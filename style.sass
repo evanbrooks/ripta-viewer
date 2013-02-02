@@ -1,0 +1,41 @@
+// CSS Reset
+// ---------
+
+html, body, h1, h2, h3, h4, p, ul, li,
+figure
+	margin: 0
+
+// Mixins
+// ------
+
+@mixin pos($list)
+	top: nth($list, 1)
+	right: nth($list, 2)
+	bottom: nth($list, 3)
+	left: nth($list, 4)
+
+@mixin boxfix()
+	-webkit-box-sizing: border-box
+	-moz-box-sizing: border-box
+	box-sizing: border-box
+
+// Spinner
+// -------
+
+.spinner
+	position: fixed
+	@include pos(0 0 0 0)
+	display: none
+	.loading &
+		display: block
+	> div
+		position: absolute
+		@include pos(50% auto auto 50%)
+
+.map-holder
+	border: 1px solid #ddd
+	display: inline-block
+
+#map
+	height: 800px
+	width: 800px
