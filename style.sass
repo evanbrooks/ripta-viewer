@@ -19,6 +19,28 @@ figure
 	-moz-box-sizing: border-box
 	box-sizing: border-box
 
+// Body
+// ---
+
+body, html
+	height: 100%
+	overflow: hidden
+
+
+// Nav
+// ---
+
+nav
+	position: fixed
+	z-index: 999
+	@include pos(0 0 auto 0)
+	@include boxfix
+	padding: 30px
+
+#zoom-slide
+	width: 100%
+
+
 // Spinner
 // -------
 
@@ -32,10 +54,28 @@ figure
 		position: absolute
 		@include pos(50% auto auto 50%)
 
+// Map
+// ---
+
 .map-holder
-	border: 1px solid #ddd
 	display: inline-block
+	position: absolute
+	top: 0
+	left: 0
 
 #map
 	height: 800px
 	width: 800px
+
+.shapes > path
+	fill: none
+	opacity: 0.1
+
+.crosshair
+	position: fixed
+	@include pos(50% auto auto 50%)
+	height: 10px
+	width: 10px
+	margin: -5px
+	border: 1px solid red
+	@include boxfix

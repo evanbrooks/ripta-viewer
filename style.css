@@ -2,6 +2,25 @@ html, body, h1, h2, h3, h4, p, ul, li,
 figure {
   margin: 0; }
 
+body, html {
+  height: 100%;
+  overflow: hidden; }
+
+nav {
+  position: fixed;
+  z-index: 999;
+  top: 0;
+  right: 0;
+  bottom: auto;
+  left: 0;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  padding: 30px; }
+
+#zoom-slide {
+  width: 100%; }
+
 .spinner {
   position: fixed;
   top: 0;
@@ -19,9 +38,29 @@ figure {
     left: 50%; }
 
 .map-holder {
-  border: 1px solid #dddddd;
-  display: inline-block; }
+  display: inline-block;
+  position: absolute;
+  top: 0;
+  left: 0; }
 
 #map {
   height: 800px;
   width: 800px; }
+
+.shapes > path {
+  fill: none;
+  opacity: 0.1; }
+
+.crosshair {
+  position: fixed;
+  top: 50%;
+  right: auto;
+  bottom: auto;
+  left: 50%;
+  height: 10px;
+  width: 10px;
+  margin: -5px;
+  border: 1px solid red;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box; }

@@ -2,7 +2,14 @@
 // -------------------
 
 function loadData(callback) {
-  async([getTrips, getStops, getShapes], callback);
+  async([getAgency, getTrips, getStops, getShapes], callback);
+
+  function getAgency(cb) {
+    d3.json("data/agency.json", function(data){
+      agency = data;
+      cb();
+    });
+  }
 
   function getTrips(cb) {
     d3.json("data/trips.json", function(data){
@@ -24,6 +31,10 @@ function loadData(callback) {
   }
 }
 
+// Execute an array of functions syncronously in
+// order and callback when they're all done
+// ---------
+
 function sync(list, callback) {
   i = 0;
   nextData();
@@ -38,6 +49,11 @@ function sync(list, callback) {
     }
   }
 }
+
+
+// Execute an array of functions asyncronously and
+// callback when they're all done
+// ---------
 
 function async(list, callback) {
   remaining = list.length;
