@@ -45,7 +45,8 @@ nav {
 
 #map {
   height: 800px;
-  width: 800px; }
+  width: 800px;
+  cursor: -webkit-grab; }
 
 .shapes > path {
   fill: none;
@@ -60,7 +61,10 @@ nav {
   height: 10px;
   width: 10px;
   margin: -5px;
-  border: 1px solid red;
+  background: red;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
-  box-sizing: border-box; }
+  box-sizing: border-box;
+  pointer-events: none;
+  opacity: 0.5;
+  border-radius: 50%; }
