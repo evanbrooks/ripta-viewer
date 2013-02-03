@@ -34,9 +34,11 @@ nav
 	z-index: 999
 	@include pos(0 0 auto 0)
 	@include boxfix
-	padding: 30px
+	padding: 15px 20px
+	background: rgba(255,255,255,0.8)
+	box-shadow: 0 1px 3px rgba(0,0,0,0.2)
 
-#zoom-slide
+.wideslide
 	width: 100%
 
 
@@ -56,11 +58,9 @@ nav
 // Map
 // ---
 
-.map-holder
-	display: inline-block
-	position: absolute
-	top: 0
-	left: 0
+.map-back
+	position: fixed
+	@include pos(0 0 0 0)
 
 #map
 	height: 800px

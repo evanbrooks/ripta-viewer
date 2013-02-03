@@ -16,9 +16,11 @@ nav {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
-  padding: 30px; }
+  padding: 15px 20px;
+  background: rgba(255, 255, 255, 0.8);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2); }
 
-#zoom-slide {
+.wideslide {
   width: 100%; }
 
 .spinner {
@@ -37,10 +39,11 @@ nav {
     bottom: auto;
     left: 50%; }
 
-.map-holder {
-  display: inline-block;
-  position: absolute;
+.map-back {
+  position: fixed;
   top: 0;
+  right: 0;
+  bottom: 0;
   left: 0; }
 
 #map {

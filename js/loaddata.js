@@ -14,12 +14,23 @@ function loadData(callback) {
   function getTrips(cb) {
     d3.json("data/trips.json", function(data){
       trips = data;
+
+      //Add a simple integer id
+      trips.forEach(function(trip, i){
+        trip["id"] = i;
+      });
       cb();
     });
   }
   function getStops(cb) {
     d3.json("data/stops.json", function(data){
-      stops = data;
+      //stops = data;
+
+      // use the id as the array index
+      stops = [];
+      data.forEach(function(stop) {
+        stops[parseInt(stop.id, 10)] = {name: stop.name, y: stop.lat, x: stop.lon};
+      });
       cb();
     });
   }
