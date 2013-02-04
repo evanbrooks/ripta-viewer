@@ -23,7 +23,9 @@ function Map(el) {
   tripControl = new TripControl();
   timeControl = new TimeControl();
 
-  shapeControl.create(shapes);
+  this.shapeControl = shapeControl;
+
+  shapeControl.create();
 
   this.makeStops = function(){
   	stopControl.create(stops);
@@ -38,52 +40,144 @@ function Map(el) {
 	// -----
 
 	function StopControl() {
-	  this.create = function(data) {
+    var loaded = false;
+    var visible = false;
+
+    // Constructor
+    // -----------
+    bindEvents();
+
+    // Public methods
+    // --------------
+
+    this.create = create;
+    this.refresh = refresh;
+    this.show = show;
+    this.hide = hide;
+    this.toggle = toggle;
+
+    // Private methods
+    // ---------------
+    function bindEvents() {
+      $("#stopCheck").change(function(e) {
+        if (!loaded) create(stops);
+        else toggle();
+      });
+    }
+
+    function create(data) {
+      visible = true;
+      loaded = true;
 	    stopLayer.selectAll(".stop")
 	      .data(data)
 	      .enter()
 	      .append("circle")
 	      .attr("class", "stop")
-	      .attr("title", function(d) { return d.name } )
-	      .attr("cx", function(d) { return lonScale(d.lon) })
-	      .attr("cy", function(d) { return latScale(d.lat) });
+        .attr("id", function(d) { return parseInt(d.id, 10) })
+	      .attr("cx", function(d) { return lonScale(d.lon)    })
+	      .attr("cy", function(d) { return latScale(d.lat)    });
+        //.attr("title", function(d) { return d.name } )
+      show();
 	  }
-	  this.refresh = function() {
+
+	  function refresh() {
 	    stopLayer.selectAll(".stop")
 	      .attr("cx", function(d) { return lonScale(d.lon) })
 	      .attr("cy", function(d) { return latScale(d.lat) });
     }
-    this.hide = function(){
+
+    function hide(){
+      visible = false;
       stopLayer.selectAll(".stop")
         .transition()
-        //.delay(function(d, i) { return i * 5; })
+        .delay(function(d, i) { return i; })
         .attr("r",0);
     }
-    this.show = function(){
+
+    function show(){
+      visible = true;
       stopLayer.selectAll(".stop")
         .transition()
-        //.delay(function(d, i) { return i * 5; })
-        .attr("r",2);
+        .delay(function(d, i) { return i; })
+        .attr("r",1);
 	  }
+    function toggle(){
+      if (visible) hide();
+      else show();
+    }
 	}
 
 	// Shapes
 	// ------
 
 	function ShapeControl() {
-	  this.create = function(data) {
-	   	shapeLayer.selectAll(".line")
-        .data(data)
-        .enter()
+    var visible = true,
+    smoothStart = 0.002,
+     smoothness = smoothStart;
+    // Constructor
+    // -----------
+    bindEvents();
+
+    // Public methods
+    // --------------
+
+    this.hide = hide;
+    this.show = show;
+	  this.create = create;
+    this.setSmooth = setSmooth;
+	  this.refresh = refresh;
+
+    // Private methods
+    // ---------------
+
+    function create() {
+      console.log(smoothness);
+      simplifiedShapes = shapes.map( function(shape) {
+        return simplify(shape.pt,smoothness);
+      });
+
+      var shapedata = shapeLayer.selectAll(".line")
+        .data(simplifiedShapes)
+
+      // Redraw existing lines
+      refresh();
+
+      // Add new lines
+      shapedata.enter()
         .append("svg:path")
         .attr("d", pathMaker)
         .attr("stroke", "black")
         .attr("stroke-width", "1")
         .attr("class", "line");
-	  }
-	  this.refresh = function() {
-	   	shapeLayer.selectAll(".line")
+    }
+
+    function refresh() {
+      shapeLayer.selectAll(".line")
         .attr("d", pathMaker)
+    }
+
+    function setSmooth(s) {
+      smoothness = s * smoothStart;
+      create();
+    }
+
+    function bindEvents() {
+      $("#shapeCheck").change(function(e) {
+        if (visible) hide();
+        else show();
+      });
+    }
+
+    function hide() {
+      visible = false;
+      shapeLayer.selectAll(".line")
+        .attr("stroke-width", "0")
+    }
+
+    function show() {
+      visible = true;
+      shapeLayer.selectAll(".line")
+        .attr("stroke-width", "1")
     }
 
 	  var pathMaker = d3.svg.line()
@@ -97,58 +191,79 @@ function Map(el) {
 
 	function TripControl() {
 
-    //currentBus = [];
+    // Public methods
+    // --------------
 
     this.set = function(time) {
       displayBus(time);
     }
 
-    this.refresh = function(time) {
-      busLayer
-        .selectAll(".bus")
+    this.refresh = updatePos;
+
+    // Private methods
+    // ---------------
+
+    function updatePos() {
+      busLayer.selectAll(".bus").select("rect")
         .attr("x", 0)
         .attr("y", 0)
         .attr("transform",
           function(d) {
-          return "translate("+lonScale(d.x)+","+latScale(d.y)+") rotate("+d.a+")"; });
+            return "translate("+lonScale(d.x)+","+latScale(d.y)+") rotate("+d.a+")"; });
+
+      busLayer.selectAll(".bus").select("text")
+          .attr("x", function(d) { return lonScale(d.x) })
+          .attr("y", function(d) { return latScale(d.y) });
     }
 
     function displayBus(time) {
       var currentBus = getData(time);
 
+      // Main
+      // ----
       var bus = busLayer
         .selectAll(".bus")
         .data(currentBus, function(d) { return d.id; });
 
-      bus.transition()
-        .attr("x", 0)
-        .attr("y", 0)
-        .attr("transform",
-          function(d) {
-          return "translate("+lonScale(d.x)+","+latScale(d.y)+") rotate("+d.a+")"; });
+      // Move existing buses
+      // -------------------
+      updatePos();
 
-      bus.enter()
-        .append("rect")
-        //.attr("x", function(d) { return lonScale(d.y) })
-        //.attr("y", function(d) { return latScale(d.x) })
-        .attr("x", 0)
-        .attr("y", 0)
-        .attr("transform",
-          function(d) {
-          return "translate("+lonScale(d.x)+","+latScale(d.y)+") rotate("+d.a+")"; })
-        .attr("height", 0)
-        .attr("width", 0)
-        .attr("class", "bus")
-        .transition()
-        .attr("height", 2)
-        .attr("width", 5)
+      // Add new buses
+      // -------------
+      var busEnter = bus.enter().append("g").attr("class", "bus");
+          busEnter.append("rect")
+              .attr("x", 0)
+              .attr("y", 0)
+              .attr("transform",
+                function(d) {
+                  return "translate("+lonScale(d.x)+","+latScale(d.y)+") rotate("+d.a+")"; })
+              .attr("height", 0)
+              .attr("width", 0)
+              .attr("fill", "lime")
+              .transition()
+                .attr("height", 2)
+                .attr("width", 5)
+              .transition()
+                .attr("fill", "blue");
+          busEnter.append("text")
+              .text(function(d) { return d.id })
+              .attr("fill", "blue")
+              .attr("x", function(d) { return lonScale(d.x) })
+              .attr("y", function(d) { return latScale(d.y) })
 
+      // Remove old buses
+      // ---------------
+      var busExit = bus.exit();
+          busExit.select("rect")
+            .transition()
+              .attr("fill", "red")
+            .transition()
+              .attr("width",0)
+              .attr("height",0)
+            .remove();
 
-      bus.exit()
-        .transition()
-        .attr("width",0)
-        .attr("height",0)
-        .remove();
+          busExit.remove();
     }
 
     function getData(time) {
@@ -177,10 +292,10 @@ function Map(el) {
     function interpolateBus(tripStops, time) {
       var index = tBisector.left(tripStops, time, 0, tripStops.length-1),
       a = tripStops[index];
-      aPoint = stops[parseInt(a.id, 10)];
+      aPoint = stopsIndexed[parseInt(a.id, 10)];
       if (index < 1) {
         if ( a.t > time ) {
-          return -1;
+          return -1; // time is earlier than the first stop, => trip hasn't begun
         }
         else {
           return { x: aPoint.x,
@@ -189,11 +304,11 @@ function Map(el) {
         }
       }
       else if (index == tripStops.length-1 && a.t < time) {
-        return -1;
+        return -1; // time is later than the last stop, => trip has ended
       }
       else {
         var b = tripStops[index-1];
-        bPoint = stops[parseInt(b.id, 10)];
+        bPoint = stopsIndexed[parseInt(b.id, 10)];
         t = (time-a.t)/(b.t-a.t);
         return { x: (aPoint.x * (1-t) + bPoint.x * t),
                  y: (aPoint.y * (1-t) + bPoint.y * t),
@@ -210,7 +325,28 @@ function Map(el) {
   // ------------
 
   function TimeControl() {
-    //
+
+    // Constructor
+    // -----------
+
+    bindEvents();
+
+    // Private methods
+    // ---------------
+    function bindEvents() {
+      $("#time-slide").change(function(e){
+        tripControl.set(this.value);
+      });
+    }
+
+    //setInterval(runOnce, 500);
+    var t = 0;
+    function runOnce() {
+      tripControl.set(t);
+      t += 0.1;
+      console.log(t);
+    }
+
   }
 
 	// Panning
@@ -229,16 +365,18 @@ function Map(el) {
             $back = $container.parent(),
        			limit = 800,
        	 currZoom = 1,
-    pantimer,
-    coasttimer;
+    panTimer,
+    coastTimer;
 
+    // Constructor
+    // -----------
     bindEvents();
 
     function bindEvents() {
 	    $back.mousedown(begin);
-	    $back.mousemove(move);
-      $back.mouseup(end);
-      $back.mouseleave(end);
+	    $("html").mousemove(move);
+      $("html").mouseup(end);
+      $("html").mouseleave(end);
 	    $("#zoom-slide").change(function(e){
         currZoom = this.value;
 	    	zoomTo(this.value);
@@ -252,37 +390,43 @@ function Map(el) {
 			});
 		}
 
+    // Private Methods
+    // ---------------
+
     function begin(event) {
       isPanning = true;
       start.x = event.pageX - curr.x;
       start.y = event.pageY - curr.y;
-      clearInterval(coasttimer);
-      pantimer = setInterval(velCheck, 15);
+      coastTimer = clearInterval(coastTimer);
+      vel = { x:0, y:0 };
+      panTimer = setInterval(velCheck, 15);
     }
     function move(event) {
       if (isPanning) {
         curr.x = event.pageX - start.x;
         curr.y = event.pageY - start.y;
+
+        width = $(window).width();
+        height = $(window).height();
+
+        if (curr.x >  width  + limit) curr.x =  width  + limit;
+        if (curr.y >  height + limit) curr.y =  height + limit;
+        if (curr.x < -limit         ) curr.x = -limit;
+        if (curr.y < -limit         ) curr.y = -limit;
+
         $container.tform(curr.x, curr.y);
       }
     }
     function end(event) {
       isPanning = false;
-      clearInterval(pantimer);
-      coast();
+      clearInterval(panTimer);
+      coastTimer = setInterval(coastStep, 15);
     }
 
     function zoomTo(zoom){
     	currZoom = parseFloat(zoom);
       prevCenter = getCenter();
       limit = 800*zoom;
-
-      if ( isNaN(limit)) {
-        console.log(zoom);
-        console.log(limit);
-        console.log("limit is broken");
-        return;
-      }
 
       latScale.range( [ limit, 0    ] );
       lonScale.range( [ 0    , limit] );
@@ -295,7 +439,7 @@ function Map(el) {
       $container.tform(curr.x, curr.y);
 
       stopControl.refresh();
-      shapeControl.refresh();
+      shapeControl.setSmooth(1/currZoom);
       tripControl.refresh();
     }
 
@@ -329,19 +473,17 @@ function Map(el) {
       prev = { x: curr.x, y: curr.y };
     }
 
-    function coast() {
-      coasttimer = setInterval(step, 15);
-      function step() {
-        vel.x *= 0.9;
-        vel.y *= 0.9;
-        if (Math.abs(vel.x + vel.y) < 0.05) {
-          clearInterval(coasttimer);
-          return;
-        }
-        curr.x += vel.x;
-        curr.y += vel.y;
-        $container.tform(curr.x, curr.y);
+    function coastStep() {
+      // 2 decimal precision
+      vel.x = parseInt( vel.x * 0.9 * 100 ) / 100; 
+      vel.y = parseInt( vel.y * 0.9 * 100 ) / 100;
+      if (Math.abs(vel.x + vel.y) < 0.01) {
+        clearInterval(coastTimer);
+        return;
       }
+      curr = { x: parseFloat( curr.x + vel.x),
+               y: parseFloat( curr.y + vel.y) };
+      $container.tform(curr.x, curr.y);
     }
  	}
 

@@ -1,4 +1,4 @@
-var agency, trips, stops, shapes;
+var agency, trips, stops, stopsIndexed, shapes;
 
 
 // On document ready

@@ -24,19 +24,20 @@ function loadData(callback) {
   }
   function getStops(cb) {
     d3.json("data/stops.json", function(data){
-      //stops = data;
+      stops = data;
 
       // use the id as the array index
-      stops = [];
+      stopsIndexed = [];
       data.forEach(function(stop) {
-        stops[parseInt(stop.id, 10)] = {name: stop.name, y: stop.lat, x: stop.lon};
+        stopsIndexed[parseInt(stop.id, 10)] = {name: stop.name, y: stop.lat, x: stop.lon};
       });
       cb();
     });
   }
   function getShapes(cb) {
-    d3.json("data/shapes.json", function(data){
+    d3.json("data/shapes_big.json", function(data){
       shapes = data;
+
       cb();
     });
   }

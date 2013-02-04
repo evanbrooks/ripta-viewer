@@ -55,6 +55,10 @@ nav {
   fill: none;
   opacity: 0.1; }
 
+.bus > text {
+  font-family: Apercu Mono;
+  font-size: 10px; }
+
 .crosshair {
   position: fixed;
   top: 50%;
