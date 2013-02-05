@@ -37,6 +37,9 @@ nav
 	padding: 15px 20px
 	background: rgba(255,255,255,0.8)
 	box-shadow: 0 1px 3px rgba(0,0,0,0.2)
+	font:
+		family: Apercu Mono
+		size: 12px
 
 .wideslide
 	width: 100%
@@ -67,14 +70,34 @@ nav
 	width: 800px
 	cursor: -webkit-grab
 
-.shapes > path
+.shapes > .line
 	fill: none
-	opacity: 0.1
+	//opacity: 0.1
+	//shape-rendering: crispEdges
+	& .selected
+		stroke: red
+		//opacity: 1
 
 .bus > text
 	font:
 		family: Apercu Mono
 		size: 10px
+
+.labelbox
+	fill: transparent
+	//opacity: 0.8
+
+.labeltext
+	fill: blue
+	font:
+		family: Apercu Mono
+		size: 10px
+	text-anchor: middle
+
+.link
+	stroke: gray
+	stroke-width: 0.8
+
 
 .crosshair
 	position: fixed

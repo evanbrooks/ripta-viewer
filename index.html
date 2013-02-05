@@ -18,10 +18,12 @@
   <nav>
     <input id="time-slide" class="wideslide" type="range" min="0" max="1400" value="0" step="0.1"/>
     <input id="zoom-slide" class="wideslide"  type="range" min="0.5" max="10" value="1" step="0.02"/>
-    <input id="rotate-slide" class="wideslide"  type="range" min="0" max="360" value="0" step="0.1"/>
+    <input id="rotate-slide" class="wideslide"  type="range" min="0" max="360" value="0" step="0.1" style="display: none"/>
     <input type="checkbox" id="shapeCheck" name="option1" value="shapes" checked> Shapes
     <input type="checkbox" id="stopCheck" name="option2" value="stops"> Stops
     <input type="checkbox" id="busCheck" name="option3" value="buses"> Buses
+    <input type="checkbox" id="autoRunCheck" name="option4" value="autorun"> Run
+    <span id="timestamp">0:00am</span>
   </nav>
 
 
@@ -53,6 +55,7 @@
   <!-- Script -->
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
   <script src="//d3js.org/d3.v3.min.js"></script>
+  <script type="text/javascript" src="https://raw.github.com/ZJONSSON/d3-plugins/master/force_labels/force_labels.js"></script>
   <script src="js/simplify.min.js"></script>
   <script src="js/loaddata.js"></script>
   <script src="js/map.js"></script>
