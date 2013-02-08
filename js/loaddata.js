@@ -84,7 +84,12 @@ function loadData(callback) {
   }
   function getStops(cb) {
     d3.json("data/stops.json", function(data){
-      stops = data;
+
+      stops = [];
+
+      data.forEach(function(stop, i, arr) {
+        stops.push({name: stop.name, y: stop.lat, x: stop.lon});
+      });
 
       // use the id as the array index
       stopsIndexed = [];

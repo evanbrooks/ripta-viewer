@@ -54,13 +54,17 @@ nav {
   cursor: -webkit-grab; }
 
 .shapes > .line {
-  fill: none; }
+  fill: none;
+  stroke-width: 0.15; }
   .shapes > .line .selected {
     stroke: red; }
 
 .bus > text {
   font-family: Apercu Mono;
   font-size: 10px; }
+
+.panning .labelbox {
+  display: none; }
 
 .labelbox {
   fill: transparent; }
@@ -75,19 +79,5 @@ nav {
   stroke: gray;
   stroke-width: 0.8; }
 
-.crosshair {
-  position: fixed;
-  top: 50%;
-  right: auto;
-  bottom: auto;
-  left: 50%;
-  height: 10px;
-  width: 10px;
-  margin: -5px;
-  background: red;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-  pointer-events: none;
-  opacity: 0.5;
-  border-radius: 50%; }
+.TEMPHIDE {
+  display: none !important; }
