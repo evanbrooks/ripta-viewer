@@ -9,36 +9,51 @@ function Map(el) {
   shapeLayer = map.select(".shapes"),
 	 stopLayer = map.select(".stops"),
     busLayer = map.select(".buses");
+      canvas = new MapCanvas(el); 
 
 	// Scale
 	// -----
 
   var yScale, xScale;
-  var scale = new Scales();
-
-  var view = { xMin: 0, xMax: 800, yMin: 0, yMax: 800};
+  var scale  = new Scales();
+  this.scale  = scale;
+  this.xScale = xScale;
+  this.yScale = yScale;
 
   // Components
   // ----------
 
-  var panzoom = new PanZoomControl(el),
+  var view    = new ViewControl(el, self, map),
   stopControl = new StopControl(),
  shapeControl = new ShapeControl(),
   tripControl = new TripControl(),
-  timeControl = new TimeControl();
+        timer = new TimeControl(tripControl, view);
 
   this.shapeControl = shapeControl;
 
   shapeControl.create();
 
   this.makeStops = function(){
-  	stopControl.create();
-  	stopControl.show();
-  }
+    stopControl.create();
+    stopControl.show();
+  };
 
   this.makeBus = function(time){
     tripControl.set(time);
-  }
+  };
+
+  this.redrawStopsShapes = function() {
+    shapeControl.refreshSmooth();
+    stopControl.refresh();
+  };
+
+  this.redrawZoom = function(z) {
+    stopControl.refresh();
+    shapeControl.setSmooth(1/z);
+    tripControl.refresh();
+  };
+
+  this.pause = timer.pause;
 
 	// Stops
 	// -----
@@ -73,8 +88,7 @@ function Map(el) {
       visible = true;
       loaded = true;
 
-      visibleStops = stops.filter(isInView);
-      console.log("showing "+visibleStops.length+" of "+stops.length);
+      visibleStops = stops.filter(view.isInView);
 
 	    stopdata = stopLayer.selectAll(".stop")
 	      .data(visibleStops);
@@ -144,7 +158,7 @@ function Map(el) {
 
       // Array of shape points only because d3 is picky
       var simplifiedShapes = shapes.map( function(s) {
-        visShape = s.pt.filter(isInView);
+        visShape = s.pt.filter(view.isInView);
         return simplify(visShape,smoothness); });
 
       // Array of shape ids only to lookup simplifiedShapes
@@ -175,19 +189,19 @@ function Map(el) {
     function refreshSmooth() {
       // Array of shape points only because d3 is picky
       var simplifiedShapes = [];
+      var shapeids = [];
+
       shapes.map( function(s) {
-        visShape = s.pt.filter(isInView);
+        visShape = s.pt.filter(view.isInView);
         if (visShape.length > 1){
           simplifiedShapes.push(simplify(visShape,smoothness));
+          shapeids.push(s.id);
         }
       });
 
-      // Array of shape ids only to lookup simplifiedShapes
-      var shapeIds = shapes.map( function(s) { return s.id; });
-
       // Apply new data
       var shapedata = shapeLayer.selectAll(".line")
-        .data(simplifiedShapes)
+        .data(simplifiedShapes, function(d,i) {return shapeids[i]})
         .attr("d", pathMaker);
     }
 
@@ -258,11 +272,28 @@ function Map(el) {
           .attr("x", function(d) { return xScale(d.x) })
           .attr("y", function(d) { return yScale(d.y) });
 
-      refreshInterps();      // DEBUG
+      // refreshInterps();      // DEBUG
+    }
+
+    function transitionPos() {
+      busLayer.selectAll(".bus").select("circle")
+        .attr("transform",
+          function(d) {
+            return "translate("+xScale(d.x)+","+yScale(d.y)+") rotate("+d.a+")"; });
+
+      busLayer.selectAll(".bus").select("text")
+          .attr("x", function(d) { return xScale(d.x) })
+          .attr("y", function(d) { return yScale(d.y) });
+
+      // refreshInterps();      // DEBUG
     }
 
     function displayBus(time) {
-      var currentBus = getData(time).filter(isInView);
+      var currentBus = getData(time).filter(view.isInView);
+
+      // currentBus.forEach(function(bus){
+      //   canvas.addPt( xScale(bus.x), yScale(bus.y) );
+      // }); 
 
       // Main
       // ----
@@ -272,7 +303,10 @@ function Map(el) {
 
       // Move existing buses
       // -------------------
-      updatePos();
+      if (Math.abs(timer.currentTime - timer.prevTime) < 10 ) {
+        transitionPos();
+      }
+      else updatePos(); // larger time step? skip the transition
 
       // Add new buses
       // -------------
@@ -285,15 +319,11 @@ function Map(el) {
                   return "translate("+xScale(d.x)+","+yScale(d.y)+") rotate("+d.a+")"; })
               .attr("height", 0)
               .attr("width", 0)
-              .attr("fill", "lime")
-              .transition()
-                .attr("r", 3)
-                //.attr("height", 3)
-                //.attr("width", 6)
-              .transition()
-                .attr("fill", "blue");
+              .attr("fill", "blue")
+              .attr("r", 2);
+
           busEnter.append("text")
-              .text(function(d) { return d.sign })
+              .text(function(d) { return d.route })
               .attr("fill", "blue")
               .attr("x", function(d) { return xScale(d.x) })
               .attr("y", function(d) { return yScale(d.y) })
@@ -301,41 +331,29 @@ function Map(el) {
       // Remove old buses
       // ---------------
       var busExit = bus.exit();
-          busExit.select("rect")
-            .transition()
-                .attr("r", 3)
-              //.attr("width",0)
-              //.attr("height",0)
-            .remove();
+          // busExit.select("rect")
+          //   .transition()
+          //     .duration(100)
+          //     .attr("r", 6)
+          //   .transition()
+          //     .duration(100)
+          //     .attr("r", 0)
+          //   .remove();
 
-          busExit.remove();
+          busExit.transition().attr("opacity", 0).remove();
 
       // Force-labels
       // -----------------
-
-      // bus.call(labelForce.update);
-
-      // labels = map.selectAll(".labels").data(currentBus,function(d) { return d.id})
-      //     labels.exit().attr("class","exit").transition().delay(0).duration(500).style("opacity",0).remove()
-          
-      //     // Draw the labelbox, caption and the link
-      //         newLabels = labels.enter().append("g").attr("class","labels")
-
-      //         newLabelBox = newLabels.append("g").attr("class","labelbox")
-      //                 newLabelBox.append("circle").attr("r",11)
-      //                 newLabelBox.append("text").attr("class","labeltext").attr("y",6)
-      //         newLabels.append("line").attr("class","link")
-              
-      //         labelBox = map.selectAll(".labels").selectAll(".labelbox")
-      //         links = map.selectAll(".link")
-      //         labelBox.selectAll("text").text(function(d) { return d.route})
 
     }
 
     function getData(time) {
       currentBus = [];
       currentStopInterps = [];
-      trips.forEach(function(trip){
+      tripsNow = trips.filter(timer.isRunningNow);
+      //console.log("processing "+ tripsNow.length + "/" + trips.length +" trips");
+
+      tripsNow.forEach(function(trip){
         if (trip.stop && trip.stop.length > 0){
           var interp = interpolateBus(trip.stop, trip.shape, time);
           if (interp == -1) {
@@ -351,9 +369,9 @@ function Map(el) {
                            a: interp.a,
                           id: trip.id };
             currentBus.push(bus);
-            if (interp.stops.a && interp.stops.b){
-              currentStopInterps.push(interp.stops);
-            }
+            // if (interp.stops.a && interp.stops.b){
+            //   currentStopInterps.push(interp.stops);
+            // } DEBUG
           }
         }
         else {
@@ -393,8 +411,10 @@ function Map(el) {
         bus = linearInterpolate(t, aPoint, bPoint);
         //bus = shapeInterpolate(t, aPoint, bPoint, shapeid);
 
-        return { x: bus.x,
-                 y: bus.y,
+        busCurve = getPtOnShapeNear(bus,shapeid);
+
+        return { x: busCurve.x,
+                 y: busCurve.y,
                  stops: { a: a.id, b: b.id },
                  a: Math.atan2(
                       bPoint.y - aPoint.y,
@@ -433,24 +453,24 @@ function Map(el) {
 
     // Labels
     // ------
-    var labelBox,link;
-    labelForce = d3.force_labels()
-        .linkDistance(0)
-        .gravity(0)
-        .nodes([]).links([])
-        .charge(-10)
-        .on("tick",redrawLabels);
+    // var labelBox,link;
+    // labelForce = d3.force_labels()
+    //     .linkDistance(0)
+    //     .gravity(0)
+    //     .nodes([]).links([])
+    //     .charge(-10)
+    //     .on("tick",redrawLabels);
 
-    function redrawLabels() {
-        labelBox
-            .attr("transform",function(d) { return "translate("+d.labelPos.x+" "+d.labelPos.y+")"})
+    // function redrawLabels() {
+    //     labelBox
+    //         .attr("transform",function(d) { return "translate("+d.labelPos.x+" "+d.labelPos.y+")"})
 
-        links
-            .attr("x1",function(d) { return d.anchorPos.x})
-            .attr("y1",function(d) { return d.anchorPos.y})
-            .attr("x2",function(d) { return d.labelPos.x})
-            .attr("y2",function(d) { return d.labelPos.y})
-    }   
+    //     links
+    //         .attr("x1",function(d) { return d.anchorPos.x})
+    //         .attr("y1",function(d) { return d.anchorPos.y})
+    //         .attr("x2",function(d) { return d.labelPos.x})
+    //         .attr("y2",function(d) { return d.labelPos.y})
+    // }   
 
     // linear interpolation layer
     // --------------------------
@@ -494,241 +514,6 @@ function Map(el) {
     // End linear interpolation
 
 	}
-
-  // Time Control
-  // ------------
-
-  function TimeControl() {
-
-    var autoRun = false;
-
-    // Constructor
-    // -----------
-
-    bindEvents();
-
-    // Private methods
-    // ---------------
-    function bindEvents() {
-      $("#time-slide").change(function(e){
-        tripControl.set(this.value);
-      });
-      $("#autoRunCheck").change(function(e) {
-        if (!autoRun) {
-          autoRun = true;
-          d3.timer(timeStep, 200);
-        }
-        else autoRun = false;
-      });
-    }
-
-    var t = 0;
-    function timeStep() {
-      if ( panzoom.isPanning()) {
-        return;
-      }
-      if (!autoRun) return true;              // stop timer
-      else {
-        tripControl.set(t/20);
-        t += 1;
-        return false;                         // keep running
-      }
-    }
-
-  }
-
-	// Panning
-	// -------
-
-  var mouse = {x:0, y:0}
-    , curr  = {x:0, y:0};
-
-	function PanZoomControl(el) {
-		var isPanning = false
-      , frame  = 1000 / 60 // ms per frame
-      , buffer = 10        // px on each side
-		  , start  = {x:0, y:0}
-      , delta  = {x:0, y:0}
-      , prev   = {x:0, y:0}
-      , vel    = {x:0, y:0}
-			, $el    = $(el)
-			, $inner = $el.parent()
-      , $container = $inner.parent()
-      , $back  = $container.parent()
-      , limit  = 800
-      , currZoom = 1
-      , xMin   = scale.x.min
-      , yMin   = scale.y.min
-      , xMax   = scale.x.max
-      , yMax   = scale.y.max;
-
-    // Constructor
-    // -----------
-    bindEvents();
-    map.append("rect")
-      .attr("id", "viewportPreview")
-      .attr("fill", "transparent")
-      .attr("stroke", "black")
-      .attr("stroke-width", 0.15)
-
-    function bindEvents() {
-	    $back.mousedown(begin);
-	    $("html").mousemove(move);
-      $("html").mouseup(end);
-      $("html").mouseleave(end);
-	    $("#zoom-slide").change(function(e){
-        currZoom = this.value;
-	    	zoomTo(this.value);
-	    });
-	    $("#rotate-slide").change(function(e){
-	    	rotateTo(this.value);
-	    });
-
-			$back.on( 'DOMMouseScroll mousewheel', function(e) {
-				scrollZoom(e.originalEvent.wheelDelta);
-			});
-		}
-
-    // Public Methods
-    // ---------------
-    this.isPanning = function() { return isPanning };
-
-    // Private Methods
-    // ---------------
-
-    function begin(event) {
-      isPanning = true;
-      $container.addClass("panning");
-      start.x = mouse.x - curr.x;
-      start.y = mouse.y - curr.y;
-      vel = { x:0, y:0 };
-      d3.timer(velCheck, frame);
-    }
-    function move(event) {
-
-      // Always capture mouse position 
-      mouse = { x: event.pageX, y: event.pageY };
-
-      // Pan map
-      if (isPanning) {
-        curr.x = mouse.x - start.x;
-        curr.y = mouse.y - start.y;
-
-        $container.tform(curr.x, curr.y);
-
-        updateFakeViewPort();
-
-      }
-    }
-
-    function end(event) {
-      isPanning = false;
-      stopControl.refresh();        // show/hide stops
-      shapeControl.refreshSmooth(); // crop/add shape lines
-      $container.removeClass("panning");
-      d3.timer(coastStep, frame);
-    }
-
-    function zoomTo(zoom, center){
-
-      var zoomCenter = center || { x: $(window).width()/2, y: $(window).height()/2};
-      currZoom = parseFloat(zoom);
-      prevCenter = getCenter(center);
-      limit = 800*zoom;
-
-      yScale.range( [ limit, 0    ] );
-      xScale.range( [ 0    , limit] );
-
-      curr.x = zoomCenter.x - prevCenter.x * limit;
-      curr.y = zoomCenter.y - prevCenter.y * limit;
-
-      $container.tform(curr.x, curr.y);
-
-      $el.css({"width": limit, "height": limit});
-
-      updateFakeViewPort();
-      stopControl.refresh();
-      shapeControl.setSmooth(1/currZoom);
-      tripControl.refresh();
-    }
-
-    function updateFakeViewPort() {
-        view.xMin = -curr.x + buffer;
-        view.yMin = -curr.y + buffer;
-        view.xMax = -curr.x + $(window).width() - buffer*2;
-        view.yMax = -curr.y + $(window).height() - buffer*2;
-        map.select("#viewportPreview")
-          .attr("x", view.xMin)
-          .attr("y", view.yMin)
-          .attr("width", view.xMax - view.xMin)
-          .attr("height", view.yMax - view.yMin);
-    }
-
-    function scrollZoom(scroll) {
-    	currZoom += parseFloat(0.005 * scroll);
-    	if (currZoom < 0.5) {
-    		currZoom = 0.51;
-    	}
-    	$("#zoom-slide").val(currZoom);
-    	zoomTo(currZoom, { x: mouse.x, y: mouse.y});
-    }
-
-    function rotateTo(angle) {
-      $el.css("-webkit-transform","rotate("+angle+"deg)");
-    }
-
-    function getCenter(center) {
-      // prevCenter is the distance from the mouse cursor tp
-      // the top-left corner of the map as a percentage of the map
-      // size. If the mouse isn't specified fall back to the 
-      // center of the viewport
-      viewCenter = center || { x: $(window).width()/2, y: $(window).height()/2 };
-      return {
-      	x: (viewCenter.x - $inner.offset().left) / limit,
-      	y: (viewCenter.y - $inner.offset().top) / limit
-      };
-    }
-
-    function velCheck() {
-      if (isPanning) {
-        vel = { x: curr.x - prev.x, 
-                y: curr.y - prev.y };
-        prev = { x: curr.x, y: curr.y };
-        return false; // continue timer
-      }
-      else return true;  // end timer
-    }
-
-    function coastStep() {
-      if (isPanning) return true;                   // stop timer
-      vel.x = parseInt( vel.x * 0.9 * 100 ) / 100;  // 2 decimal precision
-      vel.y = parseInt( vel.y * 0.9 * 100 ) / 100;
-      if (Math.abs(vel.x + vel.y) < 0.01) {
-        stopControl.refresh();
-        shapeControl.refreshSmooth();
-        return true;                                // stop timer
-      }
-      else {
-        curr = { x: parseFloat( curr.x + vel.x),
-                 y: parseFloat( curr.y + vel.y) };
-        $container.tform(curr.x, curr.y);
-        updateFakeViewPort();
-        return false;                               // continue timer
-      }
-    }
- 	}
-
-  function isInView(obj, index, array) {
-    var x = xScale(obj.x);
-    var y = yScale(obj.y);
-    if ( x > view.xMax
-      || x < view.xMin
-      || y > view.yMax
-      || y < view.yMin ) {
-      return false;
-    }
-    else return true;
-  }
 
 	// Scales
 	// ------
@@ -784,57 +569,71 @@ function Map(el) {
   //     .attr("cy", nearest.y);
 
   // });
-}
-
-// --------------------------------------------------------
-
-// These are a few handy utility methods
 
 
-// Given a point {x: x1, y: y1} and a unique
-// shapeid, find the point on the shape nearest
-// to the target and also return how far along
-// the shape it is
+  // --------------------------------------------------------
 
-function getPtOnShapeNear(target, shapeid) {
+  // These are a few handy utility methods
 
-    var pathEl = d3.select("#l"+shapeid).node()
-      , pathLength = pathEl.getTotalLength();
 
-    // loop through all points
-    // to find the one closest to the target
-    // ------------------------------------
-    var minDist = 10000000
-      , minPos = {x:0,y:0}
-      , minRatio = 0;
+  // Given a point {x: x1, y: y1} and a unique
+  // shapeid, find the point on the shape nearest
+  // to the target and also return how far along
+  // the shape it is
 
-    for (i = 0; i < pathLength; i++) {
-      var pos = pathEl.getPointAtLength(i)
-        , dist = getDist(pos,target);
+  function getPtOnShapeNear(target, shapeid) {
 
-      if (dist < minDist) {
-        minDist = dist;
-        minPos = pos;
-        minRatio = i / pathLength;
+    thisShape = shapeSmoothCache[shapeid];
+    pt = { x: xScale(target.x), y: yScale(target.y) };
+
+    if (thisShape.expire !== view.getUnique()) {
+      //console.log("building cahce");
+      var pathEl = d3.select("#l"+shapeid).node()
+        , pathLength = pathEl.getTotalLength()
+        , pathPts = [];
+      for (i = 0; i < pathLength; i++) {
+        var pos = pathEl.getPointAtLength(i);
+        thisPt = { x: pos.x, y: pos.y };
+        pathPts.push(thisPt);
       }
-      if (minDist < 1) break; // stop looking if we're pretty close
+      thisShape.cache = pathPts;
+      thisShape.isCached = true;
+      thisShape.expire = view.getUnique();
+      // console.log(thisShape.expire)
     }
-    return { x: minPos.x, y: minPos.y, percent: minRatio };
+
+    var minPos = thisShape.cache[0]
+      , minDist = getDist(minPos, pt);
+
+    for (i = 0; i < thisShape.cache.length; i++) {
+        pos = thisShape.cache[i];
+        dist = getDist(pt, pos);
+        if (dist < minDist) {
+          minDist = dist;
+          minPos = pos;
+        }
+        if (minDist < 1) break; // stop looking if we're pretty close
+    }
+
+    //console.log(minPos);
+
+    return { x: xScale.invert(minPos.x), y: yScale.invert(minPos.y)};
+  }
+
+  function getPtOnShapeAt(percentLength, shapeid) {
+      var pathEl = d3.select("#l"+shapeid).node()
+        , pathLength = pathEl.getTotalLength();
+      return pathEl.getPointAtLength( percentLength * pathLength );
+  }
+
+  // Given 2 points {x: x1, y: y1} and {x: x2, y: y2}
+  // return the distance between them
+
+  function getDist(pt1,pt2) {
+    return Math.sqrt((pt2.y-pt1.y)*(pt2.y-pt1.y) + (pt2.x-pt1.x)*(pt2.x-pt1.x));
+  }
+
 }
-
-function getPtOnShapeAt(percentLength, shapeid) {
-    var pathEl = d3.select("#l"+shapeid).node()
-      , pathLength = pathEl.getTotalLength();
-    return pathEl.getPointAtLength( percentLength * pathLength );
-}
-
-// Given 2 points {x: x1, y: y1} and {x: x2, y: y2}
-// return the distance between them
-
-function getDist(pt1,pt2) {
-  return Math.sqrt((pt2.y-pt1.y)*(pt2.y-pt1.y) + (pt2.x-pt1.x)*(pt2.x-pt1.x));
-}
-
 
 // --------------------------------------------------------
 

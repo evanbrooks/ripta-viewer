@@ -12,34 +12,61 @@
 
 <!-- Body -->
 
-<body class="loading">
+<body class="loading paused">
 
   <!-- Nav -->
 
   <nav>
-    <input id="time-slide" class="wideslide TEMPHIDE" type="range" min="0" max="1400" value="0" step="0.1"/>
     <input id="zoom-slide" class="wideslide TEMPHIDE"  type="range" min="0.5" max="10" value="1" step="0.02"/>
-    <input id="rotate-slide" class="wideslide"  type="range" min="0" max="360" value="0" step="0.1" style="display: none"/>
-    <input type="checkbox" id="shapeCheck" name="option1" value="shapes" checked> Shapes
-    <input type="checkbox" id="stopCheck" name="option2" value="stops"> Stops
-    <input type="checkbox" id="busCheck" name="option3" value="buses"> Buses
-    <input type="checkbox" id="autoRunCheck" name="option4" value="autorun"> Run
+    <!-- <input id="rotate-slide" class="wideslide"  type="range" min="0" max="360" value="0" step="0.1" style="display: none"/>
+    <input
+      type="checkbox"
+      class="TEMPHIDE"
+      id="shapeCheck"
+      name="option1"
+      value="shapes"
+      checked> Shapes
+    <input
+      type="checkbox"
+      class="TEMPHIDE"
+      id="stopCheck"
+      name="option2"
+      value="stops"> Stops
+    <input
+      type="checkbox"
+      class="TEMPHIDE"
+      id="busCheck"
+      name="option3"
+      value="buses"> Buses
+    <input
+      type="checkbox"
+      class="TEMPHIDE"
+      id="autoRunCheck"
+      name="option4"
+      value="autorun"> Run -->
     <span id="timestamp">0:00am</span>
   </nav>
 
+  <footer>
+    <input id="time-slide" class="wideslide" type="range" min="0" max="1400" value="0" step="0.05"/>
+    <div class="controls">
+      <button id="play">▶</button>
+      <button id="pause">◼</button>
+    </div>
+  </footer>
 
   <!-- Map -->
-
-  <!--<div  style="height:500px" id="altMap"></div>-->
 
   <div class="map-back">
     <div class="map-holder">
       <div class="rotate-holder">
+        <!-- Vector layers -->
         <svg id="map">
-          <g class="shapes"></g>  <!-- SVG Layers -->
+          <g class="shapes"></g>
           <g class="stops"></g>
           <g class="buses"></g>
         </svg>
+        <!-- Raster layers -->
       </div>
     </div>
   </div>
@@ -58,6 +85,9 @@
   <!--<script src="http://cdn.leafletjs.com/leaflet-0.5/leaflet.js"></script>-->
   <script src="js/simplify.min.js"></script>
   <script src="js/loaddata.js"></script>
+  <script src="js/canvas.js"></script>
+  <script src="js/panzoom.js"></script>
+  <script src="js/timer.js"></script>
   <script src="js/map.js"></script>
   <script src="js/script.js"></script>
 

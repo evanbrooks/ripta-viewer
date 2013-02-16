@@ -6,7 +6,16 @@ body, html {
   height: 100%;
   overflow: hidden; }
 
-nav {
+body {
+  -webkit-transition: all 1s; }
+
+* {
+  -webkit-user-select: none; }
+
+.panning * {
+  cursor: move; }
+
+nav, footer {
   position: fixed;
   z-index: 999;
   top: 0;
@@ -17,13 +26,74 @@ nav {
   -moz-box-sizing: border-box;
   box-sizing: border-box;
   padding: 15px 20px;
-  background: rgba(255, 255, 255, 0.8);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
   font-family: Apercu Mono;
   font-size: 12px; }
 
+.night nav {
+  color: white; }
+
+footer {
+  top: auto;
+  right: 0;
+  bottom: 0;
+  left: 50px; }
+
 .wideslide {
-  width: 100%; }
+  width: 100%;
+  -webkit-appearance: none;
+  background: rgba(0, 0, 0, 0.2);
+  height: 1px;
+  outline: transparent; }
+  .wideslide::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    -webkit-transition: all 0.1s;
+    height: 10px;
+    width: 10px;
+    border-radius: 50%;
+    background: black;
+    box-shadow: 0 0 0 0px black; }
+  .wideslide:focus::-webkit-slider-thumb {
+    background: #12c2ff; }
+  .wideslide:hover {
+    background: black; }
+    .wideslide:hover::-webkit-slider-thumb {
+      box-shadow: 0 0 0 5px black; }
+
+.night .wideslide {
+  background: rgba(255, 255, 255, 0.2); }
+  .night .wideslide::-webkit-slider-thumb {
+    background: white;
+    box-shadow: 0 0 0 0px white; }
+  .night .wideslide:hover {
+    background: white; }
+    .night .wideslide:hover::-webkit-slider-thumb {
+      box-shadow: 0 0 0 5px white; }
+
+.controls {
+  position: fixed;
+  top: auto;
+  right: auto;
+  bottom: 5px;
+  left: 15px; }
+  .controls button {
+    -webkit-appearance: none;
+    -webkit-transition: all 0.2s;
+    border: none;
+    outline: none;
+    background: transparent;
+    font-size: 15px;
+    cursor: pointer; }
+    .controls button:focus {
+      color: #12c2ff; }
+    .controls button:hover {
+      opacity: 0.6; }
+
+.night .controls button {
+  color: white; }
+
+.playing #play,
+.paused #pause {
+  display: none; }
 
 .spinner {
   position: fixed;
@@ -39,45 +109,59 @@ nav {
     top: 50%;
     right: auto;
     bottom: auto;
-    left: 50%; }
+    left: 50%;
+    border: 2px solid red;
+    height: 20px;
+    width: 20px;
+    border-radius: 50%; }
 
 .map-back {
   position: fixed;
   top: 0;
   right: 0;
   bottom: 0;
-  left: 0; }
+  left: 0;
+  -webkit-backface-visibility: hidden;
+  -webkit-transform: translate3d(0, 0, 0); }
 
 #map {
   height: 800px;
+  width: 800px; }
+
+#mapCanvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 800px;
   width: 800px;
-  cursor: -webkit-grab; }
+  pointer-events: none; }
 
 .shapes > .line {
   fill: none;
-  stroke-width: 0.15; }
+  stroke-width: 0.15;
+  opacity: 0.2; }
   .shapes > .line .selected {
     stroke: red; }
 
+.bus > circle {
+  fill: black; }
 .bus > text {
+  -webkit-transition: all 0.5s;
+  opacity: 0;
   font-family: Apercu Mono;
   font-size: 10px; }
+  .panning .bus > text {
+    opacity: 0; }
+.bus:hover {
+  cursor: pointer; }
+  .bus:hover > text {
+    opacity: 1; }
 
-.panning .labelbox {
+.night .bus > circle {
+  fill: white; }
+
+.panning .label {
   display: none; }
-
-.labelbox {
-  fill: transparent; }
-
-.labeltext {
-  fill: blue;
-  font-family: Apercu Mono;
-  font-size: 10px;
-  text-anchor: middle; }
-
-.link {
-  stroke: gray;
-  stroke-width: 0.8; }
 
 .TEMPHIDE {
   display: none !important; }

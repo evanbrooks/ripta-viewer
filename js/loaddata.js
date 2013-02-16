@@ -72,6 +72,17 @@ function loadData(callback) {
         // clean out stops that have repeat times
         trip.stop = trip.stop.filter(isUniqueTime);
 
+        // Add begin/end times
+        if (trip.stop.length ) {
+          last = trip.stop.length - 1;
+          trip["time"] = { start: trip.stop[0].t,
+                           end:   trip.stop[last].t };
+        }
+        else {
+          trip["time"] = { start: -1,
+                           end:   -1 };
+        }
+
         // reprocess trips that span midnight
         trip.stop = processMidnight(i, trip.stop);
 
@@ -102,6 +113,11 @@ function loadData(callback) {
   function getShapes(cb) {
     d3.json("data/shapes_big.json", function(data){
       shapes = data;
+
+      shapeSmoothCache = [];
+      shapes.forEach(function(shape){
+        shapeSmoothCache[shape.id] = { expire: "", cache: [] };
+      });
 
       cb();
     });
@@ -150,7 +166,7 @@ function processMidnight(id, arrayOfStops) {
                 id: stop.id };
       }
       else return stop;
-    })
+    });
   }
   else return arrayOfStops;
 }
