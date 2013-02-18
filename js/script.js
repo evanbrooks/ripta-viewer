@@ -1,4 +1,8 @@
-var agency, trips, stops, stopsIndexed, shapes, shapeSmoothCache;
+var
+  agency,
+  trips,
+  stops, stopsIndexed,
+  shapes, shapesIndexed, shapeSmoothCache;
 
 
 // On document ready

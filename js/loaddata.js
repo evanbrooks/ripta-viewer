@@ -71,6 +71,10 @@ function loadData(callback) {
 
         // clean out stops that have repeat times
         trip.stop = trip.stop.filter(isUniqueTime);
+        trip.stop = trip.stop.map(function(s){
+          time = parseInt(s.t, 10) * 60;
+          return { id: s.id, t: time};
+        });
 
         // Add begin/end times
         if (trip.stop.length ) {
@@ -119,6 +123,11 @@ function loadData(callback) {
         shapeSmoothCache[shape.id] = { expire: "", cache: [] };
       });
 
+      shapesIndexed = [];
+      shapes.forEach(function(shape) {
+        shapesIndexed[parseInt(shape.id, 10)] = shape.pt;
+      });
+
       cb();
     });
   }
@@ -158,11 +167,11 @@ function processMidnight(id, arrayOfStops) {
   // if the trip lasts for more than ~6 hours
   // then something funky is going on
   // --
-  if ( lastStop.t - firstStop.t > 6 * 60) {
+  if ( lastStop.t - firstStop.t > 6*60*60) {
     // console.log(id);
     return arrayOfStops.map(function(stop){
       if (stop.t <= lastStop.t ) {
-        return { t: stop.t += 24 * 60, // push off until tomorrow
+        return { t: stop.t += 24*60*60, // push off until tomorrow
                 id: stop.id };
       }
       else return stop;
@@ -197,10 +206,10 @@ function sync(list, callback) {
 
 function async(list, callback) {
   remaining = list.length;
-  list.forEach(function(f, i){ list[i](done) });
+  list.forEach(function(f, i){ list[i](done); });
   function done(){
     remaining--;
-    if (remaining == 0) {
+    if (remaining === 0) {
       callback();
     }
   }

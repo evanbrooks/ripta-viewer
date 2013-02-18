@@ -19,6 +19,10 @@ figure
 	-moz-box-sizing: border-box
 	box-sizing: border-box
 
+$dark: rgb(79, 85, 102)
+$light: #f4f4f4 //rgb(206, 223, 228)
+$sun: rgb(230, 144, 122)
+
 // Body
 // ---
 
@@ -27,7 +31,12 @@ body, html
 	overflow: hidden
 
 body
-	-webkit-transition: all 1s
+	-webkit-transition: all 0.5s
+	background: $light
+.night
+	background: $dark
+.sun
+	background: $sun
 
 // Nav
 // ---
@@ -37,6 +46,7 @@ body
 
 .panning *
 	cursor: move
+
 
 nav, footer
 	position: fixed
@@ -54,7 +64,7 @@ nav, footer
 	color: white
 
 footer
-	@include pos(auto 0 0 50px)
+	@include pos(auto 80px 0 50px)
 
 .wideslide
 	width: 100%
@@ -65,8 +75,8 @@ footer
 	&::-webkit-slider-thumb
 		-webkit-appearance: none
 		-webkit-transition: all 0.1s
-		height: 10px
-		width: 10px
+		height: 8px
+		width: 8px
 		border-radius: 50%
 		background: black
 		box-shadow: 0 0 0 0px black
@@ -88,6 +98,38 @@ footer
 		&::-webkit-slider-thumb
 			box-shadow: 0 0 0 5px white
 
+.timeline
+	width: 100%
+	// overflow-y: hidden
+	// overflow-x: scroll
+	padding: 10px 0
+	color: $dark
+	&::after
+		content: ""
+		height: 40px
+		width: 1px
+		background: red
+		top: 15px
+		left: 50%
+		position: absolute
+		z-index: 999
+	.times
+		white-space: nowrap
+		display: inline-block
+		&> li
+			display: inline-block
+			list-style: none
+			width: 100px
+			text-align: center
+			// border-right: 1px solid black
+	&::-webkit-scrollbar
+		height: 0px
+		background: white
+	&::-webkit-scrollbar-thumb
+		background: rgba(0,0,0,1)
+		&:hover
+			background: rgba(0,0,0,0.6)
+
 .controls
 	position: fixed
 	@include pos(auto auto 5px 15px)
@@ -96,6 +138,7 @@ footer
 		-webkit-transition: all 0.2s
 		border: none
 		outline: none
+		color: $dark
 		background: transparent
 		font-size: 15px
 		cursor: pointer
@@ -104,9 +147,15 @@ footer
 		&:hover
 			opacity: 0.6
 
-.night .controls
-	button
-		color: white
+.controls-right
+	position: fixed
+	@include pos(auto 15px 10px auto)
+
+.night
+	.timeline,
+	.controls,
+	.controls button
+		color: $light
 
 .playing #play,
 .paused #pause
@@ -155,23 +204,31 @@ footer
 
 .shapes > .line
 	fill: none
-	stroke-width: 0.15
-	opacity: 0.2
+	stroke-width: 0
+	opacity: 1
+	-webkit-transition: all 1s
 	//shape-rendering: crispEdges
 	//display: none
-	& .selected
-		stroke: red
-		//opacity: 1
+	stroke: $dark
+	&.selected
+		stroke-width: 0.15
+	//&:hover
+	//	stroke-width: 5
+	//	-webkit-transition: all 0.2s
+
+.night .shapes > .line
+	stroke: white
 
 .bus
 	&> circle
-		fill: black
+		fill: $dark
 	&> text
 		-webkit-transition: all 0.5s
 		//display: none
 		opacity: 0
 		.panning &
 			opacity: 0
+		fill: $dark
 		font:
 			family: Apercu Mono
 			size: 10px
@@ -179,6 +236,19 @@ footer
 		cursor: pointer
 		&> text
 			opacity: 1
+
+.zoom .bus
+	&> circle
+		fill: $dark
+		stroke: $dark
+		stroke-width: 2
+	&> text
+		opacity: 1
+	&:hover
+		&> circle
+			stroke: $dark
+			stroke-width: 12
+
 
 .night .bus > circle
 	fill: white

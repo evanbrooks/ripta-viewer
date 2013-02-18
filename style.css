@@ -7,7 +7,14 @@ body, html {
   overflow: hidden; }
 
 body {
-  -webkit-transition: all 1s; }
+  -webkit-transition: all 0.5s;
+  background: #f4f4f4; }
+
+.night {
+  background: #4f5566; }
+
+.sun {
+  background: #e6907a; }
 
 * {
   -webkit-user-select: none; }
@@ -34,7 +41,7 @@ nav, footer {
 
 footer {
   top: auto;
-  right: 0;
+  right: 80px;
   bottom: 0;
   left: 50px; }
 
@@ -47,8 +54,8 @@ footer {
   .wideslide::-webkit-slider-thumb {
     -webkit-appearance: none;
     -webkit-transition: all 0.1s;
-    height: 10px;
-    width: 10px;
+    height: 8px;
+    width: 8px;
     border-radius: 50%;
     background: black;
     box-shadow: 0 0 0 0px black; }
@@ -69,6 +76,35 @@ footer {
     .night .wideslide:hover::-webkit-slider-thumb {
       box-shadow: 0 0 0 5px white; }
 
+.timeline {
+  width: 100%;
+  padding: 10px 0;
+  color: #4f5566; }
+  .timeline::after {
+    content: "";
+    height: 40px;
+    width: 1px;
+    background: red;
+    top: 15px;
+    left: 50%;
+    position: absolute;
+    z-index: 999; }
+  .timeline .times {
+    white-space: nowrap;
+    display: inline-block; }
+    .timeline .times > li {
+      display: inline-block;
+      list-style: none;
+      width: 100px;
+      text-align: center; }
+  .timeline::-webkit-scrollbar {
+    height: 0px;
+    background: white; }
+  .timeline::-webkit-scrollbar-thumb {
+    background: black; }
+    .timeline::-webkit-scrollbar-thumb:hover {
+      background: rgba(0, 0, 0, 0.6); }
+
 .controls {
   position: fixed;
   top: auto;
@@ -80,6 +116,7 @@ footer {
     -webkit-transition: all 0.2s;
     border: none;
     outline: none;
+    color: #4f5566;
     background: transparent;
     font-size: 15px;
     cursor: pointer; }
@@ -88,8 +125,17 @@ footer {
     .controls button:hover {
       opacity: 0.6; }
 
+.controls-right {
+  position: fixed;
+  top: auto;
+  right: 15px;
+  bottom: 10px;
+  left: auto; }
+
+.night .timeline,
+.night .controls,
 .night .controls button {
-  color: white; }
+  color: #f4f4f4; }
 
 .playing #play,
 .paused #pause {
@@ -138,16 +184,22 @@ footer {
 
 .shapes > .line {
   fill: none;
-  stroke-width: 0.15;
-  opacity: 0.2; }
-  .shapes > .line .selected {
-    stroke: red; }
+  stroke-width: 0;
+  opacity: 1;
+  -webkit-transition: all 1s;
+  stroke: #4f5566; }
+  .shapes > .line.selected {
+    stroke-width: 0.15; }
+
+.night .shapes > .line {
+  stroke: white; }
 
 .bus > circle {
-  fill: black; }
+  fill: #4f5566; }
 .bus > text {
   -webkit-transition: all 0.5s;
   opacity: 0;
+  fill: #4f5566;
   font-family: Apercu Mono;
   font-size: 10px; }
   .panning .bus > text {
@@ -156,6 +208,16 @@ footer {
   cursor: pointer; }
   .bus:hover > text {
     opacity: 1; }
+
+.zoom .bus > circle {
+  fill: #4f5566;
+  stroke: #4f5566;
+  stroke-width: 2; }
+.zoom .bus > text {
+  opacity: 1; }
+.zoom .bus:hover > circle {
+  stroke: #4f5566;
+  stroke-width: 12; }
 
 .night .bus > circle {
   fill: white; }

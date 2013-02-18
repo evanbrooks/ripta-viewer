@@ -2,34 +2,35 @@ function Map(el) {
 
   var self = this;
 
-	// Layers
-	// ------
+  // Layers
+  // ------
 
-	   var map = d3.select(el),
+     var map = d3.select(el),
   shapeLayer = map.select(".shapes"),
-	 stopLayer = map.select(".stops"),
-    busLayer = map.select(".buses");
-      canvas = new MapCanvas(el); 
+   stopLayer = map.select(".stops"),
+    busLayer = map.select(".buses"),
+      canvas = new MapCanvas(el);
 
-	// Scale
-	// -----
+  // Scale
+  // -----
 
   var yScale, xScale;
   var scale  = new Scales();
-  this.scale  = scale;
-  this.xScale = xScale;
-  this.yScale = yScale;
+  self.scale  = scale;
+  self.xScale = xScale;
+  self.yScale = yScale;
 
   // Components
   // ----------
 
-  var view    = new ViewControl(el, self, map),
-  stopControl = new StopControl(),
- shapeControl = new ShapeControl(),
-  tripControl = new TripControl(),
-        timer = new TimeControl(tripControl, view);
+  self.view = new ViewControl(el, self, map);
 
-  this.shapeControl = shapeControl;
+   var stopControl   = new StopControl(),
+ shapeControl   = new ShapeControl(),
+  tripControl   = new TripControl(),
+        timer   = new TimeControl(tripControl, self.view);
+
+  self.shapeControl = shapeControl;
 
   shapeControl.create();
 
@@ -53,12 +54,12 @@ function Map(el) {
     tripControl.refresh();
   };
 
-  this.pause = timer.pause;
+  self.pause = timer.pause;
 
-	// Stops
-	// -----
+  // Stops
+  // -----
 
-	function StopControl() {
+  function StopControl() {
     var loaded = false;
     var visible = false;
 
@@ -85,27 +86,27 @@ function Map(el) {
     }
 
     function refresh() {
-      visible = true;
-      loaded = true;
+     //  visible = true;
+     //  loaded = true;
 
-      visibleStops = stops.filter(view.isInView);
+     //  visibleStops = stops.filter(view.isInView);
 
-	    stopdata = stopLayer.selectAll(".stop")
-	      .data(visibleStops);
+      // stopdata = stopLayer.selectAll(".stop")
+      //   .data(visibleStops);
 
-	    stopdata.enter()
-        .append("circle")
-        .attr("id", function(d) { return parseInt(d.id, 10) })
-        .attr("class", "stop");
+      // stopdata.enter()
+     //    .append("circle")
+     //    .attr("id", function(d) { return parseInt(d.id, 10) })
+     //    .attr("class", "stop");
 
-	    stopdata
-	      .attr("cx", function(d) { return xScale(d.x) })
-	      .attr("cy", function(d) { return yScale(d.y) });
+      // stopdata
+      //   .attr("cx", function(d) { return xScale(d.x) })
+      //   .attr("cy", function(d) { return yScale(d.y) });
 
-      stopdata
-        .exit()
-        .remove();
-	  }
+     //  stopdata
+     //    .exit()
+     //    .remove();
+    }
 
     function hide(){
       visible = false;
@@ -121,18 +122,18 @@ function Map(el) {
         .transition()
         .delay(function(d, i) { return i; })
         .attr("r",1);
-	  }
+    }
 
     function toggle(){
       if (visible) hide();
       else show();
     }
-	}
+  }
 
-	// Shapes
-	// ------
+  // Shapes
+  // ------
 
-	function ShapeControl() {
+  function ShapeControl() {
     var visible = true,
     smoothStart = 0.002,
      smoothness = smoothStart;
@@ -145,7 +146,7 @@ function Map(el) {
 
     this.hide = hide;
     this.show = show;
-	  this.create = create;
+    this.create = create;
     this.setSmooth = setSmooth;
     this.refresh = refresh;
     this.refreshSmooth = refreshSmooth;
@@ -158,7 +159,7 @@ function Map(el) {
 
       // Array of shape points only because d3 is picky
       var simplifiedShapes = shapes.map( function(s) {
-        visShape = s.pt.filter(view.isInView);
+        visShape = s.pt.filter(self.view.isInView);
         return simplify(visShape,smoothness); });
 
       // Array of shape ids only to lookup simplifiedShapes
@@ -192,7 +193,7 @@ function Map(el) {
       var shapeids = [];
 
       shapes.map( function(s) {
-        visShape = s.pt.filter(view.isInView);
+        visShape = s.pt.filter(self.view.isInView);
         if (visShape.length > 1){
           simplifiedShapes.push(simplify(visShape,smoothness));
           shapeids.push(s.id);
@@ -230,31 +231,22 @@ function Map(el) {
         .attr("stroke-width", "1")
     }
 
-	  var pathMaker = d3.svg.line()
-	  	.y(function(d) { return yScale(d.y) })
-	  	.x(function(d) { return xScale(d.x) })
-	  	.interpolate("basis"); // "basis" for smoother
-	}
+    var pathMaker = d3.svg.line()
+      .y(function(d) { return yScale(d.y) })
+      .x(function(d) { return xScale(d.x) })
+      .interpolate("basis"); // "basis" for smoother
+  }
 
-	// Trips
-	// -----
+  // Trips
+  // -----
 
-	function TripControl() {
+  function TripControl() {
 
     // Public methods
     // --------------
 
     this.set = function(time) {
       displayBus(time);
-      var hr = parseInt(time / 60);
-      var mi = parseInt(time % 60);
-      var ap = "am";
-      if (hr >= 12) {
-        hr -= 12;
-        ap = "pm";
-      }
-      if (mi < 10) mi = "0"+mi;
-      $("#timestamp").html(hr+":"+mi+""+ap);
     }
 
     this.refresh = updatePos;
@@ -269,8 +261,8 @@ function Map(el) {
             return "translate("+xScale(d.x)+","+yScale(d.y)+") rotate("+d.a+")"; });
 
       busLayer.selectAll(".bus").select("text")
-          .attr("x", function(d) { return xScale(d.x) })
-          .attr("y", function(d) { return yScale(d.y) });
+          .attr("x", function(d) { return xScale(d.x) + 10 })
+          .attr("y", function(d) { return yScale(d.y) + 2 });
 
       // refreshInterps();      // DEBUG
     }
@@ -282,18 +274,20 @@ function Map(el) {
             return "translate("+xScale(d.x)+","+yScale(d.y)+") rotate("+d.a+")"; });
 
       busLayer.selectAll(".bus").select("text")
-          .attr("x", function(d) { return xScale(d.x) })
-          .attr("y", function(d) { return yScale(d.y) });
+          .attr("x", function(d) { return xScale(d.x) + 5 })
+          .attr("y", function(d) { return yScale(d.y) + 5 });
 
       // refreshInterps();      // DEBUG
     }
 
     function displayBus(time) {
-      var currentBus = getData(time).filter(view.isInView);
+      var currentBus = getData(time).filter(self.view.isInView);
 
+      // var drawThese = []
       // currentBus.forEach(function(bus){
-      //   canvas.addPt( xScale(bus.x), yScale(bus.y) );
-      // }); 
+      //   drawThese.push({x: xScale(bus.x), y: yScale(bus.y) });
+      // });
+      // canvas.addArr(drawThese);
 
       // Main
       // ----
@@ -317,10 +311,9 @@ function Map(el) {
               .attr("transform",
                 function(d) {
                   return "translate("+xScale(d.x)+","+yScale(d.y)+") rotate("+d.a+")"; })
-              .attr("height", 0)
-              .attr("width", 0)
-              .attr("fill", "blue")
-              .attr("r", 2);
+              .attr("r", 2)
+              .transition()
+              .attr("r", 1.1);
 
           busEnter.append("text")
               .text(function(d) { return d.route })
@@ -340,7 +333,11 @@ function Map(el) {
           //     .attr("r", 0)
           //   .remove();
 
-          busExit.transition().attr("opacity", 0).remove();
+          busExit
+            .select("circle")
+            .transition()
+            .attr("r", 5)
+            .call(function(){busExit.remove();});
 
       // Force-labels
       // -----------------
@@ -352,6 +349,12 @@ function Map(el) {
       currentStopInterps = [];
       tripsNow = trips.filter(timer.isRunningNow);
       //console.log("processing "+ tripsNow.length + "/" + trips.length +" trips");
+
+      tripsNow.forEach(function(trip){
+        if (trip.stop && trip.stop.length > 0){
+          getSmoothnessCache(trip.shape);
+        }
+      });
 
       tripsNow.forEach(function(trip){
         if (trip.stop && trip.stop.length > 0){
@@ -378,7 +381,7 @@ function Map(el) {
           //console.log("no stops?");
         }
       });
-      // showShapeUsed(currentBus);                  //DEBUG
+      showShapeUsed(currentBus);                  //DEBUG
       // showStopInterps(currentStopInterps);        //DEBUG
       return currentBus;
     }
@@ -424,7 +427,7 @@ function Map(el) {
 
     function linearInterpolate(t, pt1, pt2) {
       return { x: (pt1.x * (1-t) + pt2.x * t),
-               y: (pt1.y * (1-t) + pt2.y * t) }
+               y: (pt1.y * (1-t) + pt2.y * t) };
     }
 
     function shapeInterpolate(t, pt1, pt2, shapeid) {
@@ -444,11 +447,11 @@ function Map(el) {
 
 
         return { x: xScale.invert(newPoint.x),   // return in lat/lon so that
-                 y: yScale.invert(newPoint.y) }  // it can be rescaled when
+                 y: yScale.invert(newPoint.y) }; // it can be rescaled when
                                                  // the map is manipulated
     }
 
-    var tBisector = d3.bisector(function(d){return d.t})
+    var tBisector = d3.bisector(function(d){return d.t;});
 
 
     // Labels
@@ -470,7 +473,7 @@ function Map(el) {
     //         .attr("y1",function(d) { return d.anchorPos.y})
     //         .attr("x2",function(d) { return d.labelPos.x})
     //         .attr("y2",function(d) { return d.labelPos.y})
-    // }   
+    // }
 
     // linear interpolation layer
     // --------------------------
@@ -493,31 +496,30 @@ function Map(el) {
       function showShapeUsed(current) {
         shapeLayer
           .selectAll(".line")
-          .attr('style="stroke-width: 0.15, stroke: black"');
+          .attr("class", "line");
 
         current.forEach(function(curr) {
           shapeLayer
             .select("#l"+curr.shape)
-            .attr("stroke-width", "3")
-            .attr("stroke", "red");
+            .attr("class", "line selected");
         });
       }
 
       function refreshInterps() {
         stopLayer.selectAll(".interp")
-          .attr("x1", function(d) { return xScale( stopsIndexed[ parseInt(d.a) ].x ) } )
-          .attr("y1", function(d) { return yScale( stopsIndexed[ parseInt(d.a) ].y ) } )
-          .attr("x2", function(d) { return xScale( stopsIndexed[ parseInt(d.b) ].x ) } )
-          .attr("y2", function(d) { return yScale( stopsIndexed[ parseInt(d.b) ].y ) } );
+          .attr("x1", function(d) { return xScale( stopsIndexed[ parseInt(d.a, 10) ].x ); } )
+          .attr("y1", function(d) { return yScale( stopsIndexed[ parseInt(d.a, 10) ].y ); } )
+          .attr("x2", function(d) { return xScale( stopsIndexed[ parseInt(d.b, 10) ].x ); } )
+          .attr("y2", function(d) { return yScale( stopsIndexed[ parseInt(d.b, 10) ].y ); } );
       }
     // ------------------------
     // End linear interpolation
 
-	}
+  }
 
-	// Scales
-	// ------
-	function Scales() {
+  // Scales
+  // ------
+  function Scales() {
 
     var w = $(el).width()
       , h = $(el).height()
@@ -533,12 +535,12 @@ function Map(el) {
       x = { min: 0 - (h-w)/2, max: w + (h-w)/2 };
     }
 
-	  yScale = d3.scale.linear()
-	    .domain([agency.lat.min, agency.lat.max])
-	    .range([y.max, y.min]); // reversed because measure north of equator
-	  xScale = d3.scale.linear()
-	    .domain([agency.lon.min, agency.lon.max])
-	    .range([x.min, x.max]);
+    yScale = d3.scale.linear()
+      .domain([agency.lat.min, agency.lat.max])
+      .range([y.max, y.min]); // reversed because measure north of equator
+    xScale = d3.scale.linear()
+      .domain([agency.lon.min, agency.lon.max])
+      .range([x.min, x.max]);
 
     this.x = x;
     this.y = y;
@@ -581,44 +583,49 @@ function Map(el) {
   // to the target and also return how far along
   // the shape it is
 
+  function getSmoothnessCache(shapeid) {
+    // thisShape = shapeSmoothCache[shapeid];
+    // if (thisShape.expire !== self.view.getUnique()) {
+    //   var pathEl = d3.select("#l"+shapeid).node()
+    //     , pathLength = pathEl.getTotalLength()
+    //     , pathPts = [];
+    //   for (i = 0; i < pathLength; i++) {
+    //     var pos = pathEl.getPointAtLength(i);
+    //     thisPt = { x: pos.x, y: pos.y };
+    //     pathPts.push(thisPt);
+    //   }
+    //   thisShape.cache = pathPts;
+    //   thisShape.isCached = true;
+    //   thisShape.expire = self.view.getUnique();
+    // }
+  }
+
   function getPtOnShapeNear(target, shapeid) {
 
-    thisShape = shapeSmoothCache[shapeid];
-    pt = { x: xScale(target.x), y: yScale(target.y) };
+    //thisShape = shapeSmoothCache[shapeid];
+    thisShape = shapesIndexed[shapeid];
+    //pt = { x: xScale(target.x), y: yScale(target.y) };
+    pt = target;
+    
+    var minPos = thisShape[0]
+      , minDist = getSquareDist(minPos, pt);
 
-    if (thisShape.expire !== view.getUnique()) {
-      //console.log("building cahce");
-      var pathEl = d3.select("#l"+shapeid).node()
-        , pathLength = pathEl.getTotalLength()
-        , pathPts = [];
-      for (i = 0; i < pathLength; i++) {
-        var pos = pathEl.getPointAtLength(i);
-        thisPt = { x: pos.x, y: pos.y };
-        pathPts.push(thisPt);
-      }
-      thisShape.cache = pathPts;
-      thisShape.isCached = true;
-      thisShape.expire = view.getUnique();
-      // console.log(thisShape.expire)
-    }
-
-    var minPos = thisShape.cache[0]
-      , minDist = getDist(minPos, pt);
-
-    for (i = 0; i < thisShape.cache.length; i++) {
-        pos = thisShape.cache[i];
-        dist = getDist(pt, pos);
+    for (i = 0; i < thisShape.length; i++) {
+        pos = thisShape[i];
+        dist = getSquareDist(pt, pos);
         if (dist < minDist) {
           minDist = dist;
           minPos = pos;
         }
-        if (minDist < 1) break; // stop looking if we're pretty close
+        //if (minDist < 1) break; // stop looking if we're pretty close
     }
 
     //console.log(minPos);
 
-    return { x: xScale.invert(minPos.x), y: yScale.invert(minPos.y)};
+    //return { x: xScale.invert(minPos.x), y: yScale.invert(minPos.y)};
+    return { x: minPos.x, y: minPos.y};
   }
+
 
   function getPtOnShapeAt(percentLength, shapeid) {
       var pathEl = d3.select("#l"+shapeid).node()
@@ -630,7 +637,11 @@ function Map(el) {
   // return the distance between them
 
   function getDist(pt1,pt2) {
-    return Math.sqrt((pt2.y-pt1.y)*(pt2.y-pt1.y) + (pt2.x-pt1.x)*(pt2.x-pt1.x));
+    return Math.sqrt(getSquareDist(pt1,pt2));
+  }
+
+  function getSquareDist(pt1,pt2) {
+    return (pt2.y-pt1.y)*(pt2.y-pt1.y) + (pt2.x-pt1.x)*(pt2.x-pt1.x);
   }
 
 }
