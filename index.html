@@ -5,8 +5,11 @@
 
 <head>
   <title>RIPTA</title>
-  <!--<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.5/leaflet.css" />  <link rel="stylesheet" href="loader.css" type="text/css" media="screen">-->
   <link rel="stylesheet" href="style.css" type="text/css" media="screen">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
 
 </head>
 
@@ -17,7 +20,10 @@
   <!-- Nav -->
 
   <nav>
-    <input id="zoom-slide" class="wideslide TEMPHIDE"  type="range" min="0.5" max="10" value="1" step="0.02"/>
+    <!-- <input id="zoom-slide" class="wideslide TEMPHIDE"  type="range" min="0.5" max="10" value="1" step="0.02"/> -->
+    <button id="play">&#9654;</button>
+    <button id="pause">&#9724;</button>
+
     <select id="speed">
       <option value="3">3s in 1 frame</option>
       <option value="30">30s in 1 frame</option>
@@ -52,18 +58,15 @@
   </nav>
 
   <footer>
-    <input id="time-slide" class="wideslide" type="range" min="0" max="86400" value="0" step="1"/>
-    <div class="controls">
-      <button id="play">&#9654;</button>
-      <button id="pause">&#9724;</button>
-    </div>
-    <div class="controls-right">
-      <span id="timestamp">0:00am</span>
-    </div>
+    <!-- <input id="time-slide" class="wideslide" type="range" min="0" max="86400" value="0" step="1"/> -->
+    <div id="timestamp">0:00am</div>
     <div class="timeline">
       <ul class="times">
-        <li>midnight
-        </li><li>1
+        <!--
+        don't change these weirdly positioned tags!
+        inline-blocks are whitespace sensitive.
+        -->
+        <li>1
         </li><li>2
         </li><li>3
         </li><li>4
@@ -85,7 +88,35 @@
         </li><li>8
         </li><li>9
         </li><li>10
-        </li><li>11</li>
+        </li><li>11
+        </li><li>midnight</li>
+        
+
+        <li>1
+        </li><li>2
+        </li><li>3
+        </li><li>4
+        </li><li>5
+        </li><li>6
+        </li><li>7
+        </li><li>8
+        </li><li>9
+        </li><li>10
+        </li><li>11
+        </li><li>noon
+        </li><li>1
+        </li><li>2
+        </li><li>3
+        </li><li>4
+        </li><li>5
+        </li><li>6
+        </li><li>7
+        </li><li>8
+        </li><li>9
+        </li><li>10
+        </li><li>11
+        </li><li>midnight</li>
+
       </ul>
     </div>
   </footer>

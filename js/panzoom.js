@@ -97,8 +97,6 @@ function ViewControl(el, mapControl, mapsvg) {
 
   function end(event) {
     isPanning = false;
-    mapControl.redrawStopsShapes();
-    $container.removeClass("panning");
     d3.timer(coastStep, frame);
   }
 
@@ -189,6 +187,7 @@ function ViewControl(el, mapControl, mapsvg) {
     vel.y = parseInt( vel.y * 0.9 * 100, 10 ) / 100;
     if (Math.abs(vel.x + vel.y) < 0.05) {
       mapControl.redrawStopsShapes();
+      $container.removeClass("panning");
       return true;                                // stop timer
     }
     else {

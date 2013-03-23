@@ -1,6 +1,7 @@
 html, body, h1, h2, h3, h4, p, ul, li,
 figure {
-  margin: 0; }
+  margin: 0;
+  padding: 0; }
 
 body, html {
   height: 100%;
@@ -22,6 +23,11 @@ body {
 .panning * {
   cursor: move; }
 
+#timestamp {
+  text-align: center;
+  color: red;
+  font-size: 1.5em; }
+
 nav, footer {
   position: fixed;
   z-index: 999;
@@ -32,7 +38,6 @@ nav, footer {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
-  padding: 15px 20px;
   font-family: Apercu Mono;
   font-size: 12px; }
 
@@ -41,9 +46,9 @@ nav, footer {
 
 footer {
   top: auto;
-  right: 80px;
+  right: 0;
   bottom: 0;
-  left: 50px; }
+  left: 0; }
 
 .wideslide {
   width: 100%;
@@ -79,13 +84,15 @@ footer {
 .timeline {
   width: 100%;
   padding: 10px 0;
-  color: #4f5566; }
+  color: #4f5566;
+  background: white;
+  cursor: col-resize; }
   .timeline::after {
     content: "";
-    height: 40px;
+    height: 35px;
     width: 1px;
     background: red;
-    top: 15px;
+    bottom: 0px;
     left: 50%;
     position: absolute;
     z-index: 999; }
@@ -195,7 +202,8 @@ footer {
   stroke: white; }
 
 .bus > circle {
-  fill: #4f5566; }
+  fill: #4f5566;
+  -webkit-transition: all 0.3s; }
 .bus > text {
   -webkit-transition: all 0.5s;
   opacity: 0;
@@ -217,7 +225,7 @@ footer {
   opacity: 1; }
 .zoom .bus:hover > circle {
   stroke: #4f5566;
-  stroke-width: 12; }
+  stroke-width: 7; }
 
 .night .bus > circle {
   fill: white; }

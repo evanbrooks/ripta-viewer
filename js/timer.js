@@ -14,6 +14,7 @@ function TimeControl(tripControl, viewControl) {
   // -----------
 
   bindEvents();
+  self.timeline = new Timeline(self, tripControl);
 
   this.pause = pause;
 
@@ -43,15 +44,15 @@ function TimeControl(tripControl, viewControl) {
       self.step = parseFloat(this.value);
       console.log(self.step);
     });
-    $(".timeline").scroll( function(e){
-      e.preventDefault();
-      if ($(this).scrollLeft() + $(this).width()  > $(".times").width()) {
-        $(this).scrollLeft(1);
-      }
-      else if ($(this).scrollLeft() <= 0) {
-        $(this).scrollLeft(1000);
-      }
-    });
+    // $(".timeline").scroll( function(e){
+    //   e.preventDefault();
+    //   if ($(this).scrollLeft() + $(this).width()  > $(".times").width()) {
+    //     $(this).scrollLeft(1);
+    //   }
+    //   else if ($(this).scrollLeft() <= 0) {
+    //     $(this).scrollLeft(1000);
+    //   }
+    // });
   }
 
   function timeStep() {
@@ -61,8 +62,8 @@ function TimeControl(tripControl, viewControl) {
     if (!autoRun) return true;              // stop timer
     else {
       self.currentTime = parseFloat(self.currentTime) + self.step;
-      if (self.currentTime > 86400) self.currentTime = 0;
-      $("#time-slide").val(self.currentTime);
+      //if (self.currentTime > 86400) self.currentTime = 0;
+      //$("#time-slide").val(self.currentTime);
       $("#timestamp").html(toTime(self.currentTime));
       tripControl.set(self.currentTime);
       //colorize();
@@ -136,7 +137,7 @@ function toSec(s) {
   var sec = 0;
   if (split.length > 1) {
     min = split[1]; }
-  if (split.length > 1) {
+  if (split.length > 2) {
     sec = split[2]; }
   var total = parseInt(hr,10)*(60*60) + parseInt(min,10)*(60) + parseInt(sec,10);
   return total;
@@ -159,4 +160,89 @@ function toTime(s) {
 
   var time = hr + ":" + min + ":" + sec + " " + ap;
   return time;
+}
+
+function Timeline(tControl, tripControl) {
+  var self = this
+  , frame  = 1000 / 60      // ms per frame
+  , vel = 0
+  , shift = 0
+  , prevShift = 0
+  , el = $(".times")
+  , hrUnit = $(".times > li").width()
+  , html = $("html")
+  , tlStart = toSec("00:30");
+
+  var isChanging = false;
+
+  bindEvents();
+
+  function bindEvents() {
+    $(".timeline").on("mousedown touchstart", begin);
+    html.on("mousemove touchmove", move);
+    html.on("mouseup touchend", end);
+    html.mouseleave(end);
+  }
+
+  function begin(e) {
+    isChanging = true;
+    el.addClass("changing");
+    start = mouse.x - shift;
+    vel = 0;
+    d3.timer(velCheck, frame);
+  }
+
+  function move(e) {
+    // hooray, everyone can access global
+    // variable mouse! mouse = {x, y}
+    if (isChanging) {
+      shift = mouse.x - start;
+      update();
+    }
+  }
+
+  function end(e) {
+    isChanging = false;
+    d3.timer(coast, frame);
+  }
+
+  function coast() {
+    if (isChanging) return true;                       // stop timer
+    vel = parseInt( vel * 0.95 * 100, 10 ) / 100;  // 2 decimal precision
+    if (Math.abs(vel) < 0.05) {
+      el.removeClass("changing");
+      return true;                                    // stop timer
+    }
+    else {
+      shift += vel;
+      update();
+      return false;                                  // continue timer
+    }
+  }
+
+  function update() {
+      if (shift > 0) {
+        shift -= 24 * hrUnit;
+      }
+      if (shift < -48 * hrUnit + $(window).width() ) {
+        shift += 24 * hrUnit;
+      }
+      el.tform(shift, 0);
+      centeredshift = shift - $(window).width()/2;
+      t = tlStart + parseInt(-centeredshift/hrUnit * 60 * 60, 10);
+      t = t % (24 * 60 * 60);
+      tControl.currentTime = t;
+      tripControl.set(parseInt(t, 10));
+      $("#timestamp").html(toTime(tControl.currentTime));
+  }
+
+  function velCheck() {
+    if (isChanging) {
+      vel = shift - prevShift;
+      prevShift = shift;
+      return false;                                 // continue timer
+    }
+    else return true;                               // end timer
+  }
+
 }
