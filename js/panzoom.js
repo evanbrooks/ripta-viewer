@@ -12,8 +12,8 @@ function ViewControl(el, mapControl, mapsvg) {
     , $inner = $el.parent()
     , $container = $inner.parent()
     , $back  = $container.parent()
-    , xlimit = 1200 * (agency.lon.max - agency.lon.min)
-    , ylimit = 1200 * (agency.lat.max - agency.lat.min)
+    , xlimit = 1400 * (agency.lon.max - agency.lon.min)
+    , ylimit = 1400 * (agency.lat.max - agency.lat.min)
     , currZoom = 1
     , xMin   = mapControl.scale.x.min
     , yMin   = mapControl.scale.y.min

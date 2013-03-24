@@ -17,7 +17,7 @@ $(function(){
 
 function setup() {
   spinner = new Spinner();
-  map = new Map("#map");
+  m = new Map("#map");
 
   spinner.hide(); // When loading is complete
 }

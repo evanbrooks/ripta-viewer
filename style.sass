@@ -50,13 +50,14 @@ body
 
 #timestamp
 	text-align: center
-	color: red
+	color: black
 	font-size: 1.5em
+	margin-bottom: 10px
 
 nav, footer
 	position: fixed
 	z-index: 999
-	@include pos(0 0 auto 0)
+	@include pos(10px 10px auto 10px)
 	@include boxfix
 	// padding: 15px 20px
 	// background: rgba(255,255,255,0.8)
@@ -65,8 +66,36 @@ nav, footer
 		family: Apercu Mono
 		size: 12px
 
+nav
+	font-size: 14px
+
 #speed
-	float: right
+	//float: right
+	//text-align: right
+	font-family: inherit
+	font-size: inherit
+	-webkit-appearance: none
+	border: none
+	background: transparent
+	border-radius: 0
+	margin-right: -20px
+	padding: 10px 15px
+	&:focus
+		outline: none
+		background: rgba(0,0,0,0.05)
+	&:hover, &:hover + b
+		background: rgba(0,0,0,0.05)
+
+#play, #pause
+	text-decoration: none
+	color: black
+	padding: 10px 15px
+	background: rgba(0,0,0,0.05)
+	display: inline-block
+	&:hover
+		color: red
+		background: black
+		color: white
 
 .night nav
 	color: white
@@ -112,12 +141,12 @@ footer
 	// overflow-x: scroll
 	padding: 10px 0
 	color: $dark
-	background: white
+	//background: white
 	cursor: col-resize
 	&::after
 		content: ""
 		height: 35px
-		width: 1px
+		width: 3px
 		background: red
 		bottom: 0px
 		left: 50%

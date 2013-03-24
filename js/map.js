@@ -2,15 +2,6 @@ function Map(el) {
 
   var self = this;
 
-  // Layers
-  // ------
-
-     var map = d3.select(el),
-  shapeLayer = map.select(".shapes"),
-   stopLayer = map.select(".stops"),
-    busLayer = map.select(".buses"),
-      canvas = new MapCanvas(el);
-
   // Scale
   // -----
 
@@ -19,6 +10,17 @@ function Map(el) {
   self.scale  = scale;
   self.xScale = xScale;
   self.yScale = yScale;
+
+  console.log(scale.x);
+
+  // Layers
+  // ------
+
+     var map = d3.select(el),
+  shapeLayer = map.select(".shapes"),
+   stopLayer = map.select(".stops"),
+    busLayer = map.select(".buses"),
+      canvas = new MapCanvas(el);
 
   // Components
   // ----------
@@ -554,7 +556,7 @@ function Map(el) {
       stopControl.refresh();
       shapeControl.refresh();
       tripControl.refresh();
-  }
+  };
 
   // Finding points along paths
   // --------------------------
