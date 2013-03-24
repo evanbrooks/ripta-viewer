@@ -54,6 +54,8 @@ function Map(el) {
     tripControl.refresh();
   };
 
+  this.timer = timer;
+
   self.pause = timer.pause;
 
   timer.play();

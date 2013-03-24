@@ -12,14 +12,15 @@ function ViewControl(el, mapControl, mapsvg) {
     , $inner = $el.parent()
     , $container = $inner.parent()
     , $back  = $container.parent()
-    , limit  = 800
+    , xlimit = 1200 * (agency.lon.max - agency.lon.min)
+    , ylimit = 1200 * (agency.lat.max - agency.lat.min)
     , currZoom = 1
     , xMin   = mapControl.scale.x.min
     , yMin   = mapControl.scale.y.min
     , xMax   = mapControl.scale.x.max
     , yMax   = mapControl.scale.y.max;
 
-  var view = { xMin: 0, xMax: 800, yMin: 0, yMax: 800};
+  var view = { xMin: 0, xMax: xlimit, yMin: 0, yMax: ylimit};
 
 
   // Constructor
@@ -107,17 +108,18 @@ function ViewControl(el, mapControl, mapsvg) {
     var zoomCenter = center || { x: $(window).width()/2, y: $(window).height()/2};
     currZoom = parseFloat(zoom);
     prevCenter = getCenter(center);
-    limit = 800*zoom;
+    xlimit = 800*zoom;
+    ylimit = 800*zoom;
 
-    mapControl.yScale.range( [ limit, 0    ] );
-    mapControl.xScale.range( [ 0    , limit] );
+    mapControl.yScale.range( [ ylimit, 0    ] );
+    mapControl.xScale.range( [ 0    , xlimit] );
 
-    curr.x = zoomCenter.x - prevCenter.x * limit;
-    curr.y = zoomCenter.y - prevCenter.y * limit;
+    curr.x = zoomCenter.x - prevCenter.x * xlimit;
+    curr.y = zoomCenter.y - prevCenter.y * ylimit;
 
     $container.tform(curr.x, curr.y);
 
-    $el.css({"width": limit, "height": limit});
+    $el.css({"width": xlimit, "height": ylimit});
 
     // $container.css({
     //   "-webkit-transition": "-webkit-transform 0.5s",
@@ -166,8 +168,8 @@ function ViewControl(el, mapControl, mapsvg) {
     // center of the viewport
     viewCenter = center || { x: $(window).width()/2, y: $(window).height()/2 };
     return {
-      x: (viewCenter.x - $inner.offset().left) / limit,
-      y: (viewCenter.y - $inner.offset().top) / limit
+      x: (viewCenter.x - $inner.offset().left) / xlimit,
+      y: (viewCenter.y - $inner.offset().top) / ylimit
     };
   }
 

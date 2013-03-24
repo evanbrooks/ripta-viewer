@@ -41,6 +41,9 @@ nav, footer {
   font-family: Apercu Mono;
   font-size: 12px; }
 
+#speed {
+  float: right; }
+
 .night nav {
   color: white; }
 
@@ -49,37 +52,6 @@ footer {
   right: 0;
   bottom: 0;
   left: 0; }
-
-.wideslide {
-  width: 100%;
-  -webkit-appearance: none;
-  background: rgba(0, 0, 0, 0.2);
-  height: 1px;
-  outline: transparent; }
-  .wideslide::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    -webkit-transition: all 0.1s;
-    height: 8px;
-    width: 8px;
-    border-radius: 50%;
-    background: black;
-    box-shadow: 0 0 0 0px black; }
-  .wideslide:focus::-webkit-slider-thumb {
-    background: #12c2ff; }
-  .wideslide:hover {
-    background: black; }
-    .wideslide:hover::-webkit-slider-thumb {
-      box-shadow: 0 0 0 5px black; }
-
-.night .wideslide {
-  background: rgba(255, 255, 255, 0.2); }
-  .night .wideslide::-webkit-slider-thumb {
-    background: white;
-    box-shadow: 0 0 0 0px white; }
-  .night .wideslide:hover {
-    background: white; }
-    .night .wideslide:hover::-webkit-slider-thumb {
-      box-shadow: 0 0 0 5px white; }
 
 .timeline {
   width: 100%;

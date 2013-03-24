@@ -32,8 +32,9 @@ function TimeControl(tripControl, viewControl) {
       }
       else autoRun = false;
     });
-    $("#play").click(this.play);
-    $("#pause").click(this.pause);
+    $("html")
+      .on("click", "#play",  function() {self.play() } )
+      .on("click", "#pause", function() {self.pause()} );
     $("#speed").change(function(){
       self.step = parseFloat(this.value);
       console.log(self.step);
@@ -53,7 +54,12 @@ function TimeControl(tripControl, viewControl) {
       autoRun = true;
       d3.timer(timeStep, 50);
       $("body").addClass("playing").removeClass("paused");
-  }
+  };
+
+  this.pause = function() {
+      autoRun = false;
+      $("body").removeClass("playing").addClass("paused");
+  };
 
   function timeStep() {
     if ( viewControl.isPanning()) {
@@ -77,11 +83,6 @@ function TimeControl(tripControl, viewControl) {
       && obj.time.end >= self.currentTime ) {
          return true; }
     else return false;
-  }
-
-  this.pause = function() {
-      autoRun = false;
-      $("body").removeClass("playing").addClass("paused");
   }
 
   function colorize() {
