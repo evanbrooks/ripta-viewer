@@ -51,8 +51,9 @@ body
 #timestamp
 	text-align: center
 	color: black
-	font-size: 1.5em
-	margin-bottom: 10px
+	font-size: 1.8em
+	font-weight: bold
+	margin-bottom: -30px
 
 nav, footer
 	position: fixed
@@ -63,7 +64,7 @@ nav, footer
 	// background: rgba(255,255,255,0.8)
 	// box-shadow: 0 1px 3px rgba(0,0,0,0.2)
 	font:
-		family: Apercu Mono
+		family: "Apercu Mono"
 		size: 12px
 
 nav
@@ -78,24 +79,26 @@ nav
 	border: none
 	background: transparent
 	border-radius: 0
-	margin-right: -20px
+	margin-right: -35px
 	padding: 10px 15px
+	background: rgba(0,0,0,0.02)
 	&:focus
-		outline: none
-		background: rgba(0,0,0,0.05)
-	&:hover, &:hover + b
-		background: rgba(0,0,0,0.05)
+		outline: 1px solid #12c2ff
+	&:hover
+		background: white
+	& + b
+		font-size: 8px
 
 #play, #pause
+	-webkit-transition: all 0.2s
 	text-decoration: none
 	color: black
 	padding: 10px 15px
 	background: rgba(0,0,0,0.05)
 	display: inline-block
 	&:hover
-		color: red
-		background: black
-		color: white
+		background: white
+		// box-shadow: 0 1px 2px rgba(0,0,0,0.2)
 
 .night nav
 	color: white
@@ -137,17 +140,26 @@ footer
 
 .timeline
 	width: 100%
+	-webkit-transition: all 0.5s
 	// overflow-y: hidden
 	// overflow-x: scroll
 	padding: 10px 0
-	color: $dark
+	color: black
 	//background: white
+	//background: rgba(0,0,0,0.05)
 	cursor: col-resize
+	//font-weight: bold
+	color: black
+	&:hover
+		background: white
+		box-shadow: 0 0 2px rgba(0,0,0,0.1)
 	&::after
 		content: ""
-		height: 35px
-		width: 3px
-		background: red
+		height: 0px
+		width: 0px
+		//background: red
+		border: 5px solid transparent
+		border-bottom-color: red
 		bottom: 0px
 		left: 50%
 		position: absolute
@@ -158,8 +170,16 @@ footer
 		&> li
 			display: inline-block
 			list-style: none
-			width: 100px
+			width: 250px
+			position: relative
+			font-size: 15px
+			-webkit-text-rendering: optimizeLegibility
 			text-align: center
+			&::after
+				content: "30"
+				position: absolute
+				right: 0
+				font-size: 8px
 			// border-right: 1px solid black
 	&::-webkit-scrollbar
 		height: 0px

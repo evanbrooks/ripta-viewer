@@ -612,7 +612,7 @@ function Map(el) {
     thisShape = shapesIndexed[shapeid];
     //pt = { x: xScale(target.x), y: yScale(target.y) };
     pt = target;
-    
+
     var minPos = thisShape[0]
       , minDist = getSquareDist(minPos, pt);
 
