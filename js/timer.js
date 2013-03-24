@@ -16,10 +16,6 @@ function TimeControl(tripControl, viewControl) {
   bindEvents();
   self.timeline = new Timeline(self, tripControl);
 
-  this.pause = pause;
-
-  this.firstTick = function() { self.timeline.update(); };
-
   // Private methods
   // ---------------
   function bindEvents() {
@@ -36,12 +32,8 @@ function TimeControl(tripControl, viewControl) {
       }
       else autoRun = false;
     });
-    $("#play").click(function(){
-      autoRun = true;
-      d3.timer(timeStep, 50);
-      $("body").addClass("playing").removeClass("paused");
-    });
-    $("#pause").click(pause);
+    $("#play").click(this.play);
+    $("#pause").click(this.pause);
     $("#speed").change(function(){
       self.step = parseFloat(this.value);
       console.log(self.step);
@@ -55,6 +47,12 @@ function TimeControl(tripControl, viewControl) {
     //     $(this).scrollLeft(1000);
     //   }
     // });
+  }
+
+  this.play = function() {
+      autoRun = true;
+      d3.timer(timeStep, 50);
+      $("body").addClass("playing").removeClass("paused");
   }
 
   function timeStep() {
@@ -81,7 +79,7 @@ function TimeControl(tripControl, viewControl) {
     else return false;
   }
 
-  function pause() {
+  this.pause = function() {
       autoRun = false;
       $("body").removeClass("playing").addClass("paused");
   }
