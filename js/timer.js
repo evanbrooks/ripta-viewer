@@ -18,6 +18,8 @@ function TimeControl(tripControl, viewControl) {
 
   this.pause = pause;
 
+  this.firstTick = function() { self.timeline.update(); };
+
   // Private methods
   // ---------------
   function bindEvents() {
@@ -177,6 +179,13 @@ function Timeline(tControl, tripControl) {
 
   bindEvents();
 
+  // Setup
+  centeredshift = - $(window).width()/2;
+  t = tlStart + parseInt(-centeredshift/hrUnit * 60 * 60, 10);
+  t = t % (24 * 60 * 60);
+  tControl.currentTime = t;
+  $("#timestamp").html(toTime(tControl.currentTime));
+
   function bindEvents() {
     $(".timeline").on("mousedown touchstart", begin);
     html.on("mousemove touchmove", move);
@@ -197,7 +206,7 @@ function Timeline(tControl, tripControl) {
     // variable mouse! mouse = {x, y}
     if (isChanging) {
       shift = mouse.x - start;
-      update();
+      self.update();
     }
   }
 
@@ -215,12 +224,12 @@ function Timeline(tControl, tripControl) {
     }
     else {
       shift += vel;
-      update();
+      self.update();
       return false;                                  // continue timer
     }
   }
 
-  function update() {
+  self.update = function() {
       if (shift > 0) {
         shift -= 24 * hrUnit;
       }
@@ -234,7 +243,7 @@ function Timeline(tControl, tripControl) {
       tControl.currentTime = t;
       tripControl.set(parseInt(t, 10));
       $("#timestamp").html(toTime(tControl.currentTime));
-  }
+  };
 
   function velCheck() {
     if (isChanging) {

@@ -56,6 +56,8 @@ function Map(el) {
 
   self.pause = timer.pause;
 
+  timer.firstTick();
+
   // Stops
   // -----
 
