@@ -67,12 +67,7 @@ function TimeControl(tripControl, viewControl) {
     }
     if (!autoRun) return true;              // stop timer
     else {
-      self.currentTime = parseFloat(self.currentTime) + self.step;
-      //if (self.currentTime > 86400) self.currentTime = 0;
-      //$("#time-slide").val(self.currentTime);
-      $("#timestamp").html(toTime(self.currentTime));
-      tripControl.set(self.currentTime);
-      //colorize();
+      self.timeline.tick(self.step);
       return false;                         // keep running
     }
   }
@@ -159,6 +154,8 @@ function toTime(s) {
     ap = "pm";
   }
 
+  if (hr < 10) hr = "0" + hr;
+
   var time = hr + ":" + min + ":" + sec + " " + ap;
   return time;
 }
@@ -227,6 +224,11 @@ function Timeline(tControl, tripControl) {
       return false;                                  // continue timer
     }
   }
+
+  self.tick = function(amount) {
+    shift -= amount / 60 / 60 * hrUnit;
+    self.update();
+  };
 
   self.update = function() {
       if (shift > 0) {
