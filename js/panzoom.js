@@ -12,6 +12,7 @@ function ViewControl(el, mapControl, mapsvg) {
     , $inner = $el.parent()
     , $container = $inner.parent()
     , $back  = $container.parent()
+    , limiter = $(window).width()
     , xlimit = 1400 * (agency.lon.max - agency.lon.min)
     , ylimit = 1400 * (agency.lat.max - agency.lat.min)
     , currZoom = 1
@@ -34,8 +35,11 @@ function ViewControl(el, mapControl, mapsvg) {
 
   function bindEvents() {
     $back.mousedown(begin);
+    $back.on("touchstart", begin);
     $("html").mousemove(move);
+    $("html").on("touchmove", move);
     $("html").mouseup(end);
+    $("html").on("touchend", end);
     $("html").mouseleave(end);
     $("#zoom-slide").change(function(e){
       currZoom = this.value;
