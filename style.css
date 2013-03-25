@@ -8,20 +8,13 @@ body, html {
   overflow: hidden; }
 
 body {
-  -webkit-transition: all 0.5s;
-  background: #f4f4f4; }
-
-.night {
-  background: #4f5566; }
-
-.sun {
-  background: #e6907a; }
+  -webkit-transition: all 0.5s; }
 
 * {
   -webkit-user-select: none; }
 
 .panning * {
-  cursor: move; }
+  cursor: all-scroll; }
 
 nav, footer {
   position: fixed;
@@ -47,12 +40,12 @@ nav {
   background: transparent;
   border-radius: 0;
   margin-right: -35px;
-  padding: 10px 15px;
+  padding: 10px 45px 10px 15px;
   background: rgba(0, 0, 0, 0.02); }
   #speed:focus {
     outline: 1px solid #12c2ff; }
   #speed:hover {
-    background: white; }
+    background: rgba(0, 0, 0, 0.1); }
   #speed + b {
     font-size: 8px; }
 
@@ -64,7 +57,7 @@ nav {
   background: rgba(0, 0, 0, 0.05);
   display: inline-block; }
   #play:hover, #pause:hover {
-    background: white; }
+    background: rgba(0, 0, 0, 0.1); }
 
 .night nav {
   color: white; }
@@ -75,16 +68,11 @@ footer {
   bottom: 0;
   left: 0; }
 
-.loading {
-  background: #dddddd; }
-
 .loading #timestamp {
-  opacity: 0;
-  -webkit-transform: translate3d(0, 10px, 0); }
+  -webkit-transform: translate3d(0, 100px, 0); }
 
 .loading nav {
-  opacity: 0;
-  -webkit-transform: translate3d(0, -20px, 0); }
+  -webkit-transform: translate3d(0, -50px, 0); }
 
 nav {
   -webkit-transition: all 0.3s; }
@@ -97,7 +85,6 @@ nav {
   margin-bottom: 0px; }
 
 .loading .timeline {
-  opacity: 0;
   -webkit-transform: translate3d(0, 30px, 0); }
 
 .timeline {
@@ -109,8 +96,10 @@ nav {
   color: black;
   position: relative; }
   .timeline:hover {
-    background: white;
-    box-shadow: 0 0 2px rgba(0, 0, 0, 0.1); }
+    background: rgba(0, 0, 0, 0.05);
+    box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.1); }
+  .timeline:active {
+    cursor: col-resize; }
   .timeline::after {
     content: "";
     height: 0px;
@@ -182,6 +171,16 @@ nav {
 .paused #pause {
   display: none; }
 
+@-webkit-keyframes what {
+  0% {
+    -webkit-transform: rotate(0deg); }
+
+  50% {
+    -webkit-transform: rotate(180deg); }
+
+  100% {
+    -webkit-transform: rotate(360deg); } }
+
 .spinner {
   position: fixed;
   top: 0;
@@ -191,16 +190,17 @@ nav {
   display: none; }
   .loading .spinner {
     display: block; }
+    .loading .spinner > div {
+      -webkit-animation: what 1s linear infinite; }
   .spinner > div {
     position: absolute;
     top: 50%;
     right: auto;
     bottom: auto;
     left: 50%;
-    border: 2px solid red;
-    height: 20px;
-    width: 20px;
-    border-radius: 50%; }
+    border: 2px solid black;
+    height: 0px;
+    width: 50px; }
 
 .map-back {
   position: fixed;
@@ -213,7 +213,8 @@ nav {
 
 #map {
   height: 800px;
-  width: 800px; }
+  width: 800px;
+  cursor: -webkit-grab; }
 
 #mapCanvas {
   position: fixed;
