@@ -48,13 +48,6 @@ body
 .panning *
 	cursor: move
 
-#timestamp
-	text-align: center
-	color: black
-	font-size: 3em
-	//font-weight: bold
-	margin-bottom: 0px
-
 nav, footer
 	position: fixed
 	z-index: 999
@@ -138,9 +131,35 @@ footer
 // 		&::-webkit-slider-thumb
 // 			box-shadow: 0 0 0 5px white
 
+.loading
+	background: #ddd
+
+.loading #timestamp
+	opacity: 0
+	-webkit-transform: translate3d(0,10px,0)
+
+.loading nav
+	opacity: 0
+	-webkit-transform: translate3d(0,-20px,0)
+
+nav
+	-webkit-transition: all 0.3s
+
+#timestamp
+	-webkit-transition: all 0.3s
+	text-align: center
+	color: black
+	font-size: 3em
+	//font-weight: bold
+	margin-bottom: 0px
+
+.loading .timeline
+	opacity: 0
+	-webkit-transform: translate3d(0,30px,0)
+
 .timeline
 	width: 100%
-	-webkit-transition: all 0.5s
+	-webkit-transition: all 0.3s
 	// overflow-y: hidden
 	// overflow-x: scroll
 	padding: 10px 0
@@ -150,6 +169,7 @@ footer
 	cursor: col-resize
 	//font-weight: bold
 	color: black
+	position: relative
 	&:hover
 		background: white
 		box-shadow: 0 0 2px rgba(0,0,0,0.1)
