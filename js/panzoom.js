@@ -3,7 +3,7 @@ function ViewControl(el, mapControl, mapsvg) {
     , frame  = 1000 / 60 // ms per frame
     , buffer = -200        // px on each side
     , start  = {x:0, y:0}
-    , mouseStart  = {x:0, y:0}
+    , lastRedraw  = {x:0, y:0}
     , curr   = {x:0, y:0}
     , delta  = {x:0, y:0}
     , prev   = {x:0, y:0}
@@ -69,7 +69,7 @@ function ViewControl(el, mapControl, mapsvg) {
     $container.addClass("panning");
     start = { x: mouse.x - curr.x,
               y: mouse.y - curr.y };
-    mouseStart  = { x: mouse.x, y: mouse.y };
+    lastRedraw  = { x: curr.x, y:curr.y };
     vel = { x:0, y:0 };
     d3.timer(velCheck, frame);
   }
@@ -82,27 +82,45 @@ function ViewControl(el, mapControl, mapsvg) {
       curr  = { x: mouse.x - start.x,
                 y: mouse.y - start.y };
 
-      $container.tform(curr.x, curr.y);
-
-      delta = { x: mouseStart.x - mouse.x,
-                y: mouseStart.y - mouse.y };
-
-      updateFakeViewPort();
-
-      // If we've used up the buffer trigger a redraw and reset the
-      // buffer to allow for future redraws within this drag event
-      if ( Math.abs(delta.x) > Math.abs(buffer) || Math.abs(delta.y) > Math.abs(buffer)) {
-        //console.log("redraw");
-        mapControl.redrawStopsShapes();
-        mouseStart  = { x: mouse.x, y: mouse.y };
-      }
-
+      drawMap();
     }
   }
 
   function end(event) {
     isPanning = false;
     d3.timer(coastStep, frame);
+  }
+
+  function drawMap() {
+
+    w = $(window).width();
+    h = $(window).height();
+
+    if (xlimit > w){
+      if (curr.x > 0) curr.x = 0;
+      var edgeX = -1*(xlimit - w);
+      if (curr.x < edgeX) curr.x = edgeX;
+    }
+    if (ylimit > h){
+      if (curr.y > 0) curr.y = 0;
+      var edgeY = -1*(ylimit - h);
+      if (curr.y < edgeY) curr.y = edgeY;
+    }
+
+    $container.tform(curr.x, curr.y);
+
+    delta = { x: lastRedraw.x - curr.x,
+              y: lastRedraw.y - curr.y };
+
+    updateFakeViewPort();
+
+    // If we've used up the buffer trigger a redraw and reset the
+    // buffer to allow for future redraws within this drag event
+    if ( Math.abs(delta.x) > Math.abs(buffer) || Math.abs(delta.y) > Math.abs(buffer)) {
+      //console.log("redraw");
+      mapControl.redrawStopsShapes();
+      lastRedraw  = { x: curr.x, y: curr.y };
+    }
   }
 
   function zoomTo(zoom, center){
@@ -112,8 +130,8 @@ function ViewControl(el, mapControl, mapsvg) {
     var zoomCenter = center || { x: $(window).width()/2, y: $(window).height()/2};
     currZoom = parseFloat(zoom);
     prevCenter = getCenter(center);
-    xlimit = 800*zoom;
-    ylimit = 800*zoom;
+    xlimit = 1400 * (agency.lon.max - agency.lon.min) * zoom;
+    ylimit = 1400 * (agency.lat.max - agency.lat.min) * zoom;
 
     mapControl.yScale.range( [ ylimit, 0    ] );
     mapControl.xScale.range( [ 0    , xlimit] );
@@ -145,11 +163,6 @@ function ViewControl(el, mapControl, mapsvg) {
       view.yMin = -curr.y + buffer;
       view.xMax = -curr.x + $(window).width() - buffer*2;
       view.yMax = -curr.y + $(window).height() - buffer*2;
-      // mapsvg.select("#viewportPreview")
-      //   .attr("x", view.xMin)
-      //   .attr("y", view.yMin)
-      //   .attr("width", view.xMax - view.xMin)
-      //   .attr("height", view.yMax - view.yMin);
   }
 
   function scrollZoom(scroll) {
@@ -199,8 +212,7 @@ function ViewControl(el, mapControl, mapsvg) {
     else {
       curr = { x: parseFloat( curr.x + vel.x),
                y: parseFloat( curr.y + vel.y) };
-      $container.tform(curr.x, curr.y);
-      updateFakeViewPort();
+      drawMap();
       return false;                               // continue timer
     }
   }
