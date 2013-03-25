@@ -77,7 +77,11 @@ footer {
 nav {
   -webkit-transition: all 0.3s; }
 
+footer:hover #timestamp {
+  -webkit-transform: translate3d(0, 0px, 0); }
+
 #timestamp {
+  -webkit-transform: translate3d(0, 100px, 0);
   -webkit-transition: all 0.3s;
   text-align: center;
   color: black;
