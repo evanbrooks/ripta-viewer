@@ -61,6 +61,15 @@ function TimeControl(tripControl, viewControl) {
       $("body").removeClass("playing").addClass("paused");
   };
 
+  this.goToNow = function() {
+    var tzone = -4 * 60 * 60;
+    var now = new Date().getTime() / 1000 + tzone;
+    jump = now - self.currentTime;
+
+    jump = jump % (24 * 60 * 60); // disregard month/year
+    self.timeline.tick(jump);
+  };
+
   function timeStep() {
     if ( viewControl.isPanning()) {
       return;
@@ -150,7 +159,7 @@ function toTime(s) {
 
   var ap = "am";
   if (hr > 12) {
-    hr -= 12;
+    hr = hr % 12;
     ap = "pm";
   }
 

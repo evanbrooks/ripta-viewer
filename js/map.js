@@ -11,7 +11,7 @@ function Map(el) {
   self.xScale = xScale;
   self.yScale = yScale;
 
-  console.log(scale.x);
+  // console.log(scale.x);
 
   // Layers
   // ------
@@ -61,6 +61,7 @@ function Map(el) {
   self.pause = timer.pause;
 
   timer.play();
+  timer.goToNow();
 
   // Stops
   // -----

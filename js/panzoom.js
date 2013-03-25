@@ -92,7 +92,7 @@ function ViewControl(el, mapControl, mapsvg) {
       // If we've used up the buffer trigger a redraw and reset the
       // buffer to allow for future redraws within this drag event
       if ( Math.abs(delta.x) > Math.abs(buffer) || Math.abs(delta.y) > Math.abs(buffer)) {
-        console.log("redraw");
+        //console.log("redraw");
         mapControl.redrawStopsShapes();
         mouseStart  = { x: mouse.x, y: mouse.y };
       }
