@@ -6,6 +6,8 @@ figure
 	margin: 0
 	padding: 0
 
+
+
 // Mixins
 // ------
 
@@ -20,9 +22,17 @@ figure
 	-moz-box-sizing: border-box
 	box-sizing: border-box
 
+
+
+
+// Variables
+// ---------
+
 $dark: rgb(79, 85, 102)
 $light: #f4f4f4 //rgb(206, 223, 228)
 $sun: rgb(230, 144, 122)
+
+
 
 // Body
 // ---
@@ -34,8 +44,9 @@ body, html
 body
 	-webkit-transition: all 0.5s
 
-// Nav
-// ---
+
+// Dragging Support
+// ----------------
 
 *
 	-webkit-user-select: none
@@ -43,26 +54,32 @@ body
 .panning *
 	cursor: all-scroll
 
+
+
+
+
+// Nav
+// ---
+
 nav, footer
 	position: fixed
 	z-index: 999
-	@include pos(10px 10px auto 10px)
 	@include boxfix
-	// padding: 15px 20px
-	// background: rgba(255,255,255,0.8)
-	// box-shadow: 0 1px 3px rgba(0,0,0,0.2)
 	font:
 		family: "Apercu Mono"
 		size: 12px
 
 nav
-	font-size: 14px
+	-webkit-transition: all 0.3s
+	@include pos(10px 10px auto 10px)
+
+footer
+	@include pos(auto 0 0 0) 
+
 
 #speed
-	//float: right
-	//text-align: right
 	font-family: inherit
-	font-size: inherit
+	font-size: 1em
 	-webkit-appearance: none
 	border: none
 	background: transparent
@@ -86,34 +103,25 @@ nav
 	display: inline-block
 	&:hover
 		background: rgba(0,0,0,0.1)
-		// box-shadow: 0 1px 2px rgba(0,0,0,0.2)
 
-.night nav
-	color: white
-
-footer
-	@include pos(auto 0 0 0) 
-
-.loading #timestamp
-	-webkit-transform: translate3d(0,100px,0)
-
-.loading nav
-	-webkit-transform: translate3d(0,-50px,0)
-
-nav
-	-webkit-transition: all 0.3s
-
-footer:hover #timestamp
-	-webkit-transform: translate3d(0,0px,0)
-
+.loading
+	#timestamp
+		-webkit-transform: translate3d(0,100px,0)
+	nav
+		-webkit-transform: translate3d(0,-50px,0)
 
 #timestamp
-	-webkit-transform: translate3d(0,100px,0)
+	position: absolute
+	bottom: 10px
+	z-index: 999
+	width: 100px
+	margin-left: -50px
+	left: 50%
+	background: white
 	-webkit-transition: all 0.3s
 	text-align: center
 	color: black
-	font-size: 3em
-	//font-weight: bold
+	font-size: 1em
 	margin-bottom: 0px
 
 .loading .timeline
@@ -122,14 +130,9 @@ footer:hover #timestamp
 .timeline
 	width: 100%
 	-webkit-transition: all 0.3s
-	// overflow-y: hidden
-	// overflow-x: scroll
 	padding: 10px 0
 	color: black
-	//background: white
-	//background: rgba(0,0,0,0.05)
 	cursor: col-resize
-	//font-weight: bold
 	color: black
 	position: relative
 	&:hover
@@ -139,11 +142,10 @@ footer:hover #timestamp
 		cursor: col-resize
 	&::after
 		content: ""
-		height: 0px
+		height: 30px
 		width: 0px
 		//background: red
-		border: 5px solid transparent
-		border-bottom-color: red
+		border-right: 1px solid red
 		bottom: 0px
 		left: 50%
 		margin-left: -5px
@@ -157,22 +159,13 @@ footer:hover #timestamp
 			list-style: none
 			width: 250px
 			position: relative
-			font-size: 15px
 			-webkit-text-rendering: optimizeLegibility
 			text-align: center
-			&::after
-				content: "30"
-				position: absolute
-				right: 0
-				font-size: 8px
-			// border-right: 1px solid black
-	&::-webkit-scrollbar
-		height: 0px
-		background: white
-	&::-webkit-scrollbar-thumb
-		background: rgba(0,0,0,1)
-		&:hover
-			background: rgba(0,0,0,0.6)
+			// &::after
+			// 	content: "30"
+			// 	position: absolute
+			// 	right: 0
+			// 	font-size: 8px
 
 .controls
 	position: fixed
@@ -191,15 +184,6 @@ footer:hover #timestamp
 		&:hover
 			opacity: 0.6
 
-.controls-right
-	position: fixed
-	@include pos(auto 15px 10px auto)
-
-.night
-	.timeline,
-	.controls,
-	.controls button
-		color: $light
 
 .playing #play,
 .paused #pause
@@ -256,22 +240,23 @@ footer:hover #timestamp
 	width:  800px
 	pointer-events: none
 
-.shapes > .line
+
+// Lines
+// -----
+
+.line
 	fill: none
-	stroke-width: 0
+	stroke-width: 0.15
 	opacity: 1
 	-webkit-transition: all 1s
 	//shape-rendering: crispEdges
-	//display: none
 	stroke: $dark
 	&.selected
 		stroke-width: 0.15
-	//&:hover
-	//	stroke-width: 5
-	//	-webkit-transition: all 0.2s
 
-.night .shapes > .line
-	stroke: white
+
+// Buses
+// -----
 
 .bus
 	&> circle
@@ -292,6 +277,7 @@ footer:hover #timestamp
 		&> text
 			opacity: 1
 
+
 .zoom .bus
 	&> circle
 		fill: $dark
@@ -304,9 +290,6 @@ footer:hover #timestamp
 			stroke: $dark
 			stroke-width: 7
 
-
-.night .bus > circle
-	fill: white
 
 .panning .label
 	display: none

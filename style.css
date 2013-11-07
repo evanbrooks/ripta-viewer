@@ -19,10 +19,6 @@ body {
 nav, footer {
   position: fixed;
   z-index: 999;
-  top: 10px;
-  right: 10px;
-  bottom: auto;
-  left: 10px;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
@@ -30,11 +26,21 @@ nav, footer {
   font-size: 12px; }
 
 nav {
-  font-size: 14px; }
+  -webkit-transition: all 0.3s;
+  top: 10px;
+  right: 10px;
+  bottom: auto;
+  left: 10px; }
+
+footer {
+  top: auto;
+  right: 0;
+  bottom: 0;
+  left: 0; }
 
 #speed {
   font-family: inherit;
-  font-size: inherit;
+  font-size: 1em;
   -webkit-appearance: none;
   border: none;
   background: transparent;
@@ -59,33 +65,23 @@ nav {
   #play:hover, #pause:hover {
     background: rgba(0, 0, 0, 0.1); }
 
-.night nav {
-  color: white; }
-
-footer {
-  top: auto;
-  right: 0;
-  bottom: 0;
-  left: 0; }
-
 .loading #timestamp {
   -webkit-transform: translate3d(0, 100px, 0); }
-
 .loading nav {
   -webkit-transform: translate3d(0, -50px, 0); }
 
-nav {
-  -webkit-transition: all 0.3s; }
-
-footer:hover #timestamp {
-  -webkit-transform: translate3d(0, 0px, 0); }
-
 #timestamp {
-  -webkit-transform: translate3d(0, 100px, 0);
+  position: absolute;
+  bottom: 10px;
+  z-index: 999;
+  width: 100px;
+  margin-left: -50px;
+  left: 50%;
+  background: white;
   -webkit-transition: all 0.3s;
   text-align: center;
   color: black;
-  font-size: 3em;
+  font-size: 1em;
   margin-bottom: 0px; }
 
 .loading .timeline {
@@ -106,10 +102,9 @@ footer:hover #timestamp {
     cursor: col-resize; }
   .timeline::after {
     content: "";
-    height: 0px;
+    height: 30px;
     width: 0px;
-    border: 5px solid transparent;
-    border-bottom-color: red;
+    border-right: 1px solid red;
     bottom: 0px;
     left: 50%;
     margin-left: -5px;
@@ -123,21 +118,8 @@ footer:hover #timestamp {
       list-style: none;
       width: 250px;
       position: relative;
-      font-size: 15px;
       -webkit-text-rendering: optimizeLegibility;
       text-align: center; }
-      .timeline .times > li::after {
-        content: "30";
-        position: absolute;
-        right: 0;
-        font-size: 8px; }
-  .timeline::-webkit-scrollbar {
-    height: 0px;
-    background: white; }
-  .timeline::-webkit-scrollbar-thumb {
-    background: black; }
-    .timeline::-webkit-scrollbar-thumb:hover {
-      background: rgba(0, 0, 0, 0.6); }
 
 .controls {
   position: fixed;
@@ -158,18 +140,6 @@ footer:hover #timestamp {
       color: #12c2ff; }
     .controls button:hover {
       opacity: 0.6; }
-
-.controls-right {
-  position: fixed;
-  top: auto;
-  right: 15px;
-  bottom: 10px;
-  left: auto; }
-
-.night .timeline,
-.night .controls,
-.night .controls button {
-  color: #f4f4f4; }
 
 .playing #play,
 .paused #pause {
@@ -228,17 +198,14 @@ footer:hover #timestamp {
   width: 800px;
   pointer-events: none; }
 
-.shapes > .line {
+.line {
   fill: none;
-  stroke-width: 0;
+  stroke-width: 0.15;
   opacity: 1;
   -webkit-transition: all 1s;
   stroke: #4f5566; }
-  .shapes > .line.selected {
+  .line.selected {
     stroke-width: 0.15; }
-
-.night .shapes > .line {
-  stroke: white; }
 
 .bus > circle {
   fill: #4f5566;
@@ -265,9 +232,6 @@ footer:hover #timestamp {
 .zoom .bus:hover > circle {
   stroke: #4f5566;
   stroke-width: 7; }
-
-.night .bus > circle {
-  fill: white; }
 
 .panning .label {
   display: none; }

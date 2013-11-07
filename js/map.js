@@ -141,9 +141,8 @@ function Map(el) {
   // ------
 
   function ShapeControl() {
-    var visible = true,
     smoothStart = 0.002,
-     smoothness = smoothStart;
+    smoothness = smoothStart;
     // Constructor
     // -----------
     bindEvents();
@@ -151,8 +150,6 @@ function Map(el) {
     // Public methods
     // --------------
 
-    this.hide = hide;
-    this.show = show;
     this.create = create;
     this.setSmooth = setSmooth;
     this.refresh = refresh;
@@ -183,8 +180,6 @@ function Map(el) {
       shapedata.enter()
         .append("svg:path")
         .attr("id", function(d, i) { return "l"+shapeIds[i] })  
-        .attr("stroke", "black")
-        .attr("stroke-width", "1")
         .attr("class", "line")
         .attr("d", pathMaker);
     }
@@ -226,22 +221,10 @@ function Map(el) {
       });
     }
 
-    function hide() {
-      visible = false;
-      shapeLayer.selectAll(".line")
-        .attr("stroke-width", "0")
-    }
-
-    function show() {
-      visible = true;
-      shapeLayer.selectAll(".line")
-        .attr("stroke-width", "1")
-    }
-
     var pathMaker = d3.svg.line()
       .y(function(d) { return yScale(d.y) })
       .x(function(d) { return xScale(d.x) })
-      .interpolate("basis"); // "basis" for smoother
+      //.interpolate("basis"); // "basis" for smoother
   }
 
   // Trips
@@ -501,15 +484,16 @@ function Map(el) {
       }
 
       function showShapeUsed(current) {
-        shapeLayer
-          .selectAll(".line")
-          .attr("class", "line");
+        // shapeLayer
+        //   .selectAll(".line")
+        //   .attr("class", "line");
 
-        current.forEach(function(curr) {
-          shapeLayer
-            .select("#l"+curr.shape)
-            .attr("class", "line selected");
-        });
+        // current.forEach(function(curr) {
+        //   shapeLayer
+        //     .select("#l"+curr.shape)
+        //     .attr("class", "line selected");
+        // });
+        // shapeLayer.selectAll(".line")
       }
 
       function refreshInterps() {
@@ -627,29 +611,35 @@ function Map(el) {
         //if (minDist < 1) break; // stop looking if we're pretty close
     }
 
-    //console.log(minPos);
 
     //return { x: xScale.invert(minPos.x), y: yScale.invert(minPos.y)};
     return { x: minPos.x, y: minPos.y};
   }
 
 
+
+
+  // Get point on shape at
+  // -------------
   function getPtOnShapeAt(percentLength, shapeid) {
       var pathEl = d3.select("#l"+shapeid).node()
         , pathLength = pathEl.getTotalLength();
       return pathEl.getPointAtLength( percentLength * pathLength );
   }
 
+
+
   // Given 2 points {x: x1, y: y1} and {x: x2, y: y2}
   // return the distance between them
-
+  // --------------
   function getDist(pt1,pt2) {
     return Math.sqrt(getSquareDist(pt1,pt2));
   }
-
   function getSquareDist(pt1,pt2) {
     return (pt2.y-pt1.y)*(pt2.y-pt1.y) + (pt2.x-pt1.x)*(pt2.x-pt1.x);
   }
+
+
 
 }
 

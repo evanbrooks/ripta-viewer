@@ -5,7 +5,7 @@ function TimeControl(tripControl, viewControl) {
 
   var self = this;
   self.currentTime = new Date().getTime() / 1000;
-  self.step = 3;
+  self.step = $("#speed").val();
   self.sun = { rise: toSec(6), set: toSec(18) };
 
   var autoRun = false;
