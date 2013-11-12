@@ -99,24 +99,7 @@ function TripControl(view, busLayer) {
 
     // Remove old buses
     // ---------------
-    var busExit = bus.exit();
-        // busExit.select("rect")
-        //   .transition()
-        //     .duration(100)
-        //     .attr("r", 6)
-        //   .transition()
-        //     .duration(100)
-        //     .attr("r", 0)
-        //   .remove();
-
-        busExit
-          .select("circle")
-          .transition()
-          .attr("r", 5)
-          .call(function(){busExit.remove();});
-
-    // Force-labels
-    // -----------------
+    var busExit = bus.exit().remove();
 
   }
 
@@ -142,9 +125,6 @@ function TripControl(view, busLayer) {
                          a: interp.a,
                         id: trip.id };
           currentBus.push(bus);
-          // if (interp.stops.a && interp.stops.b){
-          //   currentStopInterps.push(interp.stops);
-          // } DEBUG
         }
       }
       else {
@@ -180,7 +160,6 @@ function TripControl(view, busLayer) {
       t = (time-a.t)/(b.t-a.t);
 
       bus = linearInterpolate(t, aPoint, bPoint);
-      //bus = shapeInterpolate(t, aPoint, bPoint, shapeid);
 
       busCurve = getPtOnShapeNear(bus,shapeid);
 
@@ -205,13 +184,7 @@ function TripControl(view, busLayer) {
         , percentOfPath_range = aPercentOfPath - bPercentOfPath
         , newPercentOfPath = aPercentOfPath + percentOfPath_range*t;
 
-      //console.log(aPercentOfPath+" < "+newPercentOfPath+" < "+bPercentOfPath);
-      //console.log(percentOfPath_range);
-      //console.log(t);
-
       var newPoint = getPtOnShapeAt(newPercentOfPath, shapeid);
-
-      // console.log(newPoint);
 
 
       return { x: xScale.invert(newPoint.x),   // return in lat/lon so that
@@ -220,20 +193,6 @@ function TripControl(view, busLayer) {
   }
 
   var tBisector = d3.bisector(function(d){return d.t;});
-
-    function showShapeUsed(current) {
-      // shapeLayer
-      //   .selectAll(".line")
-      //   .attr("class", "line");
-
-      current.forEach(function(curr) {
-
-        // shapeLayer
-        //   .select("#l"+curr.shape)
-        //   .attr("class", "line selected");
-      });
-      // shapeLayer.selectAll(".line")
-    }
 
     function refreshInterps() {
       stopLayer.selectAll(".interp")
