@@ -34,48 +34,11 @@ function TripControl(view, busLayer) {
 
 
 
-
+  var currentStopInterps;
 
 
   // Private methods
   // ---------------
-
-  function updatePos() {
-
-    busLayer.selectAll(".bus").select("circle")
-      .attr("transform",
-        function(d) {
-          return "translate("+xScale(d.x)+","+yScale(d.y)+") rotate("+d.a+")"; });
-
-    busLayer.selectAll(".bus").select("text")
-        .attr("x", function(d) { return xScale(d.x) + 10 })
-        .attr("y", function(d) { return yScale(d.y) + 2 });
-
-    // refreshInterps();      // DEBUG
-  }
-
-
-
-
-
-
-  function transitionPos() {
-    busLayer.selectAll(".bus").select("circle")
-      .attr("transform",
-        function(d) {
-          return "translate("+xScale(d.x)+","+yScale(d.y)+") rotate("+d.a+")"; });
-
-    busLayer.selectAll(".bus").select("text")
-        .attr("x", function(d) { return xScale(d.x) + 5 })
-        .attr("y", function(d) { return yScale(d.y) + 5 });
-
-  }
-
-
-
-
-
-
 
 
   function displayBus(time) {
@@ -92,7 +55,9 @@ function TripControl(view, busLayer) {
 
     // Add new buses
     // -------------
-    var busEnter = bus.enter().append("g").attr("class", "bus");
+    var busEnter = bus.enter()
+      .append("g")
+      .attr("class", "bus");
 
     busEnter.append("circle").attr("r", 1.1);
 
@@ -114,7 +79,44 @@ function TripControl(view, busLayer) {
     else updatePos(); // larger time step? skip the transition
 
 
+
+
+    var interper = busLayer.selectAll(".interp").data(currentStopInterps);
+
+    interper.enter().append("line").attr("class", "interp");
+
+    interper.exit().remove();
+
+    interper
+      .attr("x1", function(d) { return xScale( stopsIndexed[ parseInt(d.a, 10) ].x ); } )
+      .attr("y1", function(d) { return yScale( stopsIndexed[ parseInt(d.a, 10) ].y ); } )
+      .attr("x2", function(d) { return xScale( stopsIndexed[ parseInt(d.b, 10) ].x ); } )
+      .attr("y2", function(d) { return yScale( stopsIndexed[ parseInt(d.b, 10) ].y ); } );
   }
+
+  function updatePos() {
+    busLayer.selectAll(".bus").select("circle")
+      .attr("transform",
+        function(d) {
+          return "translate("+xScale(d.x)+","+yScale(d.y)+") rotate("+d.a+")"; });
+    busLayer.selectAll(".bus").select("text")
+        .attr("x", function(d) { return xScale(d.x) + 10 })
+        .attr("y", function(d) { return yScale(d.y) + 2 });
+  }
+
+
+  function transitionPos() {
+    busLayer.selectAll(".bus").select("circle")
+      .attr("transform",
+        function(d) {
+          return "translate("+xScale(d.x)+","+yScale(d.y)+") rotate("+d.a+")"; });
+    busLayer.selectAll(".bus").select("text")
+        .attr("x", function(d) { return xScale(d.x) + 5 })
+        .attr("y", function(d) { return yScale(d.y) + 5 });
+  }
+
+
+
 
   function getData(time) {
     var currentBus = [];
@@ -138,17 +140,28 @@ function TripControl(view, busLayer) {
                          a: interp.a,
                         id: trip.id };
           currentBus.push(bus);
+          currentStopInterps.push(interp.stops);
         }
       }
       else {
         //console.log("no stops?");
       }
     });
+
+
     return currentBus;
   }
 
-  // Linear interpolation
-  // Returns point between stops on path
+
+
+
+
+
+
+
+  var tBisector = d3.bisector(function(d){return d.t;});
+
+
   function interpolateBus(tripStops, shapeid, time) {
     var index  = tBisector.left(tripStops, time, 0, tripStops.length-1)
       , a      = tripStops[index]
@@ -172,9 +185,9 @@ function TripControl(view, busLayer) {
       bPoint = stopsIndexed[parseInt(b.id, 10)];
       t = (time-a.t)/(b.t-a.t);
 
-      bus = linearInterpolate(t, aPoint, bPoint);
 
-      busCurve = getPtOnShapeNear(bus,shapeid);
+      busLinear = linearInterpolate(t, aPoint, bPoint);
+      busCurve = getPtOnShapeNear(busLinear,shapeid);
 
       return { x: busCurve.x,
                y: busCurve.y,
@@ -185,10 +198,21 @@ function TripControl(view, busLayer) {
     }
   }
 
+
+
+
+
+
+
   function linearInterpolate(t, pt1, pt2) {
     return { x: (pt1.x * (1-t) + pt2.x * t),
              y: (pt1.y * (1-t) + pt2.y * t) };
   }
+
+
+
+
+
 
   function shapeInterpolate(t, pt1, pt2, shapeid) {
       // console.log(shapeid);
@@ -205,35 +229,32 @@ function TripControl(view, busLayer) {
                                                // the map is manipulated
   }
 
-  var tBisector = d3.bisector(function(d){return d.t;});
 
-  function refreshInterps() {
-    stopLayer.selectAll(".interp")
-      .attr("x1", function(d) { return xScale( stopsIndexed[ parseInt(d.a, 10) ].x ); } )
-      .attr("y1", function(d) { return yScale( stopsIndexed[ parseInt(d.a, 10) ].y ); } )
-      .attr("x2", function(d) { return xScale( stopsIndexed[ parseInt(d.b, 10) ].x ); } )
-      .attr("y2", function(d) { return yScale( stopsIndexed[ parseInt(d.b, 10) ].y ); } );
+
+
+
+
+  function getPtOnShapeNear(pt, shapeid) {
+    thisShape = shapesIndexed[shapeid];
+
+    var minPos = thisShape[0]
+      , minDist = getSquareDist(minPos, pt);
+
+    for (i = 0; i < thisShape.length; i++) {
+        pos = thisShape[i];
+        dist = getSquareDist(pt, pos);
+        if (dist < minDist) {
+          minDist = dist;
+          minPos = pos;
+        }
+        //if (minDist < 1) break; // stop looking if we're pretty close
+    }
+
+    return { x: minPos.x, y: minPos.y};
   }
-  // ------------------------
-  // End linear interpolation
 
 }
 
-function getPtOnShapeNear(pt, shapeid) {
-  thisShape = shapesIndexed[shapeid];
 
-  var minPos = thisShape[0]
-    , minDist = getSquareDist(minPos, pt);
 
-  for (i = 0; i < thisShape.length; i++) {
-      pos = thisShape[i];
-      dist = getSquareDist(pt, pos);
-      if (dist < minDist) {
-        minDist = dist;
-        minPos = pos;
-      }
-      //if (minDist < 1) break; // stop looking if we're pretty close
-  }
 
-  return { x: minPos.x, y: minPos.y};
-}
