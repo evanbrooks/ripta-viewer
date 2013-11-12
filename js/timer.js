@@ -39,15 +39,6 @@ function TimeControl(tripControl, viewControl) {
       self.step = parseFloat(this.value);
       console.log(self.step);
     });
-    // $(".timeline").scroll( function(e){
-    //   e.preventDefault();
-    //   if ($(this).scrollLeft() + $(this).width()  > $(".times").width()) {
-    //     $(this).scrollLeft(1);
-    //   }
-    //   else if ($(this).scrollLeft() <= 0) {
-    //     $(this).scrollLeft(1000);
-    //   }
-    // });
   }
 
   this.play = function() {
@@ -88,51 +79,9 @@ function TimeControl(tripControl, viewControl) {
          return true; }
     else return false;
   }
-
-  function colorize() {
-    var sunT = 30;
-    if (self.currentTime > self.sun.rise && self.currentTime < self.sun.set) {
-      $("body").removeClass("night");
-    }
-    else {
-      $("body").addClass("night");
-    }
-    if (self.currentTime > self.sun.rise - sunT/2 && self.currentTime < self.sun.rise + sunT/2 ||
-        self.currentTime > self.sun.set - sunT/2 && self.currentTime < self.sun.set + sunT/2) {
-      $("body").removeClass("night").addClass("sun");
-    }
-    else {
-      $("body").removeClass("sun");
-    }
-    // var bg = parseInt(255 * (self.currentTime / 720), 10);
-    // if (bg > 255) bg = 255 - (bg%255);
-    // var color = "rgb("+bg+","+bg+","+bg+")";
-    // $("body").css("background-color", color);
-  }
-
-
-  // Get today's sunset and sunrise times for
-  // Providence, RI by checking the Yahoo Weather
-  // RSS feed through Google's feed API
-  // ---------------------------------
-  var pvdWOEID = 12759056;
-  var pvdUrl = "http://weather.yahooapis.com/forecastrss?w="+pvdWOEID;
-  //google.load("feeds", "1");
-  // function getSun() {
-  //   var feed = new google.feeds.Feed(pvdUrl);
-  //   feed.setResultFormat(google.feeds.Feed.XML_FORMAT);
-  //   feed.load(function(result) {
-  //     if (!result.error) {
-  //       var t = result.xmlDocument.childNodes[0].firstChild.childNodes[12];
-  //       var rise = $(t).attr("sunrise");
-  //       var set = $(t).attr("sunset");
-  //       //self.sun = {rise: rise, set: set };
-  //       //self.console.log(self.sun);
-  //     }
-  //   });
-  // }
-  // google.setOnLoadCallback(getSun);
 }
+
+
 
 function toSec(s) {
   var str = s + "";

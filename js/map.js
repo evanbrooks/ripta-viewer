@@ -74,6 +74,7 @@ function Map(el) {
     // -----------
     bindEvents();
 
+
     // Public methods
     // --------------
 
@@ -93,26 +94,26 @@ function Map(el) {
     }
 
     function refresh() {
-     //  visible = true;
-     //  loaded = true;
+      // visible = true;
+      // loaded = true;
 
-     //  visibleStops = stops.filter(view.isInView);
+      // visibleStops = stops.filter(self.view.isInView);
 
       // stopdata = stopLayer.selectAll(".stop")
       //   .data(visibleStops);
 
       // stopdata.enter()
-     //    .append("circle")
-     //    .attr("id", function(d) { return parseInt(d.id, 10) })
-     //    .attr("class", "stop");
+      //   .append("circle")
+      //   .attr("id", function(d) { return parseInt(d.id, 10) })
+      //   .attr("class", "stop");
 
       // stopdata
       //   .attr("cx", function(d) { return xScale(d.x) })
       //   .attr("cy", function(d) { return yScale(d.y) });
 
-     //  stopdata
-     //    .exit()
-     //    .remove();
+      // stopdata
+      //   .exit()
+      //   .remove();
     }
 
     function hide(){
@@ -162,38 +163,13 @@ function Map(el) {
     // Public methods
     // --------------
 
-    this.create = create;
+    this.create = refreshSmooth;
     this.setSmooth = setSmooth;
     this.refresh = refresh;
     this.refreshSmooth = refreshSmooth;
 
     // Private methods
     // ---------------
-
-    function create() {
-      refreshSmooth();
-      // // Array of shape points only because d3 is picky
-      // var simplifiedShapes = shapes.map( function(s) {
-      //   visShape = s.pt.filter(self.view.isInView);
-      //   return simplify(visShape,smoothness); });
-
-      // // Array of shape ids only to lookup simplifiedShapes
-      // var shapeIds = shapes.map( function(s) { return s.id; });
-
-      // // Apply new data
-      // var shapedata = shapeLayer.selectAll(".line")
-      //   .data(simplifiedShapes)
-
-      // // Redraw existing lines
-      // refresh();
-
-      // // Add new lines
-      // shapedata.enter()
-      //   .append("svg:path")
-      //   .attr("id", function(d, i) { return "l"+shapeIds[i] })  
-      //   .attr("class", "line")
-      //   .attr("d", pathMaker);
-    }
 
     function refresh() {
       shapeLayer.selectAll(".line")
@@ -206,14 +182,12 @@ function Map(el) {
 
       shapes.map( function(s) {
         visShape = s.pt.filter(self.view.isInView);
-
         if (visShape.length > 1){
           simplifiedShapes.push({
             id: s.id,
             simple: simplify(visShape,smoothness)
           });
         }
-
       });
 
       // Apply new data
