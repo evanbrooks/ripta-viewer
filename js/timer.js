@@ -83,41 +83,6 @@ function TimeControl(tripControl, viewControl) {
 
 
 
-function toSec(s) {
-  var str = s + "";
-  var split = str.split(":");
-  var hr = split[0];
-  var min = 0;
-  var sec = 0;
-  if (split.length > 1) {
-    min = split[1]; }
-  if (split.length > 2) {
-    sec = split[2]; }
-  var total = parseInt(hr,10)*(60*60) + parseInt(min,10)*(60) + parseInt(sec,10);
-  return total;
-}
-
-function toTime(s) {
-  var hr  = parseInt(s / (60 * 60), 10);
-  var min = parseInt((s - 60 * 60 * hr) / 60, 10);
-  var sec = parseInt((s - 60 * 60 * hr - 60*min), 10);
-
-  if (hr < 1) hr = 12;
-  if (min < 10) min = "0" + min;
-  if (sec < 10) sec = "0" + sec;
-
-  var ap = "am";
-  if (hr > 12) {
-    hr = hr % 12;
-    ap = "pm";
-  }
-
-  if (hr < 10) hr = "0" + hr;
-
-  var time = hr + ":" + min + ":" + sec + " " + ap;
-  return time;
-}
-
 function Timeline(tControl, tripControl) {
   var self = this
   , frame  = 1000 / 60      // ms per frame
@@ -171,7 +136,7 @@ function Timeline(tControl, tripControl) {
 
   function coast() {
     if (isChanging) return true;                       // stop timer
-    vel = parseInt( vel * 0.95 * 100, 10 ) / 100;  // 2 decimal precision
+    vel = parseInt( vel * 0.8 * 100, 10 ) / 100;  // 2 decimal precision
     if (Math.abs(vel) < 0.05) {
       el.removeClass("changing");
       return true;                                    // stop timer

@@ -135,9 +135,8 @@ footer
 	cursor: col-resize
 	color: black
 	position: relative
-	&:hover
-		background: rgba(0,0,0,0.05)
-		box-shadow: inset 0 0 2px rgba(0,0,0,0.1)
+	background: rgba(0,0,0,0.05)
+	box-shadow: inset 0 0 2px rgba(0,0,0,0.1)
 	&:active
 		cursor: col-resize
 	&::after
@@ -246,11 +245,11 @@ footer
 
 .line
 	fill: none
-	stroke-width: 0.15
-	opacity: 1
+	stroke-width: 1
+	opacity: 0.2
 	-webkit-transition: all 1s
 	//shape-rendering: crispEdges
-	stroke: $dark
+	stroke: red
 	&.selected
 		stroke-width: 0.15
 
@@ -260,7 +259,7 @@ footer
 
 .bus
 	&> circle
-		fill: $dark
+		fill: blue
 		-webkit-transition: all 0.3s
 	&> text
 		-webkit-transition: all 0.5s
@@ -268,7 +267,7 @@ footer
 		opacity: 0
 		.panning &
 			opacity: 0
-		fill: $dark
+		fill: blue
 		font:
 			family: Apercu Mono
 			size: 10px
@@ -280,14 +279,14 @@ footer
 
 .zoom .bus
 	&> circle
-		fill: $dark
-		stroke: $dark
+		fill: blue
+		stroke: blue
 		stroke-width: 2
 	&> text
 		opacity: 1
 	&:hover
 		&> circle
-			stroke: $dark
+			stroke: blue
 			stroke-width: 7
 
 
