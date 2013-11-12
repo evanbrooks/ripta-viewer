@@ -72,7 +72,14 @@ footer {
 
 .interp {
   stroke-width: 1;
-  stroke: blue; }
+  stroke: lime;
+  stroke-dasharray: 1, 4; }
+
+.interpshape {
+  stroke-width: 1;
+  stroke: blue;
+  fill: none;
+  stroke-dasharray: 1, 4; }
 
 #timestamp {
   position: absolute;
