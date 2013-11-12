@@ -2,7 +2,7 @@
 // -----
 
 function TripControl(view, busLayer) {
-
+  var self = this;
   self.currentBus = [];
 
 
@@ -31,6 +31,12 @@ function TripControl(view, busLayer) {
     return self.currentBus;
   }
 
+
+
+
+
+
+
   // Private methods
   // ---------------
 
@@ -48,6 +54,11 @@ function TripControl(view, busLayer) {
     // refreshInterps();      // DEBUG
   }
 
+
+
+
+
+
   function transitionPos() {
     busLayer.selectAll(".bus").select("circle")
       .attr("transform",
@@ -60,18 +71,40 @@ function TripControl(view, busLayer) {
 
   }
 
+
+
+
+
+
+
+
   function displayBus(time) {
     self.currentBus = getData(time).filter(view.isInView);
-
     shapeControl.refresh();
 
-    //console.log(this.currentBus);
 
-    // Main
+    // Apply data
     // ----
     var bus = busLayer
       .selectAll(".bus")
       .data(self.currentBus, function(d) { return d.id; });
+
+
+    // Add new buses
+    // -------------
+    var busEnter = bus.enter().append("g").attr("class", "bus");
+
+    busEnter.append("circle").attr("r", 1.1);
+
+    busEnter.append("text")
+        .text(function(d) { return d.route })
+        .attr("fill", "blue")
+        .attr("x", function(d) { return xScale(d.x) })
+        .attr("y", function(d) { return yScale(d.y) })
+
+    // Remove old buses
+    // ---------------
+    var busExit = bus.exit().remove();
 
     // Move existing buses
     // -------------------
@@ -80,26 +113,6 @@ function TripControl(view, busLayer) {
     }
     else updatePos(); // larger time step? skip the transition
 
-    // Add new buses
-    // -------------
-    var busEnter = bus.enter().append("g").attr("class", "bus");
-        busEnter.append("circle")
-            .attr("cx", 0)
-            .attr("cy", 0)
-            .attr("transform",
-              function(d) {
-                return "translate("+xScale(d.x)+","+yScale(d.y)+") rotate("+d.a+")"; })
-            .attr("r", 1.1);
-
-        busEnter.append("text")
-            .text(function(d) { return d.route })
-            .attr("fill", "blue")
-            .attr("x", function(d) { return xScale(d.x) })
-            .attr("y", function(d) { return yScale(d.y) })
-
-    // Remove old buses
-    // ---------------
-    var busExit = bus.exit().remove();
 
   }
 
@@ -194,24 +207,20 @@ function TripControl(view, busLayer) {
 
   var tBisector = d3.bisector(function(d){return d.t;});
 
-    function refreshInterps() {
-      stopLayer.selectAll(".interp")
-        .attr("x1", function(d) { return xScale( stopsIndexed[ parseInt(d.a, 10) ].x ); } )
-        .attr("y1", function(d) { return yScale( stopsIndexed[ parseInt(d.a, 10) ].y ); } )
-        .attr("x2", function(d) { return xScale( stopsIndexed[ parseInt(d.b, 10) ].x ); } )
-        .attr("y2", function(d) { return yScale( stopsIndexed[ parseInt(d.b, 10) ].y ); } );
-    }
+  function refreshInterps() {
+    stopLayer.selectAll(".interp")
+      .attr("x1", function(d) { return xScale( stopsIndexed[ parseInt(d.a, 10) ].x ); } )
+      .attr("y1", function(d) { return yScale( stopsIndexed[ parseInt(d.a, 10) ].y ); } )
+      .attr("x2", function(d) { return xScale( stopsIndexed[ parseInt(d.b, 10) ].x ); } )
+      .attr("y2", function(d) { return yScale( stopsIndexed[ parseInt(d.b, 10) ].y ); } );
+  }
   // ------------------------
   // End linear interpolation
 
 }
 
-function getPtOnShapeNear(target, shapeid) {
-
-  //thisShape = shapeSmoothCache[shapeid];
+function getPtOnShapeNear(pt, shapeid) {
   thisShape = shapesIndexed[shapeid];
-  //pt = { x: xScale(target.x), y: yScale(target.y) };
-  pt = target;
 
   var minPos = thisShape[0]
     , minDist = getSquareDist(minPos, pt);
@@ -226,7 +235,5 @@ function getPtOnShapeNear(target, shapeid) {
       //if (minDist < 1) break; // stop looking if we're pretty close
   }
 
-
-  //return { x: xScale.invert(minPos.x), y: yScale.invert(minPos.y)};
   return { x: minPos.x, y: minPos.y};
 }

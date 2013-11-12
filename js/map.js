@@ -27,7 +27,7 @@ function Map(el) {
 
   self.view = new ViewControl(el, self, map);
 
-   var stopControl   = new StopControl(),
+   var stopControl   = new StopControl(self.view, stopLayer),
        tripControl   = new TripControl(self.view, busLayer),
       shapeControl   = new ShapeControl(tripControl, shapeLayer, self.view),
              timer   = new TimeControl(tripControl, self.view);
