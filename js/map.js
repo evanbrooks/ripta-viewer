@@ -137,15 +137,27 @@ function Map(el) {
     }
   }
 
+
+
+
+
+
+
+
+
+
+
+
+
   // Shapes
   // ------
 
   function ShapeControl() {
     smoothStart = 0.002,
     smoothness = smoothStart;
+
     // Constructor
     // -----------
-    bindEvents();
 
     // Public methods
     // --------------
@@ -159,29 +171,28 @@ function Map(el) {
     // ---------------
 
     function create() {
-      // console.log(smoothness);
+      refreshSmooth();
+      // // Array of shape points only because d3 is picky
+      // var simplifiedShapes = shapes.map( function(s) {
+      //   visShape = s.pt.filter(self.view.isInView);
+      //   return simplify(visShape,smoothness); });
 
-      // Array of shape points only because d3 is picky
-      var simplifiedShapes = shapes.map( function(s) {
-        visShape = s.pt.filter(self.view.isInView);
-        return simplify(visShape,smoothness); });
+      // // Array of shape ids only to lookup simplifiedShapes
+      // var shapeIds = shapes.map( function(s) { return s.id; });
 
-      // Array of shape ids only to lookup simplifiedShapes
-      var shapeIds = shapes.map( function(s) { return s.id; });
+      // // Apply new data
+      // var shapedata = shapeLayer.selectAll(".line")
+      //   .data(simplifiedShapes)
 
-      // Apply new data
-      var shapedata = shapeLayer.selectAll(".line")
-        .data(simplifiedShapes)
+      // // Redraw existing lines
+      // refresh();
 
-      // Redraw existing lines
-      refresh();
-
-      // Add new lines
-      shapedata.enter()
-        .append("svg:path")
-        .attr("id", function(d, i) { return "l"+shapeIds[i] })  
-        .attr("class", "line")
-        .attr("d", pathMaker);
+      // // Add new lines
+      // shapedata.enter()
+      //   .append("svg:path")
+      //   .attr("id", function(d, i) { return "l"+shapeIds[i] })  
+      //   .attr("class", "line")
+      //   .attr("d", pathMaker);
     }
 
     function refresh() {
@@ -192,20 +203,34 @@ function Map(el) {
     function refreshSmooth() {
       // Array of shape points only because d3 is picky
       var simplifiedShapes = [];
-      var shapeids = [];
 
       shapes.map( function(s) {
         visShape = s.pt.filter(self.view.isInView);
+
         if (visShape.length > 1){
-          simplifiedShapes.push(simplify(visShape,smoothness));
-          shapeids.push(s.id);
+          simplifiedShapes.push({
+            id: s.id,
+            simple: simplify(visShape,smoothness)
+          });
         }
+
       });
 
       // Apply new data
       var shapedata = shapeLayer.selectAll(".line")
-        .data(simplifiedShapes, function(d,i) {return shapeids[i]})
-        .attr("d", pathMaker);
+        .data(d3.entries(simplifiedShapes), function(d,i) {return d.value.id});
+
+      // Enter data
+      shapedata.enter()
+        .append("svg:path")
+        .attr("id", function(d, i) { return "l"+d.value.id })  
+        .attr("class", "line");
+      // Exit data
+      shapedata.exit()
+        .remove();
+      // Update all
+      shapedata.attr("d", function(d) { return pathMaker(d.value.simple) });
+
     }
 
     function setSmooth(s) {
@@ -214,18 +239,31 @@ function Map(el) {
       //refresh();
     }
 
-    function bindEvents() {
-      $("#shapeCheck").change(function(e) {
-        if (visible) hide();
-        else show();
-      });
-    }
-
     var pathMaker = d3.svg.line()
       .y(function(d) { return yScale(d.y) })
       .x(function(d) { return xScale(d.x) })
       //.interpolate("basis"); // "basis" for smoother
   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   // Trips
   // -----
@@ -443,56 +481,17 @@ function Map(el) {
 
     var tBisector = d3.bisector(function(d){return d.t;});
 
-
-    // Labels
-    // ------
-    // var labelBox,link;
-    // labelForce = d3.force_labels()
-    //     .linkDistance(0)
-    //     .gravity(0)
-    //     .nodes([]).links([])
-    //     .charge(-10)
-    //     .on("tick",redrawLabels);
-
-    // function redrawLabels() {
-    //     labelBox
-    //         .attr("transform",function(d) { return "translate("+d.labelPos.x+" "+d.labelPos.y+")"})
-
-    //     links
-    //         .attr("x1",function(d) { return d.anchorPos.x})
-    //         .attr("y1",function(d) { return d.anchorPos.y})
-    //         .attr("x2",function(d) { return d.labelPos.x})
-    //         .attr("y2",function(d) { return d.labelPos.y})
-    // }
-
-    // linear interpolation layer
-    // --------------------------
-    // to debug issue of multiple stops listed at the same time stamp
-      function showStopInterps(interps) {
-        var interps = stopLayer.selectAll(".interp").data(interps);
-        // New interps
-        interps.enter()
-          .append("svg:line")
-          .attr("class", "interp")
-          .attr("stroke", "blue")
-          .attr("opacity", "0.5")
-          .attr("stroke-width", 1);
-        // Refresh old interps
-        refreshInterps();
-        // Remove dead interps
-        interps.exit().remove();
-      }
-
       function showShapeUsed(current) {
         // shapeLayer
         //   .selectAll(".line")
         //   .attr("class", "line");
 
-        // current.forEach(function(curr) {
-        //   shapeLayer
-        //     .select("#l"+curr.shape)
-        //     .attr("class", "line selected");
-        // });
+        current.forEach(function(curr) {
+
+          // shapeLayer
+          //   .select("#l"+curr.shape)
+          //   .attr("class", "line selected");
+        });
         // shapeLayer.selectAll(".line")
       }
 
@@ -507,6 +506,16 @@ function Map(el) {
     // End linear interpolation
 
   }
+
+
+
+
+
+
+
+
+
+
 
   // Scales
   // ------
@@ -543,25 +552,21 @@ function Map(el) {
       tripControl.refresh();
   };
 
-  // Finding points along paths
-  // --------------------------
-  // var circle = 
-  //         shapeLayer.append("circle")
-  //           .attr("cx", 100)
-  //           .attr("cy", 350)
-  //           .attr("r", 3)
-  //           .attr("fill", "red");
 
-  // map.on("mousemove", function() {
-  //   var shiftedmouse = { x: mouse.x - curr.x, y: mouse.y - curr.y };
-  //   var nearest = getPtOnShapeNear(shiftedmouse, "600028");
 
-  //   circle
-  //     .attr("opacity", 1)
-  //     .attr("cx", nearest.x)
-  //     .attr("cy", nearest.y);
 
-  // });
+
+
+
+
+
+
+
+
+
+
+
+
 
 
   // --------------------------------------------------------
