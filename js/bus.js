@@ -42,7 +42,16 @@ function TripControl(view, busLayer) {
 
 
   function displayBus(time) {
-    self.currentBus = getData(time).filter(view.isInView);
+
+
+    // console.time("Compute initial data");
+    self.currentBus = getData(time);
+    // console.timeEnd("Compute initial data");
+
+    // console.time("Compute 'true' on-path data");
+    get_true_position(self.currentBus);
+    // console.timeEnd("Compute 'true' on-path data");
+
     shapeControl.refresh();
 
 
@@ -76,19 +85,20 @@ function TripControl(view, busLayer) {
     if (Math.abs(timer.currentTime - timer.prevTime) < 10 ) {
       transitionPos();
     }
-    else updatePos(); // larger time step? skip the transition
+    else transitionPos(); // larger time step? skip the transition
+    //else updatePos(); // larger time step? skip the transition
 
 
 
 
-    var interper = busLayer.selectAll(".interp").data(currentStopInterps);
-    interper.enter().append("line").attr("class", "interp");
-    interper.exit().remove();
-    interper
-      .attr("x1", function(d) { return xScale( stopsIndexed[ parseInt(d.a, 10) ].x ); } )
-      .attr("y1", function(d) { return yScale( stopsIndexed[ parseInt(d.a, 10) ].y ); } )
-      .attr("x2", function(d) { return xScale( stopsIndexed[ parseInt(d.b, 10) ].x ); } )
-      .attr("y2", function(d) { return yScale( stopsIndexed[ parseInt(d.b, 10) ].y ); } );
+    // var interper = busLayer.selectAll(".interp").data(currentStopInterps);
+    // interper.enter().append("line").attr("class", "interp");
+    // interper.exit().remove();
+    // interper
+    //   .attr("x1", function(d) { return xScale( stopsIndexed[ parseInt(d.a, 10) ].x ); } )
+    //   .attr("y1", function(d) { return yScale( stopsIndexed[ parseInt(d.a, 10) ].y ); } )
+    //   .attr("x2", function(d) { return xScale( stopsIndexed[ parseInt(d.b, 10) ].x ); } )
+    //   .attr("y2", function(d) { return yScale( stopsIndexed[ parseInt(d.b, 10) ].y ); } );
 
 
 
@@ -101,19 +111,21 @@ function TripControl(view, busLayer) {
     //   .attr("x2", function(d) { return xScale( d.b.x ); } )
     //   .attr("y2", function(d) { return yScale( d.b.y ); } );
 
-
-    // console.log(currentIntermShapes);
-    var interpshape = busLayer.selectAll(".interpshape").data(currentIntermShapes);
-    interpshape.enter().append("svg:path").attr("class", "interpshape");
-    interpshape.exit().remove();
-    interpshape.attr("d", function(d) {
-      return make_interp_shape_line(d);
-    });
   }
 
   var make_interp_shape_line = d3.svg.line()
-    .y(function(d) { return yScale(d.y) })
-    .x(function(d) { return xScale(d.x) });
+    .y(function(d) {
+      if (d) return yScale(d.y);
+      else return 0;
+    })
+    .x(function(d) {
+      if (d) return xScale(d.x);
+      else return 0;
+    });
+
+
+
+
 
 
   function updatePos() {
@@ -129,29 +141,41 @@ function TripControl(view, busLayer) {
 
   function transitionPos() {
     busLayer.selectAll(".bus").select("circle")
+      //.transition()
+      //.duration(200)
       .attr("transform",
         function(d) {
           return "translate("+xScale(d.x)+","+yScale(d.y)+") rotate("+d.a+")"; });
     busLayer.selectAll(".bus").select("text")
-        .attr("x", function(d) { return xScale(d.x) + 5 })
-        .attr("y", function(d) { return yScale(d.y) + 5 });
+        .attr("x", function(d) { return xScale(d.x) - 0 })
+        .attr("y", function(d) { return yScale(d.y) + 2 });
   }
 
 
 
 
+
+
+
+
+
   function getData(time) {
-    var currentBus = [];
-    currentStopInterps = [];
-    currentStopInterps2 = [];
+    var curr = [];
+    //currentStopInterps = [];
+    //currentStopInterps2 = [];
     currentIntermShapes = [];
 
+    //console.time("is running now");
     tripsNow = trips.filter(timer.isRunningNow);
+    //console.timeEnd("is running now");
 
+    // console.time("interpolate each");
 
     tripsNow.forEach(function(trip){
       if (trip.stop && trip.stop.length > 0){
+
         var interp = interpolateBus(trip.stop, trip.shape, time);
+
         if (interp == -1) {
           //console.log("not active");
           return;
@@ -162,11 +186,12 @@ function TripControl(view, busLayer) {
                      route: trip.route.split("-")[0],
                          x: interp.x,
                          y: interp.y,
+                         t: interp.t,
                          a: interp.a,
                         id: trip.id };
-          currentBus.push(bus);
-          currentStopInterps.push(interp.stops);
-          currentStopInterps2.push(interp.stops2);
+          curr.push(bus);
+          //currentStopInterps.push(interp.stops);
+          //currentStopInterps2.push(interp.stops2);
           currentIntermShapes.push(interp.interm_shape);
         }
       }
@@ -175,9 +200,12 @@ function TripControl(view, busLayer) {
       }
     });
 
+    // console.timeEnd("interpolate each");
 
-    return currentBus;
+
+    return curr;
   }
+
 
 
 
@@ -193,6 +221,9 @@ function TripControl(view, busLayer) {
     var index  = tBisector.left(tripStops, time, 0, tripStops.length-1)
       , a      = tripStops[index]
       , aPoint = stopsIndexed[parseInt(a.id, 10)];
+
+    if (!view.isInView(aPoint)) return -1; // one stop isn't within view so let's skip it
+
     if (index < 1) {
       if ( a.t > time ) {
         return -1; // time is earlier than the first stop, => trip hasn't begun
@@ -201,6 +232,8 @@ function TripControl(view, busLayer) {
         return { x: aPoint.x,
                  y: aPoint.y,
                  stops: { a: a.id },
+                 t: 0,
+                 interm_shape: [],
                  a: 0 };
       }
     }
@@ -214,17 +247,16 @@ function TripControl(view, busLayer) {
 
 
       busLinear = linearInterpolate(t, aPoint, bPoint);
-      busCurve = getPtOnShapeNear(busLinear,shapeid);
       var a_near = getPtOnShapeNear(aPoint, shapeid);
       var b_near = getPtOnShapeNear(bPoint, shapeid);
-      // console.log(a_near.index + " : " + b_near.index);
       var stops2 = {a: a_near, b: b_near };
-      var intermediate_shape = shapesIndexed[shapeid].slice(b_near.index, a_near.index);
+      var intermediate_shape = simplify(shapesIndexed[shapeid].slice(b_near.index, a_near.index + 1), shapeControl.smoothness);
 
-      return { x: busCurve.x,
-               y: busCurve.y,
+      return { x: busLinear.x,
+               y: busLinear.y,
                stops: { a: a.id, b: b.id },
                stops2: stops2,
+               t: t,
                interm_shape: intermediate_shape,
                a: Math.atan2(
                     bPoint.y - aPoint.y,
@@ -234,8 +266,27 @@ function TripControl(view, busLayer) {
 
 
 
+  function get_true_position(curr) {
+    var interpshape = busLayer.selectAll(".interpshape").data(currentIntermShapes);
+    interpshape.enter().append("svg:path").attr("class", "interpshape");
+    interpshape.exit().remove();
+    interpshape
+      .attr("d", function(d) {
+        if (d && d.length > 0) return make_interp_shape_line(d);
+        else return "";
+      })
+      .attr("id", function(d,i) { return "interp" + i})
 
-
+    curr.map(function(bus, i, arr){
+      path_el = busLayer.select("#interp" + i).node();
+      total_length = path_el.getTotalLength();
+      partial_length = total_length * (1 - bus.t);
+      pos = path_el.getPointAtLength(partial_length);
+      bus.x = xScale.invert(pos.x);
+      bus.y = yScale.invert(pos.y);
+      return bus;
+    });
+  }
 
 
   function linearInterpolate(t, pt1, pt2) {
@@ -268,6 +319,7 @@ function TripControl(view, busLayer) {
 
 
 
+
   function getPtOnShapeNear(pt, shapeid) {
     thisShape = shapesIndexed[shapeid];
 
@@ -288,6 +340,12 @@ function TripControl(view, busLayer) {
 
     return { x: minPos.x, y: minPos.y, index: minIndex};
   }
+
+
+
+
+
+
 
 }
 

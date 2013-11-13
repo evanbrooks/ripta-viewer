@@ -2,8 +2,9 @@
 // ------
 
 function ShapeControl(tripControl, shapeLayer, view) {
+  var self = this;
   smoothStart = 0.002,
-  smoothness = smoothStart;
+  self.smoothness = smoothStart;
 
   // Constructor
   // -----------
@@ -30,10 +31,10 @@ function ShapeControl(tripControl, shapeLayer, view) {
       if (visible_shape_portion.length > 1){
         now_shapes.push({
           id: bus.shape,
-          simple: simplify(visible_shape_portion,smoothness)
+          simple: simplify(visible_shape_portion, self.smoothness)
         });
       }
-    });
+    }); 
 
     // Apply new data
     // --------------
@@ -63,7 +64,7 @@ function ShapeControl(tripControl, shapeLayer, view) {
   }
 
   function setSmooth(s) {
-    smoothness = s * smoothStart;
+    self.smoothness = s * smoothStart;
     refresh();
   }
 

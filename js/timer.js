@@ -37,7 +37,7 @@ function TimeControl(tripControl, viewControl) {
       .on("click", "#pause", function() {self.pause()} );
     $("#speed").change(function(){
       self.step = parseFloat(this.value);
-      console.log(self.step);
+      //console.log(self.step);
     });
   }
 
@@ -153,7 +153,13 @@ function Timeline(tControl, tripControl) {
     self.update();
   };
 
+  var stat_time = 0;
   self.update = function() {
+      var last_stat = stat_time;
+      stat_time = window.performance.now();
+      var since_last_step = (stat_time - last_stat);
+      // console.log(since_last_step);
+
       if (shift > 0) {
         shift -= 24 * hrUnit;
       }
@@ -162,10 +168,10 @@ function Timeline(tControl, tripControl) {
       }
       el.tform(shift, 0);
       centeredshift = shift - $(window).width()/2;
-      t = tlStart + parseInt(-centeredshift/hrUnit * 60 * 60, 10);
+      t = tlStart + (-centeredshift/hrUnit * 60 * 60);
       t = t % (24 * 60 * 60);
       tControl.currentTime = t;
-      tripControl.set(parseInt(t, 10));
+      tripControl.set(t);
       $("#timestamp").html(toTime(tControl.currentTime));
   };
 

@@ -1,7 +1,7 @@
 function ViewControl(el, mapControl, mapsvg) {
   var isPanning = false
     , frame  = 1000 / 60 // ms per frame
-    , buffer = -200        // px on each side
+    , buffer = 10        // px on each side
     , start  = {x:0, y:0}
     , lastRedraw  = {x:0, y:0}
     , curr   = {x:0, y:0}
@@ -16,6 +16,8 @@ function ViewControl(el, mapControl, mapsvg) {
     , xlimit = 1400 * (agency.lon.max - agency.lon.min)
     , ylimit = 1400 * (agency.lat.max - agency.lat.min)
     , currZoom = 1
+    , w = $(window).width()
+    , h = $(window).height()
     , xMin   = mapControl.scale.x.min
     , yMin   = mapControl.scale.y.min
     , xMax   = mapControl.scale.x.max
@@ -49,6 +51,11 @@ function ViewControl(el, mapControl, mapsvg) {
       rotateTo(this.value);
     });
 
+    $(window).resize(function(){
+      w = w = $(window).width();
+      h = $(window).height();
+    });
+
     $back.on( 'DOMMouseScroll mousewheel', function(e) {
       scrollZoom(e.originalEvent.wheelDelta);
     });
@@ -60,6 +67,7 @@ function ViewControl(el, mapControl, mapsvg) {
   this.getUnique = function() {
     return ("" + curr.x + "" + curr.y + "" + currZoom);
   };
+  this.zoomTo = zoomTo;
 
   // Private Methods
   // ---------------
@@ -92,9 +100,6 @@ function ViewControl(el, mapControl, mapsvg) {
   }
 
   function drawMap() {
-
-    w = $(window).width();
-    h = $(window).height();
 
     if (xlimit > w){
       if (curr.x > 0) curr.x = 0;
@@ -152,17 +157,25 @@ function ViewControl(el, mapControl, mapsvg) {
     updateFakeViewPort();
     mapControl.redrawZoom(currZoom);
 
-    if (currZoom > 5) {
-      $("body").addClass("zoom");
+    if (currZoom > 25) {
+      $("body").removeClass("zoom");
+      $("body").addClass("zoom2");
     }
-    else $("body").removeClass("zoom");
+    else if (currZoom > 5) {
+      $("body").addClass("zoom");
+      $("body").removeClass("zoom2");
+    }
+    else {
+      $("body").removeClass("zoom");
+      $("body").removeClass("zoom2");
+    }
   }
 
   function updateFakeViewPort() {
       view.xMin = -curr.x + buffer;
       view.yMin = -curr.y + buffer;
-      view.xMax = -curr.x + $(window).width() - buffer*2;
-      view.yMax = -curr.y + $(window).height() - buffer*2;
+      view.xMax = -curr.x + w - buffer*2;
+      view.yMax = -curr.y + h - buffer*2;
   }
 
   function scrollZoom(scroll) {

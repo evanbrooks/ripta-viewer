@@ -6,7 +6,8 @@ figure
 	margin: 0
 	padding: 0
 
-
+*
+	font-family: inherit
 
 // Mixins
 // ------
@@ -43,6 +44,10 @@ body, html
 
 body
 	-webkit-transition: all 0.5s
+	background: #f7f7f7
+	font:
+		family: "Karla"
+		size: 14px
 
 
 // Dragging Support
@@ -65,9 +70,6 @@ nav, footer
 	position: fixed
 	z-index: 999
 	@include boxfix
-	font:
-		family: "Apercu Mono"
-		size: 12px
 
 nav
 	-webkit-transition: all 0.3s
@@ -77,24 +79,30 @@ footer
 	@include pos(auto 0 0 0) 
 
 
-#speed
+#speed, input
 	font-family: inherit
 	font-size: 1em
 	-webkit-appearance: none
 	border: none
-	background: transparent
 	border-radius: 0
-	margin-right: -35px
 	padding: 10px 45px 10px 15px
-	background: rgba(0,0,0,0.02)
+	background: white
 	&:focus
 		outline: 1px solid #12c2ff
 	&:hover
 		background: rgba(0,0,0,0.1)
+
+#speed
+	margin-right: -35px
 	& + b
 		font-size: 8px
+		margin-right: 35px
+
+.select-wrapper
+	float: right
 
 #play, #pause
+	float: right
 	-webkit-transition: all 0.2s
 	text-decoration: none
 	color: black
@@ -103,6 +111,7 @@ footer
 	display: inline-block
 	&:hover
 		background: rgba(0,0,0,0.1)
+
 
 .loading
 	#timestamp
@@ -119,6 +128,7 @@ footer
 	stroke: blue
 	fill: none
 	stroke-dasharray: 1,4
+	visibility: hidden
 
 
 #timestamp
@@ -167,7 +177,7 @@ footer
 		&> li
 			display: inline-block
 			list-style: none
-			width: 250px
+			width: 450px
 			position: relative
 			-webkit-text-rendering: optimizeLegibility
 			text-align: center
@@ -242,15 +252,6 @@ footer
 	cursor: -webkit-grab
 
 
-#mapCanvas
-	position: fixed
-	top: 0
-	left: 0
-	height: 800px
-	width:  800px
-	pointer-events: none
-
-
 // Lines
 // -----
 
@@ -259,11 +260,14 @@ footer
 	stroke-width: 1
 	opacity: 0.2
 	-webkit-transition: all 1s
-	//shape-rendering: crispEdges
 	stroke: red
+	stroke-dasharray: 1,2
 	&.selected
 		stroke-width: 0.15
 
+.zoom2 .line
+	stroke-dasharray: none
+	stroke-width: 1
 
 // Buses
 // -----
@@ -273,44 +277,54 @@ footer
 		fill: blue
 		-webkit-transition: all 0.3s
 	&> text
+		visibility: hidden
 		-webkit-transition: all 0.5s
 		//display: none
+		text-anchor: middle
 		opacity: 0
 		.panning &
 			opacity: 0
 		fill: blue
 		font:
-			family: Apercu Mono
+			weight: bold
 			size: 10px
-	&:hover
-		cursor: pointer
-		&> text
-			opacity: 1
-
 
 .zoom .bus
 	&> circle
 		fill: blue
 		stroke: blue
-		stroke-width: 2
+		stroke-width: 1.5
 	&> text
 		opacity: 1
-	&:hover
-		&> circle
-			stroke: blue
-			stroke-width: 7
+
+.zoom2 .bus
+	&> circle
+		fill: white
+		stroke: white
+		stroke-width: 5
+		opacity: 1
+	&> text
+		visibility: visible
+		opacity: 1
 
 .stop
-	fill: green
+	fill: red
+	visibility: hidden
 
-
-.zoom .stop
-	fill: green
-	stroke: green
-	stroke-width: 2
+.zoom2 .stop
+	fill: red
+	visibility: visible
+	stroke-width: 1
 
 .panning .label
 	display: none
 
 .TEMPHIDE
 	display: none!important
+
+#autocomplete
+	position: absolute
+	padding: 10px 15px
+
+.result
+	font-size: 2em

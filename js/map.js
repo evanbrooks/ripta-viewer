@@ -38,7 +38,7 @@ function Map(el) {
 
   shapeControl.create();
 
-  this.makeStops = function(){
+  this.makeStops = function() {
     stopControl.create();
     stopControl.show();
   };
@@ -65,6 +65,9 @@ function Map(el) {
   timer.play();
   timer.goToNow();
 
+  // Start out zoomed into Kennedy plaza
+  // ------
+  self.view.zoomTo(22, {x:570,y:265});
 
 
 

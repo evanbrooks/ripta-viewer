@@ -24,43 +24,25 @@
     <a href="#" id="play">Play</a>
     <a href="#" id="pause">Pause</a>
 
-    <select id="speed">
-      <option value=".05">Real-ish speed</option>
-      <option value="3">Fast</option>
-      <option value="30">Faster</option>
-      <option value="600">Really fast</option>
-    </select>
-    <b>▼</b>
-    <!-- <input id="rotate-slide" class="wideslide"  type="range" min="0" max="360" value="0" step="0.1" style="display: none"/>
-    <input
-      type="checkbox"
-      class="TEMPHIDE"
-      id="shapeCheck"
-      name="option1"
-      value="shapes"
-      checked> Shapes
-    <input
-      type="checkbox"
-      class="TEMPHIDE"
-      id="stopCheck"
-      name="option2"
-      value="stops"> Stops
-    <input
-      type="checkbox"
-      class="TEMPHIDE"
-      id="busCheck"
-      name="option3"
-      value="buses"> Buses
-    <input
-      type="checkbox"
-      class="TEMPHIDE"
-      id="autoRunCheck"
-      name="option4"
-      value="autorun"> Run -->
+    <div class="select-wrapper">
+      <select id="speed">
+        <option value=".05">Real-ish</option>
+        <option value=".5">Quick</option>
+        <option value="3">Fast</option>
+        <option value="30">Faster</option>
+        <option value="600">Really fast</option>
+      </select>
+      <b>▼</b>
+    </div>
+
+    <input id="search" type="text" placeholder="Kennedy Plaza" autocomplete="false" />
+    <input id="search2" type="text" placeholder="Some other stop" />
+
+    <div id="autocomplete">
+    </div>
   </nav>
 
   <footer>
-    <!-- <input id="time-slide" class="wideslide" type="range" min="0" max="86400" value="0" step="1"/> -->
     <div id="timestamp">0:00am</div>
     <div class="timeline">
       <ul class="times">
@@ -128,13 +110,11 @@
   <div class="map-back">
     <div class="map-holder">
       <div class="rotate-holder">
-        <!-- Vector layers -->
         <svg id="map">
           <g class="shapes"></g>
           <g class="stops"></g>
           <g class="buses"></g>
         </svg>
-        <!-- Raster layers -->
       </div>
     </div>
   </div>
@@ -166,9 +146,10 @@
   <script src="js/panzoom.js"></script>
   <script src="js/timer.js"></script>
 
-  <!-- Root -->
+  <!-- Top controller -->
   <script src="js/map.js"></script>
 
+  <!-- App -->
   <script src="js/script.js"></script>
 
 </body>

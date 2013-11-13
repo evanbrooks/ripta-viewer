@@ -7,7 +7,7 @@ function StopControl(view, stopLayer) {
   // --------------
 
   this.create = refresh;
-  this.refresh = refresh;
+  this.refresh = refresh;  // function(){ return };
 
   function refresh() {
 

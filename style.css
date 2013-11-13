@@ -3,12 +3,18 @@ figure {
   margin: 0;
   padding: 0; }
 
+* {
+  font-family: inherit; }
+
 body, html {
   height: 100%;
   overflow: hidden; }
 
 body {
-  -webkit-transition: all 0.5s; }
+  -webkit-transition: all 0.5s;
+  background: #f7f7f7;
+  font-family: "Karla";
+  font-size: 14px; }
 
 * {
   -webkit-user-select: none; }
@@ -21,9 +27,7 @@ nav, footer {
   z-index: 999;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
-  box-sizing: border-box;
-  font-family: "Apercu Mono";
-  font-size: 12px; }
+  box-sizing: border-box; }
 
 nav {
   -webkit-transition: all 0.3s;
@@ -38,24 +42,30 @@ footer {
   bottom: 0;
   left: 0; }
 
-#speed {
+#speed, input {
   font-family: inherit;
   font-size: 1em;
   -webkit-appearance: none;
   border: none;
-  background: transparent;
   border-radius: 0;
-  margin-right: -35px;
   padding: 10px 45px 10px 15px;
-  background: rgba(0, 0, 0, 0.02); }
-  #speed:focus {
+  background: white; }
+  #speed:focus, input:focus {
     outline: 1px solid #12c2ff; }
-  #speed:hover {
+  #speed:hover, input:hover {
     background: rgba(0, 0, 0, 0.1); }
+
+#speed {
+  margin-right: -35px; }
   #speed + b {
-    font-size: 8px; }
+    font-size: 8px;
+    margin-right: 35px; }
+
+.select-wrapper {
+  float: right; }
 
 #play, #pause {
+  float: right;
   -webkit-transition: all 0.2s;
   text-decoration: none;
   color: black;
@@ -79,7 +89,8 @@ footer {
   stroke-width: 1;
   stroke: blue;
   fill: none;
-  stroke-dasharray: 1, 4; }
+  stroke-dasharray: 1, 4;
+  visibility: hidden; }
 
 #timestamp {
   position: absolute;
@@ -126,7 +137,7 @@ footer {
     .timeline .times > li {
       display: inline-block;
       list-style: none;
-      width: 250px;
+      width: 450px;
       position: relative;
       -webkit-text-rendering: optimizeLegibility;
       text-align: center; }
@@ -200,59 +211,68 @@ footer {
   width: 800px;
   cursor: -webkit-grab; }
 
-#mapCanvas {
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 800px;
-  width: 800px;
-  pointer-events: none; }
-
 .line {
   fill: none;
   stroke-width: 1;
   opacity: 0.2;
   -webkit-transition: all 1s;
-  stroke: red; }
+  stroke: red;
+  stroke-dasharray: 1, 2; }
   .line.selected {
     stroke-width: 0.15; }
+
+.zoom2 .line {
+  stroke-dasharray: none;
+  stroke-width: 1; }
 
 .bus > circle {
   fill: blue;
   -webkit-transition: all 0.3s; }
 .bus > text {
+  visibility: hidden;
   -webkit-transition: all 0.5s;
+  text-anchor: middle;
   opacity: 0;
   fill: blue;
-  font-family: Apercu Mono;
+  font-weight: bold;
   font-size: 10px; }
   .panning .bus > text {
     opacity: 0; }
-.bus:hover {
-  cursor: pointer; }
-  .bus:hover > text {
-    opacity: 1; }
 
 .zoom .bus > circle {
   fill: blue;
   stroke: blue;
-  stroke-width: 2; }
+  stroke-width: 1.5; }
 .zoom .bus > text {
   opacity: 1; }
-.zoom .bus:hover > circle {
-  stroke: blue;
-  stroke-width: 7; }
+
+.zoom2 .bus > circle {
+  fill: white;
+  stroke: white;
+  stroke-width: 5;
+  opacity: 1; }
+.zoom2 .bus > text {
+  visibility: visible;
+  opacity: 1; }
 
 .stop {
-  fill: green; }
+  fill: red;
+  visibility: hidden; }
 
-.zoom .stop {
-  fill: green;
-  stroke: green;
-  stroke-width: 2; }
+.zoom2 .stop {
+  fill: red;
+  visibility: visible;
+  stroke-width: 1; }
 
 .panning .label {
   display: none; }
 
 .TEMPHIDE {
   display: none !important; }
+
+#autocomplete {
+  position: absolute;
+  padding: 10px 15px; }
+
+.result {
+  font-size: 2em; }
