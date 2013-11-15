@@ -67,7 +67,7 @@ function Map(el) {
 
   // Start out zoomed into Kennedy plaza
   // ------
-  self.view.zoomTo(22, {x:570,y:265});
+  self.view.zoomTo(24, {x:570,y:265});
 
 
 

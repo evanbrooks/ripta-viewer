@@ -108,7 +108,12 @@
   <!-- Map -->
 
   <div class="map-back">
+    
+    <div id="imagelayer">
+    </div>
+
     <div class="map-holder">
+
       <div class="rotate-holder">
         <svg id="map">
           <g class="shapes"></g>
@@ -116,7 +121,26 @@
           <g class="buses"></g>
         </svg>
       </div>
+
+      <div id="stoplabel">
+        <h2>East Side Market Place</h2>
+        <h3>Next bus arrivals</h2>
+        <div class="stopentry">
+          <div class="time">6:24</div>
+          <div class="sign">22 Federal Hill</div>
+        </div>
+        <div class="stopentry">
+          <div class="time">30:16</div>
+          <div class="sign">72 Pawtucket</div>
+        </div>
+        <div class="stopentry">
+          <div class="time">1:05:00</div>
+          <div class="sign">60 Newport</div>
+        </div>
+      </div>
+
     </div>
+
   </div>
 
   <!-- Loading spinner -->
@@ -131,9 +155,10 @@
   <!-- Libraries -->
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
   <script src="http://d3js.org/d3.v3.min.js"></script>
+  <script src="js/polymaps.min.js"></script>
+  <script src="js/simplify.min.js"></script>
 
   <!-- Utilities -->
-  <script src="js/simplify.min.js"></script>
   <script src="js/misc.js"></script>
 
   <!-- Content controllers -->

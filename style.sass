@@ -7,7 +7,7 @@ figure
 	padding: 0
 
 *
-	font-family: inherit
+	font: inherit
 
 // Mixins
 // ------
@@ -44,7 +44,7 @@ body, html
 
 body
 	-webkit-transition: all 0.5s
-	background: #f7f7f7
+	background: #DDEAF1
 	font:
 		family: "Karla"
 		size: 14px
@@ -249,7 +249,7 @@ footer
 	height: 800px
 	width:  800px
 	//background: white
-	cursor: -webkit-grab
+	cursor: all-scroll
 
 
 // Lines
@@ -258,12 +258,12 @@ footer
 .line
 	fill: none
 	stroke-width: 1
-	opacity: 0.2
+	//opacity: 0.2
 	-webkit-transition: all 1s
-	stroke: red
-	stroke-dasharray: 1,2
+	stroke: white
+	//stroke-dasharray: 1,2
 	&.selected
-		stroke-width: 0.15
+		//stroke-width: 0.15
 
 .zoom2 .line
 	stroke-dasharray: none
@@ -308,13 +308,29 @@ footer
 		opacity: 1
 
 .stop
-	fill: red
+	fill: transparent
 	visibility: hidden
+	cursor: pointer
+
+
+.zoom, .zoom2
+	.stop
+		visibility: visible
+		stroke-width: 1
+		stroke: black
+		opacity: 0.1
+		&:hover
+			opacity: 1
+			stroke: black
+			fill: black
 
 .zoom2 .stop
-	fill: red
-	visibility: visible
-	stroke-width: 1
+	opacity: 0.3
+
+.zoom, .zoom2
+	.viewingstop
+		opacity: 1
+		fill: black
 
 .panning .label
 	display: none
@@ -328,3 +344,55 @@ footer
 
 .result
 	font-size: 2em
+
+
+#imagelayer
+	display: none
+	opacity: 0.5
+	position: absolute
+	top: 0
+	bottom: 0
+	height: 100%
+	left: 0
+	right: 0
+
+
+@-webkit-keyframes bouncein
+	0%
+		opacity: 0
+		-webkit-transform: scale(0.3)
+	100%
+		opacity: 1
+		-webkit-transform: scale(1)
+
+#stoplabel
+	position: fixed
+	-webkit-animation: bouncein 0.3s 
+	top: -10px
+	left: 20px
+	pointer-events: none
+	// -webkit-transition: all 0.3s
+	-webkit-transform-origin: top left
+	-webkit-transform: translate3d(200px, 200px, 0)
+	font-size: 18px
+	min-width: 300px
+	h2
+		font-weight: bold
+		// text-transform: uppercase
+	h3
+		font-size: 0.6em
+		letter-spacing: 0.05em
+		font-weight: bold
+		text-transform: uppercase
+		padding: 0.2em 0 0.5em 0
+	.stopentry
+		line-height: 1.3em
+		& + .stopentry
+			opacity: 0.5
+			& + .stopentry
+				opacity: 0.3
+	.time
+		float: left
+		width: 100px
+	.sign
+		// font-weight: bold

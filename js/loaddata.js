@@ -130,7 +130,7 @@ function loadData(callback) {
       stops = [];
 
       data.forEach(function(stop, i, arr) {
-        stops.push({name: stop.name, y: stop.lat, x: stop.lon});
+        stops.push({name: stop.name, y: stop.lat, x: stop.lon, id: stop.id});
       });
 
       // use the id as the array index

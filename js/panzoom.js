@@ -1,7 +1,7 @@
 function ViewControl(el, mapControl, mapsvg) {
   var isPanning = false
     , frame  = 1000 / 60 // ms per frame
-    , buffer = 10        // px on each side
+    , buffer = -100        // px on each side
     , start  = {x:0, y:0}
     , lastRedraw  = {x:0, y:0}
     , curr   = {x:0, y:0}
@@ -16,14 +16,16 @@ function ViewControl(el, mapControl, mapsvg) {
     , xlimit = 1400 * (agency.lon.max - agency.lon.min)
     , ylimit = 1400 * (agency.lat.max - agency.lat.min)
     , currZoom = 1
-    , w = $(window).width()
-    , h = $(window).height()
+    , w = this.w = $(window).width()
+    , h = this.h = $(window).height()
     , xMin   = mapControl.scale.x.min
     , yMin   = mapControl.scale.y.min
     , xMax   = mapControl.scale.x.max
     , yMax   = mapControl.scale.y.max;
 
+  var self = this;
   var view = { xMin: 0, xMax: xlimit, yMin: 0, yMax: ylimit};
+  self.getCurr = function() { return curr; };
 
 
   // Constructor
@@ -52,8 +54,8 @@ function ViewControl(el, mapControl, mapsvg) {
     });
 
     $(window).resize(function(){
-      w = w = $(window).width();
-      h = $(window).height();
+      w = this.w = $(window).width();
+      h = this.h = $(window).height();
     });
 
     $back.on( 'DOMMouseScroll mousewheel', function(e) {
@@ -114,6 +116,9 @@ function ViewControl(el, mapControl, mapsvg) {
 
     $container.tform(curr.x, curr.y);
 
+    //tilemap.center({lon: xScale.invert(w/2 - curr.x), lat: yScale.invert(h/2 - curr.y)}).zoom((currZoom + 40) / 4);
+
+
     delta = { x: lastRedraw.x - curr.x,
               y: lastRedraw.y - curr.y };
 
@@ -128,11 +133,32 @@ function ViewControl(el, mapControl, mapsvg) {
     }
   }
 
+  this.move_to = function(center) {
+    var target = center;
+    var dx = curr.x - center.x;
+    var dy = curr.y - center.y;
+
+    var counter = 5;
+
+    d3.timer(function(){
+      if (counter > 0) {
+        curr.x -= dx/5;
+        curr.y -= dy/5;
+        drawMap();
+        counter --;
+        return false;
+      }
+      else {
+        return true;
+      }
+    });
+  };
+
   function zoomTo(zoom, center){
 
     // mapControl.pause();
 
-    var zoomCenter = center || { x: $(window).width()/2, y: $(window).height()/2};
+    var zoomCenter = center || { x: w/2, y: h/2};
     currZoom = parseFloat(zoom);
     prevCenter = getCenter(center);
     xlimit = 1400 * (agency.lon.max - agency.lon.min) * zoom;
@@ -145,6 +171,7 @@ function ViewControl(el, mapControl, mapsvg) {
     curr.y = zoomCenter.y - prevCenter.y * ylimit;
 
     $container.tform(curr.x, curr.y);
+    //tilemap.center({lon: xScale.invert(w/2 - curr.x), lat: yScale.invert(h/2 - curr.y)}).zoom((currZoom + 40) / 4);
 
     $el.css({"width": xlimit, "height": ylimit});
 

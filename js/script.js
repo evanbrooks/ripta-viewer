@@ -4,6 +4,8 @@ var
   stops, stopsIndexed,
   shapes, shapesIndexed;
 
+var tilemap;
+
 
 // On document ready
 // -----------------
@@ -20,6 +22,19 @@ function setup() {
   m = new Map("#map");
 
   spinner.hide(); // When loading is complete
+
+  var po = org.polymaps;
+  tilemap = po.map()
+    .container(document.getElementById("imagelayer").appendChild(po.svg("svg")))
+    //.zoomRange([0, 9])
+    .zoom(11)
+    .add(po.image().url(po.url("http://{S}tile.cloudmade.com"
+    + "/4c5183a444874520adcf9176f6f55a0f" // http://cloudmade.com/register
+    + "/20760/256/{Z}/{X}/{Y}.png")
+    .hosts(["a.", "b.", "c.", ""])))
+    //.add(po.interact())
+    .add(po.compass().pan("none"));
+
 }
 
 
