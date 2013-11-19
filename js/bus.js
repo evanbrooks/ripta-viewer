@@ -1,7 +1,7 @@
 // Trips
 // -----
 
-function TripControl(view, busLayer) {
+function TripControl(map, view, busLayer) {
   var self = this;
   self.currentBus = [];
 
@@ -23,9 +23,9 @@ function TripControl(view, busLayer) {
   this.refresh = updatePos;
 
   this.redraw = function() {
-      stopControl.refresh();
-      tripControl.refresh();
-      shapeControl.refresh();
+      map.stopControl.refresh();
+      map.tripControl.refresh();
+      map.shapeControl.refresh();
   };
 
   this.getCurrentBus = function() {
@@ -53,9 +53,9 @@ function TripControl(view, busLayer) {
     get_true_position(self.currentBus);
     // console.timeEnd("Compute 'true' on-path data");
 
-    shapeControl.refresh();
+    map.shapeControl.refresh();
 
-    stopControl.refresh_stop_label();
+    map.stopControl.refresh_stop_label();
 
 
     // Apply data
@@ -85,7 +85,7 @@ function TripControl(view, busLayer) {
 
     // Move existing buses
     // -------------------
-    if (Math.abs(timer.currentTime - timer.prevTime) < 10 ) {
+    if (Math.abs(map.timer.currentTime - map.timer.prevTime) < 10 ) {
       transitionPos();
     }
     else transitionPos(); // larger time step? skip the transition
@@ -169,7 +169,7 @@ function TripControl(view, busLayer) {
     currentIntermShapes = [];
 
     //console.time("is running now");
-    tripsNow = trips.filter(timer.isRunningNow);
+    tripsNow = trips.filter(map.timer.isRunningNow);
     //console.timeEnd("is running now");
 
     // console.time("interpolate each");
@@ -253,7 +253,7 @@ function TripControl(view, busLayer) {
       var a_near = getPtOnShapeNear(aPoint, shapeid);
       var b_near = getPtOnShapeNear(bPoint, shapeid);
       var stops2 = {a: a_near, b: b_near };
-      var intermediate_shape = simplify(shapesIndexed[shapeid].slice(b_near.index, a_near.index + 1), shapeControl.smoothness);
+      var intermediate_shape = simplify(shapesIndexed[shapeid].slice(b_near.index, a_near.index + 1), map.shapeControl.smoothness);
 
       return { x: busLinear.x,
                y: busLinear.y,

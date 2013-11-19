@@ -1,7 +1,7 @@
 // Shapes
 // ------
 
-function ShapeControl(tripControl, shapeLayer, view) {
+function ShapeControl(map, view, shapeLayer) {
   var self = this;
   smoothStart = 0.002,
   self.smoothness = smoothStart;
@@ -24,7 +24,7 @@ function ShapeControl(tripControl, shapeLayer, view) {
     // Process data
     // ------------
     var now_shapes = [];
-    tripControl.getCurrentBus().map( function(bus) {
+    map.tripControl.getCurrentBus().map( function(bus) {
       bus_shape = shapesIndexed[bus.shape];
 
       visible_shape_portion = bus_shape.filter(view.isInView);

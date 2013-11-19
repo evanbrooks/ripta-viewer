@@ -26,45 +26,29 @@ function Map(el) {
   // ----------
 
   self.view = new ViewControl(el, self, map);
+  self.stopControl   = new StopControl(self.view, stopLayer);
+  self.tripControl   = new TripControl(self, self.view, busLayer),
+  self.shapeControl   = new ShapeControl(self, self.view, shapeLayer),
+  self.timer = new TimeControl(self.tripControl, self.view);
 
-   var stopControl   = new StopControl(self.view, stopLayer),
-       tripControl   = new TripControl(self.view, busLayer),
-      shapeControl   = new ShapeControl(tripControl, shapeLayer, self.view),
-             timer   = new TimeControl(tripControl, self.view);
-
-  tripControl.addStuff(shapeControl, timer, stopControl);
-  stopControl.addStuff(timer);
-
-  self.shapeControl = shapeControl;
-
-  shapeControl.create();
-
-  this.makeStops = function() {
-    stopControl.create();
-    stopControl.show();
-  };
-
-  this.makeBus = function(time){
-    tripControl.set(time);
-  };
+  self.stopControl.addStuff(self.timer);
+  self.shapeControl.create();
 
   this.redrawStopsShapes = function() {
-    shapeControl.refresh();
-    stopControl.refresh();
+    self.shapeControl.refresh();
+    self.stopControl.refresh();
   };
 
   this.redrawZoom = function(z) {
-    stopControl.refresh();
-    shapeControl.setSmooth(1/z);
-    tripControl.refresh();
+    self.stopControl.refresh();
+    self.shapeControl.setSmooth(1/z);
+    self.tripControl.refresh();
   };
 
-  this.timer = timer;
+  self.pause = self.timer.pause;
 
-  self.pause = timer.pause;
-
-  timer.play();
-  timer.goToNow();
+  self.timer.play();
+  self.timer.goToNow();
 
   // Start out zoomed into Kennedy plaza
   // ------
