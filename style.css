@@ -289,9 +289,6 @@ footer {
   stroke-width: 2;
   stroke: black; }
 
-.panning .label {
-  display: none; }
-
 .TEMPHIDE {
   display: none !important; }
 
@@ -332,9 +329,11 @@ footer {
 
 .label {
   position: fixed;
+  top: -10px;
+  left: 20px;
   pointer-events: none;
   -webkit-transform-origin: top left;
-  -webkit-transform: translate3d(200px, 200px, 0);
+  -webkit-transform: translate3d(-200px, -200px, 0);
   font-size: 18px;
   min-width: 300px; }
   .label h2 {
@@ -347,9 +346,7 @@ footer {
     padding: 0.2em 0 0.5em 0; }
 
 #stoplabel {
-  -webkit-animation: bouncein 0.3s;
-  top: -10px;
-  left: 20px; }
+  -webkit-animation: bouncein 0.3s; }
   #stoplabel .stopentry {
     -webkit-transform-origin: top left;
     line-height: 1.3em;
