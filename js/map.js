@@ -29,7 +29,7 @@ function Map(el) {
   self.stopControl   = new StopControl(self, self.view, stopLayer);
   self.busControl   = new BusControl(self, self.view, busLayer),
   self.shapeControl   = new ShapeControl(self, self.view, shapeLayer),
-  self.timer = new TimeControl(self.busControl, self.view);
+  self.timer = new TimeControl(self, self.busControl);
 
   self.shapeControl.create();
 
@@ -46,12 +46,14 @@ function Map(el) {
 
   self.pause = self.timer.pause;
 
-  self.timer.play();
-  self.timer.goToNow();
+  setTimeout(function(){
+    self.timer.play();
+    self.timer.goToNow();
 
-  // Start out zoomed into Kennedy plaza
-  // ------
-  self.view.zoomTo(24, {x:570,y:265});
+    // Start out zoomed into Kennedy plaza
+    // ------
+    self.view.zoomTo(24, {x:570,y:265});
+  }, 1000);
 
 
 

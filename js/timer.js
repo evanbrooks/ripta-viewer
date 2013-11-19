@@ -1,12 +1,11 @@
 // Time Control
 // ------------
 
-function TimeControl(busControl, viewControl) {
+function TimeControl(m, busControl) {
 
   var self = this;
   self.currentTime = new Date().getTime() / 1000;
   self.step = $("#speed").val();
-  self.sun = { rise: toSec(6), set: toSec(18) };
 
   var autoRun = false;
 
@@ -68,7 +67,7 @@ function TimeControl(busControl, viewControl) {
   };
 
   function timeStep() {
-    if ( viewControl.isPanning()) {
+    if ( m.view.isPanning()) {
       return;
     }
     if (!autoRun) return true;              // stop timer
@@ -169,11 +168,11 @@ function Timeline(tControl, busControl) {
       if (shift > 0) {
         shift -= 24 * hrUnit;
       }
-      if (shift < -48 * hrUnit + $(window).width() ) {
+      if (shift < -48 * hrUnit + m.view.w ) {
         shift += 24 * hrUnit;
       }
       el.tform(shift, 0);
-      centeredshift = shift - $(window).width()/2;
+      centeredshift = shift - m.view.w/2;
       t = tlStart + (-centeredshift/hrUnit * 60 * 60);
       t = t % (24 * 60 * 60);
       tControl.currentTime = t;
