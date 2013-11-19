@@ -32,6 +32,15 @@ function BusControl(map, view, busLayer) {
     return self.currentBus;
   }
 
+  self.get_bus_from_id = function(id) {
+    for (var i = 0; i < self.currentBus.length; i++) {
+      var this_bus = self.currentBus[i];
+      if (this_bus.id == id) {
+        return this_bus;
+      }
+    }
+    return false;
+  }
 
 
 

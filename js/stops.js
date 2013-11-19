@@ -35,7 +35,7 @@ function StopControl(map, view, stopLayer) {
       .attr("r", 4)
       .attr("class", "stop")
       .on("click", function(d, i){
-
+        d3.event.stopPropagation();
         stopLayer.selectAll(".viewingstop")
           .attr("class", "stop")
           .attr("r", 4);
@@ -128,12 +128,57 @@ function StopControl(map, view, stopLayer) {
       stoplist.selectAll(".time")
         .text(function(d, i) {return time_until(d.t, map.timer.currentTime)});
 
+
+      var upcoming_bus = selected_stop;
+      if (new_data[0] && map.busControl.get_bus_from_id(new_data[0].id)) {
+        upcoming_bus = map.busControl.get_bus_from_id(new_data[0].id);
+      }
+
+      self.nearest_bus_line([{
+        bus: upcoming_bus,
+        stop: selected_stop
+      }]);
     }
 
   };
 
 
+  self.nearest_bus_line = function(data) {
 
+    // Data
+    // -----
+    var near = stopLayer
+      .selectAll(".nearest-bus-line")
+      .data(data);
+
+
+    // Additions
+    // ----
+    near.enter()
+      .append("path").attr("class", "nearest-bus-line");
+      //.append("line").attr("class", "nearest-bus-line");
+
+    // Removals
+    // -----
+    near.exit()
+      .remove();
+
+    // Changes
+    // ----
+    near
+      .attr("d", diagonal);
+      // .attr("x2", function(d,i) { return xScale( d.bus.x )  })
+      // .attr("y2", function(d,i) { return yScale( d.bus.y )  })
+      // .attr("x1", function(d,i) { return xScale( d.stop.x ) })
+      // .attr("y1", function(d,i) { return yScale( d.stop.y ) });
+
+
+  };
+
+  var diagonal = d3.svg.diagonal()
+    .projection(function(d) {return [xScale(d.x), yScale(d.y)] })
+    .source(function(d) { return d.stop })
+    .target(function(d) { return d.bus  });
 
 
 

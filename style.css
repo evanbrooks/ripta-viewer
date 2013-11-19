@@ -228,6 +228,12 @@ footer {
   stroke-dasharray: none;
   stroke-width: 1; }
 
+.nearest-bus-line {
+  fill: none;
+  stroke-width: 1;
+  stroke: blue;
+  stroke-dasharray: 1, 3; }
+
 .bus > circle {
   fill: blue;
   -webkit-transition: all 0.3s; }
