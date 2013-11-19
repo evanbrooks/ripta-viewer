@@ -42,6 +42,15 @@ function BusControl(map, view, busLayer) {
     return false;
   }
 
+  self.clear_bus = function() {
+    is_viewing_detail = false;
+    busLayer.selectAll(".viewingbus")
+      .attr("class", "bus")
+      .attr("r", 4);
+    d3.select("#buslabel").attr("data-bus", "").attr("style",
+      "-webkit-transform: translate3d(" + 0 + "px, " + 0 + "px, 0px)");
+  }
+
 
 
   var currentStopInterps, currentStopInterps2, currentIntermShapes;
@@ -80,7 +89,7 @@ function BusControl(map, view, busLayer) {
       .append("g")
       .attr("class", "bus");
 
-    busEnter.append("circle").attr("r", 1.1);
+    busEnter.append("circle");
 
     busEnter.append("text")
         .text(function(d) { return d.route })
@@ -161,11 +170,20 @@ function BusControl(map, view, busLayer) {
       });
 
     bus_change.select("circle")
-      .attr("transform", function(d) { return "translate("+xScale(d.x)+","+yScale(d.y)+") rotate("+d.a+")"; });
-
+      .attr("transform", function(d) { return "translate("+xScale(d.x)+","+yScale(d.y)+") rotate("+d.a+")"; })
+      .attr("r", function(d, i) {
+        if (view.getZoom() > 22) {
+          return 3;
+        }
+        else {
+          return 1.1;
+        }
+      });
     bus_change.select("text")
         .attr("x", function(d) { return xScale(d.x) - 0 })
         .attr("y", function(d) { return yScale(d.y) + 2 });
+
+    refresh_bus_label();
   }
 
 
@@ -175,6 +193,26 @@ function BusControl(map, view, busLayer) {
 
   function show_bus_label(d, i) {
     map.stopControl.clear_stop();
+    var this_bus = self.get_bus_from_id(d.id);
+    var to = {x: - xScale(this_bus.x) + view.w / 2 - 150, y: - yScale(this_bus.y) + view.h / 2 - 100};
+    view.move_to(to);
+
+    el = d3.select("#buslabel");
+
+    el.attr("data-bus",this_bus.id);
+    el.select("h2").text(this_bus.sign.toLowerCase().capitalize());
+
+    el.attr("style",
+      "-webkit-transform: translate3d(" + xScale(this_bus.x) + "px, " + yScale(this_bus.y) + "px, 0px)");
+
+    refresh_bus_label();
+  }
+
+  function refresh_bus_label() {
+    el = d3.select("#buslabel");
+    var this_bus = self.get_bus_from_id(parseInt(el.attr("data-bus")));
+    el.attr("style",
+      "-webkit-transform: translate3d(" + xScale(this_bus.x) + "px, " + yScale(this_bus.y) + "px, 0px)");
   }
 
 

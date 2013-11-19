@@ -4,6 +4,7 @@
 function StopControl(map, view, stopLayer) {
   var self = this;
   var timer;
+  var is_viewing_detail = false;
 
   self.stopresults = [];
 
@@ -14,12 +15,14 @@ function StopControl(map, view, stopLayer) {
   this.refresh = refresh;  // function(){ return };
   
   self.clear_stop = function() {
-      stopLayer.selectAll(".viewingstop")
-        .attr("class", "stop")
-        .attr("r", 4);
-      d3.select("#stoplabel").attr("data-stop", "").attr("style",
-        "-webkit-transform: translate3d(" + 0 + "px, " + 0 + "px, 0px)");
-      stopLayer.selectAll(".nearest-bus-line").remove();
+    is_viewing_detail = false;
+    stopLayer.selectAll(".viewingstop")
+      .attr("class", "stop")
+      .attr("r", 4);
+    d3.select("#stoplabel").attr("data-stop", "").attr("style",
+      "-webkit-transform: translate3d(" + 0 + "px, " + 0 + "px, 0px)");
+    stopLayer.selectAll(".nearest-bus-line").remove();
+    document.title = "RIPTA";
   }
 
 
@@ -78,87 +81,88 @@ function StopControl(map, view, stopLayer) {
       })
 
 
-    self.refresh_stop_label();
+    // self.refresh_stop_label();
   }
 
 
 
-
-
-
-
   self.refresh_stop_label = function() {
-    el = d3.select("#stoplabel");
-    var selected_stop = stopsIndexed[parseInt(el.attr("data-stop"))];
+    if (is_viewing_detail) {
+      // console.log("refresh_stop_label");
 
-    // If the stop exists, and it's valid enought to have a name :/ ~~
-    if (selected_stop && selected_stop.name) {
+      el = d3.select("#stoplabel");
+      var selected_stop = stopsIndexed[parseInt(el.attr("data-stop"))];
 
-      // Move label into position
-      // ---------
-      el.attr("style",
-        "-webkit-transform: translate3d(" + xScale(selected_stop.x) + "px, " + yScale(selected_stop.y) + "px, 0px)");
-      
+      // If the stop exists, and it's valid enought to have a name :/ ~~
+      if (selected_stop && selected_stop.name) {
 
-      // Data
-      // -----
-      var new_data = self.stopresults
-        .filter(function(a) { return a.t > map.timer.currentTime - 60 }) // continue showing buses you  missed for 60s
-        .slice(0, 5);
+        // Move label into position
+        // ---------
+        el.attr("style",
+          "-webkit-transform: translate3d(" + xScale(selected_stop.x) + "px, " + yScale(selected_stop.y) + "px, 0px)");
+        
 
-      var stoplist = el
-        .selectAll(".stopentry")
-        .data(new_data, function(d) { if (d) return d.id; else return false; });
+        // Data
+        // -----
+        var new_data = self.stopresults
+          .filter(function(a) { return a.t > map.timer.currentTime - 60 }) // continue showing buses you  missed for 60s
+          .slice(0, 5);
 
-
-
-      // Additions
-      // ----
-      var newstop = stoplist.enter()
-        .append("div").attr("class", "stopentry");
-      
-      newstop.append("div").attr("class", "time").text(function(d, i) {return time_until(d.t, map.timer.currentTime)});
-      newstop.append("div").attr("class", "sign").text(function(d, i) {return d.sign});
+        var stoplist = el
+          .selectAll(".stopentry")
+          .data(new_data, function(d) { if (d) return d.id; else return false; });
 
 
 
-      // Removals
-      // -----
-      stoplist.exit()
-        .attr("class","shrink-away")
-        .transition()
-        .delay(1000)
-        .remove();
+        // Additions
+        // ----
+        var newstop = stoplist.enter()
+          .append("div").attr("class", "stopentry");
+        
+        newstop.append("div").attr("class", "time").text(function(d, i) {return time_until(d.t, map.timer.currentTime)});
+        newstop.append("div").attr("class", "sign").text(function(d, i) {return d.sign});
 
 
 
-      // Changes
-      // ----
-      stoplist.attr("class", function(d){ 
-        if (d.t > map.timer.currentTime + 60) return "stopentry";
-        else return "stopentry bus-arrived"; // highlight recent arrival
-      });
+        // Removals
+        // -----
+        stoplist.exit()
+          .attr("class","shrink-away")
+          .transition()
+          .delay(1000)
+          .remove();
 
-      stoplist.selectAll(".time")
-        .text(function(d, i) {return time_until(d.t, map.timer.currentTime)});
 
-      if (new_data[0]) document.title = time_until(new_data[0].t, map.timer.currentTime) + "┊" + new_data[0].sign;
+        // Changes
+        // ----
+        stoplist.attr("class", function(d){ 
+          if (d.t > map.timer.currentTime + 60) return "stopentry";
+          else return "stopentry bus-arrived"; // highlight recent arrival
+        });
 
-      var upcoming_bus = selected_stop;
-      if (new_data[0] && map.busControl.get_bus_from_id(new_data[0].id)) {
-        upcoming_bus = map.busControl.get_bus_from_id(new_data[0].id);
+        stoplist.selectAll(".time")
+          .text(function(d, i) {return time_until(d.t, map.timer.currentTime)});
+
+        if (new_data[0]) document.title = time_until(new_data[0].t, map.timer.currentTime) + "┊" + new_data[0].sign;
+
+        var upcoming_bus = selected_stop;
+        if (new_data[0] && map.busControl.get_bus_from_id(new_data[0].id)) {
+          upcoming_bus = map.busControl.get_bus_from_id(new_data[0].id);
+        }
+
+        self.nearest_bus_line([{
+          bus: upcoming_bus,
+          stop: selected_stop
+        }]);
       }
-
-      self.nearest_bus_line([{
-        bus: upcoming_bus,
-        stop: selected_stop
-      }]);
     }
 
   };
 
 
   self.nearest_bus_line = function(data) {
+
+    // console.log("redraw near")
 
     // Data
     // -----
@@ -198,6 +202,9 @@ function StopControl(map, view, stopLayer) {
 
 
   function show_stop_label(d, i) {
+    is_viewing_detail = true;
+    map.busControl.clear_bus();
+
     var to = {x: - xScale(d.x) + view.w / 2 - 150, y: - yScale(d.y) + view.h / 2 - 100};
     view.move_to(to);
 
