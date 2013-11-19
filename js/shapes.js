@@ -9,12 +9,44 @@ function ShapeControl(map, view, shapeLayer) {
   // Constructor
   // -----------
 
+  var highlighted_shape = shapeLayer.append("g").attr("class","shape-highlight");
+
   // Public methods
   // --------------
 
   this.setSmooth = setSmooth;
   this.create = refresh;
   this.refresh = refresh;
+
+
+  this.highlight = function(shapeid) {
+    var shape = shapesIndexed[shapeid];
+    var visible = shape.filter(view.isInView);
+    var simple = simplify(visible, self.smoothness);
+
+    // Apply new data
+    // --------------
+    var h_shape = highlighted_shape.selectAll(".highlight-line")
+      .data([simple]);
+
+    // Enter data
+    // ----------
+    h_shape.enter()
+      .append("path")
+      .attr("id", shapeid)  
+      .attr("class", "highlight-line");
+
+    // Exit data
+    // ---------
+    h_shape.exit()
+      .remove();
+
+    // Update all
+    // ----------
+    h_shape.attr("d", function(d, i) {
+      return pathMaker(d.value.simple);
+    });
+  };
 
   // Private methods
   // ---------------
