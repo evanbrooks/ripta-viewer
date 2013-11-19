@@ -13,7 +13,14 @@ function StopControl(map, view, stopLayer) {
   this.create = refresh;
   this.refresh = refresh;  // function(){ return };
   
-
+  self.clear_stop = function() {
+      stopLayer.selectAll(".viewingstop")
+        .attr("class", "stop")
+        .attr("r", 4);
+      d3.select("#stoplabel").attr("data-stop", "").attr("style",
+        "-webkit-transform: translate3d(" + 0 + "px, " + 0 + "px, 0px)");
+      stopLayer.selectAll(".nearest-bus-line").remove();
+  }
 
 
   function refresh() {
@@ -78,7 +85,8 @@ function StopControl(map, view, stopLayer) {
     el = d3.select("#stoplabel");
     var selected_stop = stopsIndexed[parseInt(el.attr("data-stop"))];
 
-    if (selected_stop) {
+    // If the stop exists, and it's valid enought to have a name :/ ~~
+    if (selected_stop && selected_stop.name) {
 
       // Move label into position
       // ---------
@@ -155,8 +163,8 @@ function StopControl(map, view, stopLayer) {
     // Additions
     // ----
     near.enter()
-      .append("path").attr("class", "nearest-bus-line");
-      //.append("line").attr("class", "nearest-bus-line");
+      //.append("path").attr("class", "nearest-bus-line");
+      .append("line").attr("class", "nearest-bus-line");
 
     // Removals
     // -----
@@ -166,19 +174,19 @@ function StopControl(map, view, stopLayer) {
     // Changes
     // ----
     near
-      .attr("d", diagonal);
-      // .attr("x2", function(d,i) { return xScale( d.bus.x )  })
-      // .attr("y2", function(d,i) { return yScale( d.bus.y )  })
-      // .attr("x1", function(d,i) { return xScale( d.stop.x ) })
-      // .attr("y1", function(d,i) { return yScale( d.stop.y ) });
+      //.attr("d", line_gen);
+      .attr("x2", function(d,i) { return xScale( d.bus.x )  })
+      .attr("y2", function(d,i) { return yScale( d.bus.y )  })
+      .attr("x1", function(d,i) { return xScale( d.stop.x ) /*+ 10*/ })
+      .attr("y1", function(d,i) { return yScale( d.stop.y ) /*+ 50*/ });
 
 
   };
 
-  var diagonal = d3.svg.diagonal()
-    .projection(function(d) {return [xScale(d.x), yScale(d.y)] })
-    .source(function(d) { return d.stop })
-    .target(function(d) { return d.bus  });
+  // var diagonal = d3.svg.diagonal()
+  //   .projection(function(d) {return [xScale(d.x), yScale(d.y)] })
+  //   .source(function(d) { return d.stop })
+  //   .target(function(d) { return d.bus  });
 
 
 
