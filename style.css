@@ -333,10 +333,6 @@ footer {
     -webkit-transform-origin: top left;
     line-height: 1.3em;
     height: 25px; }
-    #stoplabel .stopentry + .stopentry {
-      color: rgba(0, 0, 0, 0.5); }
-      #stoplabel .stopentry + .stopentry + .stopentry {
-        color: rgba(0, 0, 0, 0.3); }
   #stoplabel .time {
     float: left;
     width: 80px; }

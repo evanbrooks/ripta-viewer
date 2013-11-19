@@ -81,7 +81,7 @@ function StopControl(view, stopLayer, mouse) {
       
 
       var new_data = self.stopresults
-        .filter(function(a) { return a.t > timer.currentTime - 60 })
+        .filter(function(a) { return a.t > timer.currentTime - 60 }) // continue showing buses you  missed for 60s
         .slice(0, 5);
 
       // Data
@@ -110,21 +110,14 @@ function StopControl(view, stopLayer, mouse) {
       // Changes
       // ----
       stoplist.attr("class", function(d){ 
-        if (d.t > timer.currentTime) return "stopentry";
-        else return "stopentry bus-arrived";
+        if (d.t > timer.currentTime + 30) return "stopentry";
+        else return "stopentry bus-arrived"; // highlight recent arrival
       });
 
       stoplist.selectAll(".time")
         .text(function(d, i) {return time_until(d.t, timer.currentTime)});
 
     }
-
-    // var timelist = $el.find(".time");
-    // $.each(timelist, function(i, time){
-    //   var t = parseInt($(time).attr("data-arrival"));
-    //   var diff = time_until(t, timer.currentTime);
-    //   $(time).html(diff);
-    // });
 
   };
 
@@ -155,35 +148,7 @@ function StopControl(view, stopLayer, mouse) {
       return a.t - b.t;
     });
 
-    //var html = "";
-    // var firstresults = self.stopresults.slice(0, 5);
-    // firstresults.forEach(function(result) {
-    //   html += ""
-    //     + '<li class="stopentry">\n'
-    //     + '  <div class="time" data-arrival="' + result.t + '">' + time_until(result.t, timer.currentTime) + '</div>\n'
-    //     + '  <div class="sign">' + result.sign + '</div>\n'
-    //     + '</li>\n';
-    // });
-    // $el.find(".stoplist").html(html);
-
     self.refresh_stop_label();
   }
-
-  // $("body").mousemove(function(event){
-  //   var mouse = { x: event.pageX,
-  //                 y: event.pageY };
-
-  //   if (self.stopdata) {          
-  //     self.stopdata
-  //       .attr("r", function(d, i){
-  //         var dist = getDist({x: xScale(d.x) + view.getCurr().x, y: yScale(d.y) + view.getCurr().y}, mouse);
-  //         return (100 / (dist + 100) * 5);
-  //         //      if (dist < 50) return 5;
-  //         // else if (dist < 100) return 3;
-  //         // else if (dist < 200) return 2;
-  //         // else return 1;
-  //       });
-  //   }
-  // });
 
 }
