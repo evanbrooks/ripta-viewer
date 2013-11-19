@@ -26,12 +26,11 @@ function Map(el) {
   // ----------
 
   self.view = new ViewControl(el, self, map);
-  self.stopControl   = new StopControl(self.view, stopLayer);
+  self.stopControl   = new StopControl(self, self.view, stopLayer);
   self.tripControl   = new TripControl(self, self.view, busLayer),
   self.shapeControl   = new ShapeControl(self, self.view, shapeLayer),
   self.timer = new TimeControl(self.tripControl, self.view);
 
-  self.stopControl.addStuff(self.timer);
   self.shapeControl.create();
 
   this.redrawStopsShapes = function() {

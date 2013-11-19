@@ -1,7 +1,7 @@
 // Stops
 // -----
 
-function StopControl(view, stopLayer, mouse) {
+function StopControl(map, view, stopLayer) {
   var self = this;
   var timer;
 
@@ -13,9 +13,8 @@ function StopControl(view, stopLayer, mouse) {
   this.create = refresh;
   this.refresh = refresh;  // function(){ return };
   
-  this.addStuff = function(t) {
-    timer = t;
-  };
+
+
 
   function refresh() {
 
@@ -69,6 +68,12 @@ function StopControl(view, stopLayer, mouse) {
     self.refresh_stop_label();
   }
 
+
+
+
+
+
+
   self.refresh_stop_label = function() {
     $el = $("#stoplabel");
     el = d3.select("#stoplabel");
@@ -81,7 +86,7 @@ function StopControl(view, stopLayer, mouse) {
       
 
       var new_data = self.stopresults
-        .filter(function(a) { return a.t > timer.currentTime - 60 }) // continue showing buses you  missed for 60s
+        .filter(function(a) { return a.t > map.timer.currentTime - 60 }) // continue showing buses you  missed for 60s
         .slice(0, 5);
 
       // Data
@@ -96,7 +101,7 @@ function StopControl(view, stopLayer, mouse) {
       var newstop = stoplist.enter()
         .append("div").attr("class", "stopentry");
       
-      newstop.append("div").attr("class", "time").text(function(d, i) {return time_until(d.t, timer.currentTime)});
+      newstop.append("div").attr("class", "time").text(function(d, i) {return time_until(d.t, map.timer.currentTime)});
       newstop.append("div").attr("class", "sign").text(function(d, i) {return d.sign});
 
       // Removals
@@ -110,16 +115,20 @@ function StopControl(view, stopLayer, mouse) {
       // Changes
       // ----
       stoplist.attr("class", function(d){ 
-        if (d.t > timer.currentTime + 60) return "stopentry";
+        if (d.t > map.timer.currentTime + 60) return "stopentry";
         else return "stopentry bus-arrived"; // highlight recent arrival
       });
 
       stoplist.selectAll(".time")
-        .text(function(d, i) {return time_until(d.t, timer.currentTime)});
+        .text(function(d, i) {return time_until(d.t, map.timer.currentTime)});
 
     }
 
   };
+
+
+
+
 
 
   function show_stop_label(d, i) {
@@ -150,5 +159,10 @@ function StopControl(view, stopLayer, mouse) {
 
     self.refresh_stop_label();
   }
+
+
+
+
+
 
 }
