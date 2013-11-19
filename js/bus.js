@@ -152,13 +152,18 @@ function BusControl(map, view, busLayer) {
 
 
   function transitionPos() {
-    busLayer.selectAll(".bus").select("circle")
-      //.transition()
-      //.duration(200)
-      .attr("transform",
-        function(d) {
-          return "translate("+xScale(d.x)+","+yScale(d.y)+") rotate("+d.a+")"; });
-    busLayer.selectAll(".bus").select("text")
+    var bus_change = busLayer.selectAll(".bus")
+      .on("click", function(d, i){
+        d3.event.stopPropagation();
+        busLayer.selectAll(".viewing-bus").attr("class", "bus");
+        d3.select(this).attr("class", "bus viewing-bus")
+        show_bus_label(d, i);
+      });
+
+    bus_change.select("circle")
+      .attr("transform", function(d) { return "translate("+xScale(d.x)+","+yScale(d.y)+") rotate("+d.a+")"; });
+
+    bus_change.select("text")
         .attr("x", function(d) { return xScale(d.x) - 0 })
         .attr("y", function(d) { return yScale(d.y) + 2 });
   }
@@ -168,7 +173,9 @@ function BusControl(map, view, busLayer) {
 
 
 
-
+  function show_bus_label(d, i) {
+    map.stopControl.clear_stop();
+  }
 
 
   function getData(time) {

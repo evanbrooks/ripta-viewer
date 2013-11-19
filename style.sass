@@ -287,12 +287,17 @@ footer
 // -----
 
 .bus
+	cursor: pointer 
 	&> circle
 		fill: blue
 		-webkit-transition: all 0.3s
+	&:hover > circle
+		fill: white
+		stroke: blue
+		stroke-width: 1
 	&> text
 		visibility: hidden
-		-webkit-transition: all 0.5s
+		-webkit-transition: all 0.3s
 		//display: none
 		text-anchor: middle
 		opacity: 0
@@ -320,28 +325,26 @@ footer
 	&> text
 		visibility: visible
 		opacity: 1
+	&:hover > text
+		font-size: 24px
 
 .stop
 	fill: transparent
-	visibility: hidden
 	cursor: pointer
-
-
-.zoom2
-	.stop
-		visibility: visible
-		stroke-width: 1
-		stroke: black
-		opacity: 0.1
-		&:hover
-			opacity: 1
-			stroke: black
-			fill: black
-
-.viewingstop, .zoom2 .viewingstop
 	visibility: visible
+	stroke-width: 1
+	stroke: white
+	opacity: 1
+	&:hover
+		opacity: 1
+		stroke: black
+		fill: black
+
+.viewingstop
 	opacity: 1
 	stroke-width: 2
+	stroke: black
+
 
 .panning .label
 	display: none
@@ -384,13 +387,9 @@ footer
 		-webkit-transform: scale(1)
 
 
-#stoplabel
+.label
 	position: fixed
-	-webkit-animation: bouncein 0.3s 
-	top: -10px
-	left: 20px
 	pointer-events: none
-	//-webkit-transition: all 0.3s
 	-webkit-transform-origin: top left
 	-webkit-transform: translate3d(200px, 200px, 0)
 	font-size: 18px
@@ -404,6 +403,12 @@ footer
 		font-weight: bold
 		text-transform: uppercase
 		padding: 0.2em 0 0.5em 0
+
+#stoplabel
+	-webkit-animation: bouncein 0.3s 
+	top: -10px
+	left: 20px
+	//-webkit-transition: all 0.3s
 	.stopentry
 		-webkit-transform-origin: top left
 		//-webkit-animation: bouncein 0.4s 
@@ -418,9 +423,6 @@ footer
 		width: 80px
 	.sign
 		// font-weight: bold
-
-.stoplist
-	list-style: none
 
 @-webkit-keyframes shrinkrow
 	0%

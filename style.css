@@ -234,19 +234,25 @@ footer {
   stroke: blue;
   stroke-dasharray: 1, 3; }
 
-.bus > circle {
-  fill: blue;
-  -webkit-transition: all 0.3s; }
-.bus > text {
-  visibility: hidden;
-  -webkit-transition: all 0.5s;
-  text-anchor: middle;
-  opacity: 0;
-  fill: blue;
-  font-weight: bold;
-  font-size: 10px; }
-  .panning .bus > text {
-    opacity: 0; }
+.bus {
+  cursor: pointer; }
+  .bus > circle {
+    fill: blue;
+    -webkit-transition: all 0.3s; }
+  .bus:hover > circle {
+    fill: white;
+    stroke: blue;
+    stroke-width: 1; }
+  .bus > text {
+    visibility: hidden;
+    -webkit-transition: all 0.3s;
+    text-anchor: middle;
+    opacity: 0;
+    fill: blue;
+    font-weight: bold;
+    font-size: 10px; }
+    .panning .bus > text {
+      opacity: 0; }
 
 .zoom .bus > circle {
   fill: blue;
@@ -263,26 +269,25 @@ footer {
 .zoom2 .bus > text {
   visibility: visible;
   opacity: 1; }
+.zoom2 .bus:hover > text {
+  font-size: 24px; }
 
 .stop {
   fill: transparent;
-  visibility: hidden;
-  cursor: pointer; }
-
-.zoom2 .stop {
+  cursor: pointer;
   visibility: visible;
   stroke-width: 1;
-  stroke: black;
-  opacity: 0.1; }
-  .zoom2 .stop:hover {
+  stroke: white;
+  opacity: 1; }
+  .stop:hover {
     opacity: 1;
     stroke: black;
     fill: black; }
 
-.viewingstop, .zoom2 .viewingstop {
-  visibility: visible;
+.viewingstop {
   opacity: 1;
-  stroke-width: 2; }
+  stroke-width: 2;
+  stroke: black; }
 
 .panning .label {
   display: none; }
@@ -325,24 +330,26 @@ footer {
     opacity: 1;
     -webkit-transform: scale(1); } }
 
-#stoplabel {
+.label {
   position: fixed;
-  -webkit-animation: bouncein 0.3s;
-  top: -10px;
-  left: 20px;
   pointer-events: none;
   -webkit-transform-origin: top left;
   -webkit-transform: translate3d(200px, 200px, 0);
   font-size: 18px;
   min-width: 300px; }
-  #stoplabel h2 {
+  .label h2 {
     font-weight: bold; }
-  #stoplabel h3 {
+  .label h3 {
     font-size: 0.6em;
     letter-spacing: 0.05em;
     font-weight: bold;
     text-transform: uppercase;
     padding: 0.2em 0 0.5em 0; }
+
+#stoplabel {
+  -webkit-animation: bouncein 0.3s;
+  top: -10px;
+  left: 20px; }
   #stoplabel .stopentry {
     -webkit-transform-origin: top left;
     line-height: 1.3em;
@@ -350,9 +357,6 @@ footer {
   #stoplabel .time {
     float: left;
     width: 80px; }
-
-.stoplist {
-  list-style: none; }
 
 @-webkit-keyframes shrinkrow {
   0% {

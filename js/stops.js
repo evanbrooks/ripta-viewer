@@ -27,7 +27,13 @@ function StopControl(map, view, stopLayer) {
 
     // Process data
     // ------------
-    visibleStops = stops.filter(view.isInView);
+    var visibleStops;
+    if (map.view.getZoom() > 15) {
+      visibleStops = stops.filter(view.isInView);
+    }
+    else {
+      visibleStops = [];
+    }
 
     // Apply data
     // ----------
@@ -136,6 +142,7 @@ function StopControl(map, view, stopLayer) {
       stoplist.selectAll(".time")
         .text(function(d, i) {return time_until(d.t, map.timer.currentTime)});
 
+      if (new_data[0]) document.title = time_until(new_data[0].t, map.timer.currentTime) + "┊" + new_data[0].sign;
 
       var upcoming_bus = selected_stop;
       if (new_data[0] && map.busControl.get_bus_from_id(new_data[0].id)) {
