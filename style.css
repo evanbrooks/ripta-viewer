@@ -263,19 +263,20 @@ footer {
   visibility: hidden;
   cursor: pointer; }
 
-.zoom .stop, .zoom2 .stop {
+.zoom2 .stop {
   visibility: visible;
   stroke-width: 1;
   stroke: black;
   opacity: 0.1; }
-  .zoom .stop:hover, .zoom2 .stop:hover {
+  .zoom2 .stop:hover {
     opacity: 1;
     stroke: black;
     fill: black; }
 
-.zoom .viewingstop, .zoom2 .viewingstop {
+.viewingstop, .zoom2 .viewingstop {
+  visibility: visible;
   opacity: 1;
-  fill: black; }
+  stroke-width: 2; }
 
 .panning .label {
   display: none; }
