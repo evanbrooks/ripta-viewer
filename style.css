@@ -16,6 +16,9 @@ body {
   font-family: "Karla";
   font-size: 14px; }
 
+.paused {
+  background: #dddddd; }
+
 * {
   -webkit-user-select: none; }
 
