@@ -65,15 +65,19 @@ footer {
   float: right; }
 
 #play, #pause {
-  float: right;
   -webkit-transition: all 0.2s;
   text-decoration: none;
+  width: 50px;
+  text-align: center;
   color: black;
   padding: 10px 15px;
   background: rgba(0, 0, 0, 0.05);
   display: inline-block; }
   #play:hover, #pause:hover {
     background: rgba(0, 0, 0, 0.1); }
+
+#play {
+  background: white; }
 
 .loading #timestamp {
   -webkit-transform: translate3d(0, 100px, 0); }

@@ -110,7 +110,7 @@ function StopControl(view, stopLayer, mouse) {
       // Changes
       // ----
       stoplist.attr("class", function(d){ 
-        if (d.t > timer.currentTime + 30) return "stopentry";
+        if (d.t > timer.currentTime + 60) return "stopentry";
         else return "stopentry bus-arrived"; // highlight recent arrival
       });
 

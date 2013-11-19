@@ -39,6 +39,12 @@ function TimeControl(tripControl, viewControl) {
       self.step = parseFloat(this.value);
       //console.log(self.step);
     });
+    $(document).keyup(function(evt) {
+      if (evt.keyCode == 32) {
+        if (autoRun) self.pause();
+        else self.play();
+      }
+    });
   }
 
   this.play = function() {
