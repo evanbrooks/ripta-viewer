@@ -27,9 +27,9 @@ function Map(el) {
 
   self.view = new ViewControl(el, self, map);
   self.stopControl   = new StopControl(self, self.view, stopLayer);
-  self.tripControl   = new TripControl(self, self.view, busLayer),
+  self.busControl   = new BusControl(self, self.view, busLayer),
   self.shapeControl   = new ShapeControl(self, self.view, shapeLayer),
-  self.timer = new TimeControl(self.tripControl, self.view);
+  self.timer = new TimeControl(self.busControl, self.view);
 
   self.shapeControl.create();
 
@@ -41,7 +41,7 @@ function Map(el) {
   this.redrawZoom = function(z) {
     self.stopControl.refresh();
     self.shapeControl.setSmooth(1/z);
-    self.tripControl.refresh();
+    self.busControl.refresh();
   };
 
   self.pause = self.timer.pause;

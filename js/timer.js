@@ -1,7 +1,7 @@
 // Time Control
 // ------------
 
-function TimeControl(tripControl, viewControl) {
+function TimeControl(busControl, viewControl) {
 
   var self = this;
   self.currentTime = new Date().getTime() / 1000;
@@ -14,14 +14,14 @@ function TimeControl(tripControl, viewControl) {
   // -----------
 
   bindEvents();
-  self.timeline = new Timeline(self, tripControl);
+  self.timeline = new Timeline(self, busControl);
 
   // Private methods
   // ---------------
   function bindEvents() {
     $("#time-slide").change(function(e){
       self.currentTime = this.value;
-      tripControl.set(self.currentTime);
+      busControl.set(self.currentTime);
        $("#timestamp").html(self.currentTime +" - "+ toTime(self.currentTime));
       //colorize();
     });
@@ -89,7 +89,7 @@ function TimeControl(tripControl, viewControl) {
 
 
 
-function Timeline(tControl, tripControl) {
+function Timeline(tControl, busControl) {
   var self = this
   , frame  = 1000 / 60      // ms per frame
   , vel = 0
@@ -177,7 +177,7 @@ function Timeline(tControl, tripControl) {
       t = tlStart + (-centeredshift/hrUnit * 60 * 60);
       t = t % (24 * 60 * 60);
       tControl.currentTime = t;
-      tripControl.set(t);
+      busControl.set(t);
       $("#timestamp").html(toTime(tControl.currentTime));
   };
 

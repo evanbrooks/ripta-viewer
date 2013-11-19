@@ -24,7 +24,7 @@ function ShapeControl(map, view, shapeLayer) {
     // Process data
     // ------------
     var now_shapes = [];
-    map.tripControl.getCurrentBus().map( function(bus) {
+    map.busControl.getCurrentBus().map( function(bus) {
       bus_shape = shapesIndexed[bus.shape];
 
       visible_shape_portion = bus_shape.filter(view.isInView);

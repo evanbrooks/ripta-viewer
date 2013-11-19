@@ -1,7 +1,7 @@
 // Trips
 // -----
 
-function TripControl(map, view, busLayer) {
+function BusControl(map, view, busLayer) {
   var self = this;
   self.currentBus = [];
 
@@ -24,7 +24,7 @@ function TripControl(map, view, busLayer) {
 
   this.redraw = function() {
       map.stopControl.refresh();
-      map.tripControl.refresh();
+      map.busControl.refresh();
       map.shapeControl.refresh();
   };
 
