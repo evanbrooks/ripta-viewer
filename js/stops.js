@@ -75,25 +75,27 @@ function StopControl(map, view, stopLayer) {
 
 
   self.refresh_stop_label = function() {
-    $el = $("#stoplabel");
     el = d3.select("#stoplabel");
-
     var selected_stop = stopsIndexed[parseInt(el.attr("data-stop"))];
 
     if (selected_stop) {
+
+      // Move label into position
+      // ---------
       el.attr("style",
         "-webkit-transform: translate3d(" + xScale(selected_stop.x) + "px, " + yScale(selected_stop.y) + "px, 0px)");
       
 
+      // Data
+      // -----
       var new_data = self.stopresults
         .filter(function(a) { return a.t > map.timer.currentTime - 60 }) // continue showing buses you  missed for 60s
         .slice(0, 5);
 
-      // Data
-      // -----
       var stoplist = el
         .selectAll(".stopentry")
         .data(new_data, function(d) { if (d) return d.id; else return false; });
+
 
 
       // Additions
@@ -104,6 +106,8 @@ function StopControl(map, view, stopLayer) {
       newstop.append("div").attr("class", "time").text(function(d, i) {return time_until(d.t, map.timer.currentTime)});
       newstop.append("div").attr("class", "sign").text(function(d, i) {return d.sign});
 
+
+
       // Removals
       // -----
       stoplist.exit()
@@ -111,6 +115,8 @@ function StopControl(map, view, stopLayer) {
         .transition()
         .delay(1000)
         .remove();
+
+
 
       // Changes
       // ----
@@ -135,10 +141,10 @@ function StopControl(map, view, stopLayer) {
     var to = {x: - xScale(d.x) + view.w / 2 - 150, y: - yScale(d.y) + view.h / 2 - 100};
     view.move_to(to);
 
-    $el = $("#stoplabel");
-    $el.attr("data-stop",d.id);
-    $el.find("h2").html(d.name.toLowerCase().capitalize());
-    $el.tform(xScale(d.x), yScale(d.y));
+    el = d3.select("#stoplabel");
+
+    el.attr("data-stop",d.id);
+    el.select("h2").text(d.name.toLowerCase().capitalize());
 
     self.stopresults = [];
     trips.forEach(function(tr){
