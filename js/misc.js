@@ -53,6 +53,25 @@ function toTime(s) {
   return time;
 }
 
+function time_until(s1, s2) {
+  var s = s1 - s2;
+  var hr  = parseInt(s / (60 * 60), 10);
+  var min = parseInt((s - 60 * 60 * hr) / 60, 10);
+  var sec = parseInt((s - 60 * 60 * hr - 60*min), 10);
+
+  if (hr < 1 && min < 1 ) return sec + "s";
+  else if (hr < 1 && min < 5 ) return min + "m " + sec + "s";
+  else if (hr < 1 ) return min + "m";
+  else if (hr < 6 ) return hr + "h " + min + "m";
+
+  else 
+  if (min < 10) min = "0" + min;
+  if (sec < 10) sec = "0" + sec;
+
+  var time = hr + ":" + min + ":" + sec;
+  return time;
+}
+
 
 // --------------------------------------------------------
 

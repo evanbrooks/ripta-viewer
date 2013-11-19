@@ -10,9 +10,10 @@ function TripControl(view, busLayer) {
   // --------------
 
   var timer, shapeControl;
-  this.addStuff = function(s, t) {
+  this.addStuff = function(s, t, stop) {
     shapeControl = s;
     timer = t;
+    stopControl = stop;
   }
 
   this.set = function(time) {
@@ -53,6 +54,8 @@ function TripControl(view, busLayer) {
     // console.timeEnd("Compute 'true' on-path data");
 
     shapeControl.refresh();
+
+    stopControl.refresh_stop_label();
 
 
     // Apply data
@@ -301,6 +304,9 @@ function TripControl(view, busLayer) {
 
   function shapeInterpolate(t, pt1, pt2, shapeid) {
       // console.log(shapeid);
+      if (t > 0.9) t = 1;
+      else t = t * 1.111111111;
+
       var aPercentOfPath = getPtOnShapeNear(pt1, shapeid).percent
         , bPercentOfPath = getPtOnShapeNear(pt2, shapeid).percent
         , percentOfPath_range = aPercentOfPath - bPercentOfPath

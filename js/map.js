@@ -32,7 +32,8 @@ function Map(el) {
       shapeControl   = new ShapeControl(tripControl, shapeLayer, self.view),
              timer   = new TimeControl(tripControl, self.view);
 
-  tripControl.addStuff(shapeControl, timer);
+  tripControl.addStuff(shapeControl, timer, stopControl);
+  stopControl.addStuff(timer);
 
   self.shapeControl = shapeControl;
 

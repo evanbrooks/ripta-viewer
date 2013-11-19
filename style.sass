@@ -324,9 +324,6 @@ footer
 			stroke: black
 			fill: black
 
-.zoom2 .stop
-	opacity: 0.3
-
 .zoom, .zoom2
 	.viewingstop
 		opacity: 1
@@ -360,10 +357,18 @@ footer
 @-webkit-keyframes bouncein
 	0%
 		opacity: 0
+		height: 0
 		-webkit-transform: scale(0.3)
+	50%
+		opacity: 1
+		-webkit-transform: scale(1.2)
+	80%
+		opacity: 1
+		-webkit-transform: scale(0.96)
 	100%
 		opacity: 1
 		-webkit-transform: scale(1)
+
 
 #stoplabel
 	position: fixed
@@ -371,7 +376,7 @@ footer
 	top: -10px
 	left: 20px
 	pointer-events: none
-	// -webkit-transition: all 0.3s
+	//-webkit-transition: all 0.3s
 	-webkit-transform-origin: top left
 	-webkit-transform: translate3d(200px, 200px, 0)
 	font-size: 18px
@@ -386,13 +391,36 @@ footer
 		text-transform: uppercase
 		padding: 0.2em 0 0.5em 0
 	.stopentry
+		-webkit-transform-origin: top left
+		//-webkit-animation: bouncein 0.4s 
 		line-height: 1.3em
+		height: 25px
 		& + .stopentry
-			opacity: 0.5
+			color: rgba(0,0,0,0.5)
 			& + .stopentry
-				opacity: 0.3
+				color: rgba(0,0,0,0.3)
 	.time
 		float: left
-		width: 100px
+		width: 80px
 	.sign
 		// font-weight: bold
+
+.stoplist
+	list-style: none
+
+@-webkit-keyframes shrinkrow
+	0%
+		height: 25px
+		opacity: 1
+	100%
+		height: 0px
+		opacity: 0
+
+.shrink-away
+	-webkit-animation: shrinkrow 0.2s
+	overflow: hidden
+	height: 0
+	opacity: 0
+
+.bus-arrived
+	color: green

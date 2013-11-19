@@ -3,6 +3,9 @@
 
 function StopControl(view, stopLayer, mouse) {
   var self = this;
+  var timer;
+
+  self.stopresults = [];
 
   // Public methods
   // --------------
@@ -10,6 +13,10 @@ function StopControl(view, stopLayer, mouse) {
   this.create = refresh;
   this.refresh = refresh;  // function(){ return };
   
+  this.addStuff = function(t) {
+    timer = t;
+  };
+
   function refresh() {
 
     // Process data
@@ -37,7 +44,7 @@ function StopControl(view, stopLayer, mouse) {
         d3.select(this)
           .attr("class", "stop viewingstop")
           .attr("r", 4);
-        show_stop(d, i);
+        show_stop_label(d, i);
 
       });
 
@@ -47,27 +54,119 @@ function StopControl(view, stopLayer, mouse) {
 
     // Adjust stop circles
     // ------------------
+    var zoom = view.getZoom();
     self.stopdata
       .attr("cx", function(d) { return xScale(d.x) })
-      .attr("cy", function(d) { return yScale(d.y) });
+      .attr("cy", function(d) { return yScale(d.y) })
+      .transition()
+      .duration(500)
+      .attr("r", function(d, i){
+        if (zoom > 25) return 6;
+        else return 3;
+      })
 
-    $el = $("#stoplabel");
-    var selected_stop = stopsIndexed[parseInt($el.attr("data-stop"))];
-    if (selected_stop) {
-      $el.tform(xScale(selected_stop.x), yScale(selected_stop.y)); 
-    }
+
+    self.refresh_stop_label();
   }
 
-  function show_stop(d, i) {
+  self.refresh_stop_label = function() {
+    $el = $("#stoplabel");
+    el = d3.select("#stoplabel");
+
+    var selected_stop = stopsIndexed[parseInt(el.attr("data-stop"))];
+
+    if (selected_stop) {
+      el.attr("style",
+        "-webkit-transform: translate3d(" + xScale(selected_stop.x) + "px, " + yScale(selected_stop.y) + "px, 0px)");
+      
+
+      var new_data = self.stopresults
+        .filter(function(a) { return a.t > timer.currentTime - 60 })
+        .slice(0, 5);
+
+      // Data
+      // -----
+      var stoplist = el
+        .selectAll(".stopentry")
+        .data(new_data, function(d) { if (d) return d.id; else return false; });
+
+
+      // Additions
+      // ----
+      var newstop = stoplist.enter()
+        .append("div").attr("class", "stopentry");
+      
+      newstop.append("div").attr("class", "time").text(function(d, i) {return time_until(d.t, timer.currentTime)});
+      newstop.append("div").attr("class", "sign").text(function(d, i) {return d.sign});
+
+      // Removals
+      // -----
+      stoplist.exit()
+        .attr("class","shrink-away")
+        .transition()
+        .delay(1000)
+        .remove();
+
+      // Changes
+      // ----
+      stoplist.attr("class", function(d){ 
+        if (d.t > timer.currentTime) return "stopentry";
+        else return "stopentry bus-arrived";
+      });
+
+      stoplist.selectAll(".time")
+        .text(function(d, i) {return time_until(d.t, timer.currentTime)});
+
+    }
+
+    // var timelist = $el.find(".time");
+    // $.each(timelist, function(i, time){
+    //   var t = parseInt($(time).attr("data-arrival"));
+    //   var diff = time_until(t, timer.currentTime);
+    //   $(time).html(diff);
+    // });
+
+  };
+
+
+  function show_stop_label(d, i) {
     var to = {x: - xScale(d.x) + view.w / 2 - 150, y: - yScale(d.y) + view.h / 2 - 100};
-    console.log(view.getCurr());
-    console.log(to);
     view.move_to(to);
 
     $el = $("#stoplabel");
     $el.attr("data-stop",d.id);
     $el.find("h2").html(d.name.toLowerCase().capitalize());
-    $el.tform(xScale(d.x), yScale(d.y)); 
+    $el.tform(xScale(d.x), yScale(d.y));
+
+    self.stopresults = [];
+    trips.forEach(function(tr){
+      tr.stop.forEach(function(tr_stoptime){
+        if (tr_stoptime.id == d.id) {
+          self.stopresults.push({
+            t: tr_stoptime.t,
+            id: tr.id,
+            sign: tr.sign.toLowerCase().capitalize()
+          });
+        }
+      });
+    });
+
+    self.stopresults.sort(function(a,b){
+      return a.t - b.t;
+    });
+
+    //var html = "";
+    // var firstresults = self.stopresults.slice(0, 5);
+    // firstresults.forEach(function(result) {
+    //   html += ""
+    //     + '<li class="stopentry">\n'
+    //     + '  <div class="time" data-arrival="' + result.t + '">' + time_until(result.t, timer.currentTime) + '</div>\n'
+    //     + '  <div class="sign">' + result.sign + '</div>\n'
+    //     + '</li>\n';
+    // });
+    // $el.find(".stoplist").html(html);
+
+    self.refresh_stop_label();
   }
 
   // $("body").mousemove(function(event){

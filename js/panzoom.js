@@ -26,6 +26,7 @@ function ViewControl(el, mapControl, mapsvg) {
   var self = this;
   var view = { xMin: 0, xMax: xlimit, yMin: 0, yMax: ylimit};
   self.getCurr = function() { return curr; };
+  self.getZoom = function() { return currZoom; };
 
 
   // Constructor
@@ -144,12 +145,12 @@ function ViewControl(el, mapControl, mapsvg) {
       if (counter > 0) {
         curr.x -= dx/5;
         curr.y -= dy/5;
-        drawMap();
         counter --;
+        $container.tform(curr.x, curr.y);
         return false;
       }
       else {
-        return true;
+        drawMap();
       }
     });
   };

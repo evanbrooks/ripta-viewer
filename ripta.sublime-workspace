@@ -1,0 +1,1361 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"webkit-anima",
+				"webkit-animation-delay"
+			],
+			[
+				"stop",
+				"stopControl"
+			],
+			[
+				"ref",
+				"refresh_stop_label"
+			],
+			[
+				"data-",
+				"data-arrival"
+			],
+			[
+				"font-",
+				"font-family"
+			],
+			[
+				"zoom",
+				"zoomTo"
+			],
+			[
+				"in",
+				"inline-block"
+			],
+			[
+				"re",
+				"return"
+			],
+			[
+				"sele",
+				"select"
+			],
+			[
+				"cur",
+				"currentBus"
+			],
+			[
+				"interp",
+				"interpshape"
+			],
+			[
+				"inter",
+				"intermediate_shape"
+			],
+			[
+				"sha",
+				"shapesIndexed"
+			],
+			[
+				"curr",
+				"currentStopInterps2"
+			],
+			[
+				"stroke",
+				"stroke-width"
+			],
+			[
+				"app",
+				"append"
+			],
+			[
+				"bus",
+				"busLayer"
+			],
+			[
+				"shape",
+				"shapeControl"
+			],
+			[
+				"sim",
+				"simplifiedShapes"
+			],
+			[
+				"get",
+				"getCurrentBus"
+			],
+			[
+				"curre",
+				"currentBus"
+			],
+			[
+				"trip",
+				"tripControl"
+			],
+			[
+				"refr",
+				"refresh"
+			],
+			[
+				"refre",
+				"refreshSmooth"
+			],
+			[
+				"clas",
+				"className"
+			],
+			[
+				"back",
+				"background-size"
+			],
+			[
+				"webkit-tran",
+				"webkit-transform"
+			],
+			[
+				"text",
+				"text-align"
+			],
+			[
+				"trans",
+				"transition"
+			],
+			[
+				"bird",
+				"birdname"
+			],
+			[
+				"le",
+				"letter-spacing"
+			],
+			[
+				"radial2",
+				"radial2-open"
+			],
+			[
+				"basi",
+				"basis-closed"
+			],
+			[
+				"layer",
+				"layer_thickness"
+			],
+			[
+				"inner",
+				"inner_radius"
+			],
+			[
+				"radi",
+				"radial1"
+			],
+			[
+				"radial",
+				"radial1btn"
+			],
+			[
+				"bir",
+				"birdcolors"
+			],
+			[
+				"arr",
+				"array"
+			],
+			[
+				"bi",
+				"birdname"
+			],
+			[
+				"row",
+				"rowCount"
+			],
+			[
+				"mar",
+				"margin-bottom"
+			],
+			[
+				"scr",
+				"scroll_pos"
+			],
+			[
+				"tran",
+				"translate3d"
+			],
+			[
+				"border",
+				"border"
+			],
+			[
+				"wind",
+				"window_height"
+			],
+			[
+				"web",
+				"webkit-transition"
+			],
+			[
+				"proj",
+				"proj-title"
+			],
+			[
+				"scro",
+				"scroll_update"
+			],
+			[
+				"webkit",
+				"webkit-transform"
+			],
+			[
+				"sc",
+				"scroll_pos"
+			],
+			[
+				"webkit-trans",
+				"webkit-transform"
+			],
+			[
+				"res",
+				"resize_update"
+			],
+			[
+				"art",
+				"articles"
+			],
+			[
+				"pos",
+				"position"
+			],
+			[
+				"upd",
+				"update_d3_face"
+			],
+			[
+				"chan",
+				"changeQuote"
+			],
+			[
+				"face",
+				"faceprogress"
+			],
+			[
+				"chi",
+				"child"
+			],
+			[
+				"webkit-tra",
+				"webkit-transform"
+			],
+			[
+				"ne",
+				"newQuote"
+			],
+			[
+				"border-r",
+				"border-right"
+			],
+			[
+				"prin",
+				"printingcheckbox"
+			],
+			[
+				"face_ste",
+				"face_step_fwd"
+			],
+			[
+				"printin",
+				"printing_enabled"
+			],
+			[
+				"handle",
+				"handleClick"
+			],
+			[
+				"print",
+				"printing_checkbox"
+			],
+			[
+				"there",
+				"there_is_a_face"
+			],
+			[
+				"webkit-user",
+				"webkit-user-select"
+			],
+			[
+				"mouse",
+				"mouse_dragging"
+			],
+			[
+				"control",
+				"control_height"
+			],
+			[
+				"mous",
+				"mouse_dragging"
+			],
+			[
+				"mouse_",
+				"mouse_initial"
+			],
+			[
+				"pro",
+				"progress_value"
+			],
+			[
+				"margin-",
+				"margin-left"
+			],
+			[
+				"ra",
+				"random"
+			],
+			[
+				"min",
+				"min_index"
+			],
+			[
+				"prev_",
+				"prev_nodes"
+			],
+			[
+				"gri",
+				"gridCtx"
+			],
+			[
+				"sort",
+				"sort_by_finality"
+			],
+			[
+				"fin",
+				"finality"
+			],
+			[
+				"prev",
+				"prev_ev"
+			],
+			[
+				"wid",
+				"width"
+			],
+			[
+				"so",
+				"sort_finality"
+			],
+			[
+				"parse",
+				"parseInt"
+			],
+			[
+				"new",
+				"new_time"
+			],
+			[
+				"Br",
+				"Bronze"
+			],
+			[
+				"Sw",
+				"Swimming"
+			],
+			[
+				"Sp",
+				"sport"
+			],
+			[
+				"wi",
+				"width"
+			],
+			[
+				"an",
+				"anim_list"
+			],
+			[
+				"setPo",
+				"set_position"
+			],
+			[
+				"spr",
+				"springwall"
+			],
+			[
+				"col",
+				"colorswap"
+			],
+			[
+				"webkit-an",
+				"webkit-animation-name"
+			],
+			[
+				"sp",
+				"spring_constant"
+			],
+			[
+				"ar",
+				"arrange17spacer"
+			],
+			[
+				"arra",
+				"arrange17"
+			],
+			[
+				"Bou",
+				"BouncySwitch"
+			],
+			[
+				"f",
+				"f_spring"
+			],
+			[
+				"fun",
+				"function"
+			],
+			[
+				"rang",
+				"range_to_range"
+			],
+			[
+				"inp",
+				"input_range"
+			],
+			[
+				"ri",
+				"right"
+			],
+			[
+				"padd",
+				"padding-bottom"
+			],
+			[
+				"webkit-tr",
+				"webkit-transform"
+			],
+			[
+				"vi",
+				"viewing-item"
+			],
+			[
+				"close",
+				"closeLast"
+			],
+			[
+				"ani",
+				"animate"
+			],
+			[
+				"setT",
+				"setTimeout"
+			],
+			[
+				"fi",
+				"fixed"
+			],
+			[
+				"cat",
+				"catchme"
+			],
+			[
+				"pad",
+				"padding"
+			],
+			[
+				"border-b",
+				"border-bottom"
+			],
+			[
+				"set",
+				"setupCatcher"
+			],
+			[
+				"sear",
+				"searchleave"
+			],
+			[
+				"para",
+				"paragraphs"
+			],
+			[
+				"hi",
+				"highlight"
+			],
+			[
+				"view",
+				"viewed"
+			],
+			[
+				"marg",
+				"margin-left"
+			],
+			[
+				"item",
+				"item-name"
+			],
+			[
+				"tra",
+				"translate3d"
+			],
+			[
+				"cu",
+				"currPos"
+			],
+			[
+				"ite",
+				"itemOffsets"
+			],
+			[
+				"webkit-t",
+				"webkit-transition"
+			],
+			[
+				"max",
+				"max-height"
+			],
+			[
+				"webkit-",
+				"webkit-transition"
+			],
+			[
+				"pre",
+				"previnputval"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "style.sass",
+			"settings":
+			{
+				"buffer_size": 6043,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "index.html",
+			"settings":
+			{
+				"buffer_size": 4218,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "js/map.js",
+			"settings":
+			{
+				"buffer_size": 2423,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "js/panzoom.js",
+			"settings":
+			{
+				"buffer_size": 7408,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "js/timer.js",
+			"settings":
+			{
+				"buffer_size": 4631,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "js/bus.js",
+			"settings":
+			{
+				"buffer_size": 9114,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "js/stops.js",
+			"settings":
+			{
+				"buffer_size": 3554,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "js/misc.js",
+			"settings":
+			{
+				"buffer_size": 2244,
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "",
+	"command_palette":
+	{
+		"height": 387.0,
+		"selected_items":
+		[
+			[
+				"pac",
+				"Package Control: Install Package"
+			],
+			[
+				"package",
+				"Package Control: Install Package"
+			],
+			[
+				"package control",
+				"Package Control: Install Package"
+			],
+			[
+				"Package Control: ",
+				"Package Control: Remove Package"
+			],
+			[
+				"Packa",
+				"Package Control: Install Package"
+			],
+			[
+				"package contr",
+				"Package Control: Install Package"
+			],
+			[
+				"pack",
+				"Package Control: Add Repository"
+			],
+			[
+				"",
+				"Package Control: Remove Package"
+			]
+		],
+		"width": 449.0
+	},
+	"console":
+	{
+		"height": 115.0
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/Users/risd/Documents/RISD_2012-2013/systems-structures/ripta/js/loaddata.js",
+		"/Users/risd/Documents/RISD_2012-2013/systems-structures/ripta/js/misc.js",
+		"/Users/risd/Documents/RISD_2012-2013/systems-structures/ripta/js/timer.js",
+		"/Users/risd/Documents/RISD_2012-2013/systems-structures/ripta/index.html",
+		"/Users/risd/Desktop/DP/dp_notes_v1.txt",
+		"/Users/risd/Desktop/Color/birds/script-combined.js",
+		"/Users/risd/Desktop/Color/birds/style.sass",
+		"/Users/risd/Desktop/Color/birds/style.css",
+		"/Users/risd/Desktop/Color/birds/mass-bird-barchart.txt",
+		"/Users/risd/Desktop/Color/birds/d3.js",
+		"/Users/risd/Desktop/Color/birds/script-lines.js",
+		"/Users/risd/Desktop/Color/birds/script-areas.js",
+		"/Users/risd/Desktop/Color/birds/mass-bird-barchart-original.txt",
+		"/Users/risd/Developer/MM-FastLoudTriangles/index.html",
+		"/Users/risd/Downloads/ri-bird-barchart.txt",
+		"/Users/risd/Downloads/mass-bird-barchart.txt",
+		"/Users/risd/Developer/MM-FastLoudTriangles/moment.js",
+		"/Users/risd/Dropbox/quartz-in-js/script.js",
+		"/Users/risd/Desktop/Making Meaning/Fast Cheap Out of Control/notes.txt",
+		"/Users/risd/Developer/liam/script.js",
+		"/Users/risd/Desktop/Type 3/Olympic/events-split.yaml",
+		"/Users/risd/Desktop/Type 3/Olympic/yaml.js",
+		"/Users/risd/Desktop/Type 3/Olympic/template.html",
+		"/Users/risd/Desktop/Type 3/Olympic/hb.js",
+		"/Users/risd/Developer/liam/style.sass",
+		"/Users/risd/Developer/liam/index.html",
+		"/Users/risd/Desktop/quartz-in-js/script.js",
+		"/Users/risd/Library/Application Support/Sublime Text 2/Packages/SublimeLinter/README.md",
+		"/Users/risd/Library/Application Support/Sublime Text 2/Packages/SublimeLinter/SublimeLinter.sublime-settings",
+		"/Users/risd/Library/Application Support/Sublime Text 2/Packages/User/SublimeLinter.sublime-settings",
+		"/Users/risd/portfolio-v2/index.html",
+		"/Users/risd/portfolio-v2/css/style.sass",
+		"/Users/risd/portfolio-v2/grabber.js",
+		"/Users/risd/portfolio-v2/ajax.js",
+		"/Users/risd/portfolio-v2/content.txt",
+		"/Users/risd/Desktop/dais/content.txt",
+		"/Users/risd/Library/Application Support/Sublime Text 2/Packages/User/JavaScript.sublime-settings",
+		"/Users/risd/portfolio-v2/jq.highlight.js",
+		"/Users/risd/portfolio-v2/css/jq.highlight.js",
+		"/Users/risd/physics/index.html",
+		"/Users/risd/evanbrooks.github.com/index.html",
+		"/Users/risd/wadotrisd/wadotrisd/style.css",
+		"/Users/risd/Library/Containers/com.sparrowmailapp.sparrow/Data/Library/Application Support/Sparrow/ebrooks@risd.edu.sparrowdb/Cache/INBOX/4358/2/ebrooks.grd",
+		"/Users/risd/Desktop/Evan Brooks/readme.txt",
+		"/Users/risd/Desktop/physics/style.css",
+		"/Users/risd/Downloads/untitled folder/index.html",
+		"/Users/risd/Desktop/font.txt",
+		"/Users/risd/Library/Application Support/Sublime Text 2/Packages/User/Preferences.sublime-settings",
+		"/Users/risd/Desktop/Type 2/ender/novel.txt",
+		"/Users/risd/Library/Application Support/Sublime Text 2/Packages/Default/Preferences.sublime-settings",
+		"/Users/risd/Desktop/Type 2/ender/ender-v2.txt",
+		"/Users/risd/Library/Containers/com.sparrowmailapp.sparrow/Data/Library/Application Support/Sparrow/ebrooks@risd.edu.sparrowdb/Cache/INBOX/4189/2/ebrooks.grd",
+		"/private/etc/hosts",
+		"/Users/risd/Desktop/CS 16/convex.txt",
+		"/Users/risd/Desktop/Mapping Info/media/organized-v2.txt",
+		"/Users/risd/Desktop/Mapping Info/media/mediaconsumption.txt",
+		"/Users/risd/Desktop/Mapping Info/media/history-shorter.txt",
+		"/Users/risd/evanbrooks.github.com/posts/locu/locu.md",
+		"/Users/risd/evanbrooks.github.com/posts/hop/hop.md",
+		"/Users/risd/evanbrooks.github.com/posts/deyoung/deyoung.md",
+		"/Users/risd/evanbrooks.github.com/posts/clerestory/clerestory.md",
+		"/Users/risd/evanbrooks.github.com/posts/agamatrix/agamatrix.md",
+		"/Users/risd/Desktop/Portfolio/mar2/index.html",
+		"/Users/risd/Desktop/Portfolio/mar2/project/agamatrix.md",
+		"/Users/risd/Desktop/Portfolio/feb20/js/custom.showdown.js",
+		"/Users/risd/Desktop/Portfolio/feb20/js/tdown.js",
+		"/Users/risd/Desktop/Portfolio/feb20/type.css",
+		"/Users/risd/Desktop/Type 2/hw2_clarendon.txt",
+		"/Users/risd/Desktop/cs16/hw4.py",
+		"/Users/risd/Desktop/Type 2/hw2_caslon.txt",
+		"/Users/risd/Library/Application Support/Sublime Text 2/Packages/User/Python.sublime-settings",
+		"/Users/risd/Desktop/cs16/h24.py",
+		"/Users/risd/Desktop/systems-structures/ripta/js/script.js",
+		"/Users/risd/Desktop/Portfolio/feb11_2/project/agamatrix.md",
+		"/Users/risd/Desktop/Portfolio/feb11_2/project/ripta.md",
+		"/Users/risd/Desktop/Portfolio/feb11_2/project/resume.md",
+		"/Users/risd/Desktop/Portfolio/feb11_2/project/locu.md",
+		"/Users/risd/Desktop/Portfolio/feb11_2/project/hop.md",
+		"/Users/risd/Desktop/Portfolio/feb11_2/project/clerestory.md",
+		"/Users/risd/Desktop/Portfolio/feb11_2/project/artishairy.md",
+		"/Users/risd/Desktop/Portfolio/feb11_2/js/showdown.js",
+		"/Users/risd/Library/Application Support/Sublime Text 2/Packages/Browser Refresh/Default (OSX).sublime-keymap",
+		"/Users/risd/Library/Application Support/Sublime Text 2/Packages/User/Default (OSX).sublime-keymap",
+		"/Users/risd/Desktop/Portfolio/feb11_2/project/hop.html",
+		"/Users/risd/Desktop/Portfolio/feb11_2/project/locu.html",
+		"/Users/risd/Desktop/Portfolio/feb11_2/js/jquery.ease.js",
+		"/Users/risd/Desktop/systems-structures/ripta/data/shapes_big.jso",
+		"/Users/risd/Desktop/systems-structures/ripta/data/shapes_big.txt",
+		"/Users/risd/Desktop/systems-structures/ripta/data/stops.json",
+		"/Users/risd/Desktop/systems-structures/ripta/data/trips.json",
+		"/Users/risd/Desktop/systems-structures/ripta/trips.json",
+		"/Users/risd/Desktop/systems-structures/node_modules/gtfs/examples/express/public/shapesd3.html",
+		"/Users/risd/Desktop/Portfolio/jan28/style.sass",
+		"/Users/risd/Downloads/apercumono1359350504/apercumono.html",
+		"/Users/risd/Desktop/systems-structures/node_modules/gtfs/examples/express/public/index.html",
+		"/Users/risd/Desktop/systems-structures/node_modules/gtfs/examples/express/public/js/simplify.min.js",
+		"/Users/risd/Desktop/systems-structures/node_modules/gtfs/examples/express/routes/index.js",
+		"/Users/risd/Desktop/systems-structures/node_modules/gtfs/lib/gtfs.js",
+		"/Users/risd/Desktop/systems-structures/node_modules/gtfs/node_modules/mongoose/lib/model.js",
+		"/Users/risd/Desktop/systems+structures/node_modules/gtfs/scripts/download.js",
+		"/Users/risd/Desktop/systems+structures/node_modules/gtfs/config.js",
+		"/Users/risd/evanbrooks.github.com/js.js",
+		"/Users/risd/evanbrooks.github.com/clerestory.js",
+		"/Users/risd/evanbrooks.github.com/drag.js",
+		"/Users/risd/evanbrooks.github.com/hidebar.js",
+		"/Users/risd/evanbrooks.github.com/item/locu.html",
+		"/Users/risd/evanbrooks.github.com/jquery.wait.min.js",
+		"/Users/risd/Desktop/Misc/fb.css",
+		"/Users/risd/Desktop/ArtMachine/betterIDE/js.js",
+		"/Users/risd/Desktop/Portfolio/Dec25/styles.css",
+		"/Users/risd/Desktop/Portfolio/Dec25/js.js",
+		"/Users/risd/Desktop/Portfolio/Dec25/index.html",
+		"/Users/risd/Desktop/Portfolio/Dec25/thehop.html",
+		"/Users/risd/Desktop/Portfolio/Dec25/test.html",
+		"/Users/risd/Desktop/Portfolio/Dec24/jquery.ease.js",
+		"/Users/risd/Desktop/Portfolio/Dec9/styles.css",
+		"/Users/risd/Desktop/Portfolio/Dec9/index.html",
+		"/Users/risd/Desktop/ArtMachine/betterIDE/Sketchbook/Sketch1/src/preproc.cpp",
+		"/Users/risd/Desktop/ArtMachine/betterIDE/socketio.min.js",
+		"/Users/risd/Desktop/ArtMachine/betterIDE/jquery-ui.min.js",
+		"/Users/risd/Desktop/ArtMachine/betterIDE/jquery.min.js",
+		"/Users/risd/Desktop/CS 15/pacman-notes.txt",
+		"/Users/risd/Desktop/ArtMachine/betterIDE/jshint-semicol.js",
+		"/Users/risd/Desktop/ArtMachine/betterIDE/jshint.js",
+		"/Users/risd/Desktop/Portfolio/index3.html",
+		"/Users/risd/Desktop/ArtMachine/betterIDE/applescripts",
+		"/Users/risd/Desktop/arduino.app/Contents/Info.plist",
+		"/Users/risd/Desktop/Locu/themes/overdone/overdone.html"
+	],
+	"find":
+	{
+		"height": 35.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+			"/Volumes/locudev2/menuplatform-bootstrap2/website/templates/, /Volumes/locudev2/menuplatform-bootstrap2/website/static/",
+			"/Volumes/locudev2/menuplatform-bootstrap2/website/templates/",
+			"/Volumes/locudev2/menuplatform-bootstrap2/website/static",
+			"/Volumes/locudev2/menuplatform-bootstrap2/website/templates",
+			"/Volumes/locudev2/menuplatform-bootstrap2/website",
+			"/Volumes/locudev2/menuplatform-bootstrap2/website/templates",
+			"/Volumes/locudev2/menuplatform-bootstrap2/templates/",
+			"/Volumes/locudev2/menuplatform-bootstrap2/website/static/bootstrap-2.04/",
+			"/Volumes/locudev2/menuplatform-bootstrap2/website/static/bootstrap-2.04/less"
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"timer",
+			"stopCon",
+			"stopC",
+			"stopc",
+			"displayb",
+			"set",
+			"currentTime",
+			"  <",
+			"autocomplete",
+			"stop",
+			"stops",
+			"pause",
+			"speed",
+			"select",
+			"selec",
+			"sele",
+			">b",
+			"b",
+			"b ",
+			" b ",
+			" b",
+			".line",
+			"line",
+			"text",
+			"zoom",
+			"transit",
+			"updatefake",
+			"updateface",
+			"bas",
+			"stroke",
+			"hover",
+			"slice",
+			"end",
+			"smooth",
+			"simplify",
+			"smoothne",
+			"smoo",
+			"each",
+			"getdata",
+			"){\n",
+			"drawmap",
+			"isinview",
+			"get_tr",
+			"interm",
+			"interms",
+			"intermsh",
+			"interpsh",
+			"interp-s",
+			"getdata",
+			"percent",
+			"a_near",
+			".log",
+			"interme",
+			"inter,e",
+			"inter,",
+			"inv",
+			"currentStopInterps",
+			"interp",
+			"currentStopInterps",
+			"circle",
+			"stop",
+			"xsca",
+			"tripc",
+			"$",
+			"tripcont",
+			"showshapeu",
+			"showshaped",
+			"current",
+			"showShapeUsed",
+			"selected",
+			"exit",
+			"append",
+			"enter",
+			"selectall",
+			"selectall(\"li",
+			"selectall",
+			"selected",
+			"basis",
+			"path",
+			"2",
+			"somehow",
+			"wno",
+			"addlineerror",
+			"\"===",
+			"===",
+			"\n  ",
+			"random",
+			"\"id\"",
+			"id",
+			"}",
+			"{",
+			";",
+			"chip",
+			"style",
+			"-ope",
+			"1500",
+			"stack",
+			"append",
+			"reverse",
+			"stack",
+			"text",
+			"max",
+			"stack",
+			"console.log",
+			"chicka",
+			"blue ja",
+			"red-tail",
+			"red tail",
+			"sharp",
+			"header",
+			"footer",
+			"scroller",
+			"h3",
+			"article-",
+			"proj-tit",
+			"header",
+			"scroller",
+			"scroll",
+			"overflow",
+			"hidden",
+			"overflow: hidden",
+			"header",
+			"footer",
+			"1.5",
+			"fixe",
+			"fixed",
+			"red",
+			"header"
+		],
+		"highlight": false,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			"3",
+			"",
+			"1500",
+			"1000",
+			"<article>\n            <a class=\"proj-title\" href=\"#\">",
+			"",
+			"#canvas",
+			"bronze",
+			"Outside London",
+			"London",
+			"bronze",
+			"finals",
+			"gold",
+			"london",
+			"events",
+			"self.",
+			"self",
+			"bumper",
+			"arrangeMsg",
+			"self",
+			"",
+			"p_index",
+			"lastLeft",
+			"autoplayf",
+			"",
+			"\"",
+			"doc",
+			" $html",
+			"am_dragging",
+			"",
+			"grav",
+			"gravitator",
+			" ",
+			"",
+			"curr",
+			"\"/posts/locu",
+			"",
+			".details",
+			"",
+			"subnav",
+			"wind",
+			"<a class=\"item-name\" href=\"#\">",
+			"<h2 class=\"item-name\">",
+			"<h2 class=\"item-name>",
+			"trans",
+			"iX",
+			"l",
+			"remainLetArr",
+			":",
+			",",
+			"",
+			";",
+			"item-desc",
+			"class=\"item-desc\"",
+			"\"",
+			"-",
+			"action-mode",
+			"item-mode",
+			"inner desc",
+			"desc",
+			"li",
+			"view-item-mode",
+			"h3 class=\"name\"",
+			"h2 class=\"name\"",
+			"#ddd",
+			"#4b647a",
+			"cm",
+			"ino",
+			"tfrmVal",
+			"//\"-moz",
+			"dY",
+			"dX",
+			"openBox",
+			"div",
+			"$lcol",
+			"targetTou",
+			"lightboxmode",
+			"xPos",
+			"col5",
+			"col4",
+			"col3",
+			"col2",
+			"col1",
+			"halfHeight",
+			"<div class=\"subsection name\">",
+			" <div class=\"subsection name\">S",
+			"company",
+			"",
+			"row-fluid",
+			"",
+			".",
+			"",
+			"pick-theme-view",
+			"initial-view",
+			"template-view",
+			".template-view",
+			"-small",
+			"{{ STATIC_URL }}images/faces/",
+			"tooltip",
+			"//_gaq",
+			"btn-danger",
+			"//_gaq",
+			"icon icon-",
+			"/h3",
+			"top",
+			"name",
+			"</h2></div><div class=\"bio\"><p>",
+			"h3",
+			"faces",
+			"/f",
+			"http://locu.com/static/images",
+			"section",
+			"press",
+			"thin-nav",
+			"#navinner ",
+			"<div contenteditable=\"true\" class=\"menu-item-",
+			"<div contenteditable=\"true\" class=\"menu-item",
+			"<div contenteditble=\"true\" class=\"menu-item",
+			"<div contenteditable=\"true\" class=\"menu-item-description\">",
+			"<div contenteditable=\"true\" class=\"menu-item-name\">",
+			"itemwrap",
+			"screen",
+			"1",
+			"2",
+			"<input class=\"price\" type=\"tel\" placeholder=\"Price\" value=\"$5\" />",
+			"<input class=\"price\" type=\"number\" placeholder=\"Price\" value=\"$5\" />",
+			"toolbar",
+			" "
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": false,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 7,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "style.sass",
+					"settings":
+					{
+						"buffer_size": 6043,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								5557,
+								5557
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Sass/Syntaxes/Sass.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 5610.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "index.html",
+					"settings":
+					{
+						"buffer_size": 4218,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								3203,
+								3203
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "js/map.js",
+					"settings":
+					{
+						"buffer_size": 2423,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								783,
+								783
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "js/panzoom.js",
+					"settings":
+					{
+						"buffer_size": 7408,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								4977,
+								4977
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "js/timer.js",
+					"settings":
+					{
+						"buffer_size": 4631,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								758,
+								763
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 7.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "js/bus.js",
+					"settings":
+					{
+						"buffer_size": 9114,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								7986,
+								7986
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 4464.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "js/stops.js",
+					"settings":
+					{
+						"buffer_size": 3554,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1004,
+								1004
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"file": "js/misc.js",
+					"settings":
+					{
+						"buffer_size": 2244,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1568,
+								1568
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 34.0
+	},
+	"input":
+	{
+		"height": 33.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.find_results":
+	{
+		"height": 387.0
+	},
+	"replace":
+	{
+		"height": 64.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"show_minimap": true,
+	"show_open_files": true,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 185.0,
+	"status_bar_visible": true
+}
