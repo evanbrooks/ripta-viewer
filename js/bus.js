@@ -5,6 +5,8 @@ function BusControl(map, view, busLayer) {
   var self = this;
   self.currentBus = [];
 
+  self.bus_next_stop_results = [];
+
 
   // Public methods
   // --------------
@@ -44,7 +46,7 @@ function BusControl(map, view, busLayer) {
 
   self.clear_bus = function() {
     is_viewing_detail = false;
-    busLayer.selectAll(".viewingbus")
+    busLayer.selectAll(".viewing-bus")
       .attr("class", "bus")
       .attr("r", 4);
     d3.select("#buslabel").attr("data-bus", "").attr("style",
@@ -172,7 +174,10 @@ function BusControl(map, view, busLayer) {
     bus_change.select("circle")
       .attr("transform", function(d) { return "translate("+xScale(d.x)+","+yScale(d.y)+") rotate("+d.a+")"; })
       .attr("r", function(d, i) {
-        if (view.getZoom() > 22) {
+        if (view.getZoom() > 28) {
+          return 4;
+        }
+        if (view.getZoom() > 24) {
           return 3;
         }
         else {
@@ -205,6 +210,8 @@ function BusControl(map, view, busLayer) {
     el.attr("style",
       "-webkit-transform: translate3d(" + xScale(this_bus.x) + "px, " + yScale(this_bus.y) + "px, 0px)");
 
+    self.bus_next_stop_results = trips[this_bus.id].stop;
+
     refresh_bus_label();
   }
 
@@ -213,6 +220,57 @@ function BusControl(map, view, busLayer) {
     var this_bus = self.get_bus_from_id(parseInt(el.attr("data-bus")));
     el.attr("style",
       "-webkit-transform: translate3d(" + xScale(this_bus.x) + "px, " + yScale(this_bus.y) + "px, 0px)");
+  
+    // Data
+    // -----
+    var new_data = self.bus_next_stop_results
+      .filter(function(a) { return a.t > map.timer.currentTime }) // continue showing buses you  missed for 60s
+      .slice(0, 4);
+
+    var stoplist = el
+      .selectAll(".stopentry")
+      .data(new_data, function(d) { if (d) return d.id; else return false; });
+
+
+    // Additions
+    // ----
+    var newstop = stoplist.enter()
+      .append("div").attr("class", "stopentry");
+    
+    newstop.append("div")
+      .attr("class", "time")
+      .text(function(d, i) {
+        return time_until(d.t, map.timer.currentTime)
+      });
+    newstop.append("div")
+      .attr("class", "sign")
+      .text(function(d, i) {
+        return stopsIndexed[parseInt(d.id)].name.toLowerCase().capitalize();
+      });
+
+
+
+    // Removals
+    // -----
+    stoplist.exit()
+      .attr("class","shrink-away")
+      .transition()
+      .delay(1000)
+      .remove();
+
+
+    // Changes
+    // ----
+    // stoplist.attr("class", function(d){ 
+    //   if (d.t > map.timer.currentTime + 60) return "stopentry";
+    //   else return "stopentry bus-arrived"; // highlight recent arrival
+    // });
+
+    stoplist.selectAll(".time")
+      .text(function(d, i) {return time_until(d.t, map.timer.currentTime)});
+
+
+
   }
 
 

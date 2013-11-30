@@ -25,7 +25,6 @@ figure
 
 
 
-
 // Variables
 // ---------
 
@@ -33,6 +32,9 @@ $dark: rgb(79, 85, 102)
 $light: #f4f4f4 //rgb(206, 223, 228)
 $sun: rgb(230, 144, 122)
 
+$bus-blue: #004e84
+$stop-green: #494948
+$soon: #569533
 
 
 // Body
@@ -289,11 +291,11 @@ footer
 .bus
 	cursor: pointer 
 	&> circle
-		fill: blue
+		fill: $bus-blue
 		-webkit-transition: all 0.3s
 	&:hover > circle
 		fill: white
-		stroke: blue
+		stroke: $bus-blue
 		stroke-width: 1
 	&> text
 		visibility: hidden
@@ -303,15 +305,15 @@ footer
 		opacity: 0
 		.panning &
 			opacity: 0
-		fill: blue
+		fill: $bus-blue
 		font:
 			weight: bold
 			size: 10px
 
 .zoom .bus
 	&> circle
-		fill: blue
-		stroke: blue
+		fill: $bus-blue
+		stroke: $bus-blue
 		stroke-width: 1.5
 	&> text
 		opacity: 1
@@ -320,13 +322,22 @@ footer
 	&> circle
 		fill: white
 		stroke: white
-		stroke-width: 5
+		stroke-width: 2
 		opacity: 1
 	&> text
 		visibility: visible
 		opacity: 1
 	&:hover > text
 		font-size: 24px
+
+.viewing-bus, .zoom2 .viewing-bus 
+	&> circle
+		fill: $bus-blue
+		stroke: $bus-blue
+	&> text
+		visibility: hidden
+
+
 
 .stop
 	fill: transparent
@@ -337,13 +348,13 @@ footer
 	opacity: 1
 	&:hover
 		opacity: 1
-		stroke: black
-		fill: black
+		stroke: $stop-green
+		fill: $stop-green
 
 .viewingstop
 	opacity: 1
 	stroke-width: 2
-	stroke: black
+	stroke: $stop-green
 
 
 .TEMPHIDE
@@ -386,9 +397,12 @@ footer
 
 .label
 	position: fixed
+	$sh-color: white
+	// text-shadow: 0 -1px 0px $sh-color, 0 1px 0px $sh-color, -1px 0 0px $sh-color, 1px 0 0px $sh-color
 	top: -10px
 	left: 20px
 	pointer-events: none
+	// -webkit-transition: all 0.3s
 	-webkit-transform-origin: top left
 	-webkit-transform: translate3d(-200px, -200px, 0)
 	font-size: 18px
@@ -402,24 +416,32 @@ footer
 		font-weight: bold
 		text-transform: uppercase
 		padding: 0.2em 0 0.5em 0
-
-#stoplabel
-	-webkit-animation: bouncein 0.3s 
-	//-webkit-transition: all 0.3s
 	.stopentry
 		-webkit-transform-origin: top left
 		//-webkit-animation: bouncein 0.4s 
 		line-height: 1.3em
 		height: 25px
-		& + .stopentry
-			// color: rgba(0,0,0,0.5)
-			& + .stopentry
-				// color: rgba(0,0,0,0.3)
+		white-space: nowrap
 	.time
 		float: left
 		width: 80px
 	.sign
 		// font-weight: bold
+
+#stoplabel
+	color: $stop-green
+	-webkit-animation: bouncein 0.3s 
+
+#buslabel
+	color: $bus-blue
+	.stopentry
+		opacity: 0.8
+		& + .stopentry
+			opacity: 0.6
+			& + .stopentry
+				opacity: 0.4
+				& + .stopentry
+					opacity: 0.2
 
 @-webkit-keyframes shrinkrow
 	0%
@@ -436,4 +458,5 @@ footer
 	opacity: 0
 
 .bus-arrived
-	color: green
+	color: $soon
+	font-weight: bold

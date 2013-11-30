@@ -194,11 +194,14 @@ function StopControl(map, view, stopLayer) {
 
   };
 
-  // var diagonal = d3.svg.diagonal()
-  //   .projection(function(d) {return [xScale(d.x), yScale(d.y)] })
-  //   .source(function(d) { return d.stop })
-  //   .target(function(d) { return d.bus  });
+  var diagonal = d3.svg.diagonal()
+    .projection(function(d) {return [xScale(d.x), yScale(d.y)] })
+    .source(function(d) { return d.stop })
+    .target(function(d) { return d.bus  });
 
+  var line = d3.svg.line()
+    .y(function(d) { return yScale(d.y) })
+    .x(function(d) { return xScale(d.x) });
 
 
   function show_stop_label(d, i) {

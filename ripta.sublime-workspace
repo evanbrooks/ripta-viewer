@@ -4,12 +4,48 @@
 		"selected_items":
 		[
 			[
-				"webkit-anima",
-				"webkit-animation-delay"
+				"stop",
+				"stopsIndexed"
 			],
 			[
-				"stop",
-				"stopControl"
+				"this",
+				"this_bus"
+			],
+			[
+				"refre",
+				"refresh_bus_label"
+			],
+			[
+				"stro",
+				"stroke"
+			],
+			[
+				"sele",
+				"selectAll"
+			],
+			[
+				"near",
+				"nearest-bus-line"
+			],
+			[
+				"nea",
+				"nearest_bus_line"
+			],
+			[
+				"hih",
+				"highlighted_shape"
+			],
+			[
+				"new",
+				"new_data"
+			],
+			[
+				"pau",
+				"paused"
+			],
+			[
+				"webkit-anima",
+				"webkit-animation-delay"
 			],
 			[
 				"ref",
@@ -34,10 +70,6 @@
 			[
 				"re",
 				"return"
-			],
-			[
-				"sele",
-				"select"
 			],
 			[
 				"cur",
@@ -94,10 +126,6 @@
 			[
 				"refr",
 				"refresh"
-			],
-			[
-				"refre",
-				"refreshSmooth"
 			],
 			[
 				"clas",
@@ -344,10 +372,6 @@
 				"parseInt"
 			],
 			[
-				"new",
-				"new_time"
-			],
-			[
 				"Br",
 				"Bronze"
 			],
@@ -490,30 +514,6 @@
 			[
 				"tra",
 				"translate3d"
-			],
-			[
-				"cu",
-				"currPos"
-			],
-			[
-				"ite",
-				"itemOffsets"
-			],
-			[
-				"webkit-t",
-				"webkit-transition"
-			],
-			[
-				"max",
-				"max-height"
-			],
-			[
-				"webkit-",
-				"webkit-transition"
-			],
-			[
-				"pre",
-				"previnputval"
 			]
 		]
 	},
@@ -523,7 +523,7 @@
 			"file": "style.sass",
 			"settings":
 			{
-				"buffer_size": 6043,
+				"buffer_size": 6921,
 				"line_ending": "Unix"
 			}
 		},
@@ -531,7 +531,7 @@
 			"file": "index.html",
 			"settings":
 			{
-				"buffer_size": 4218,
+				"buffer_size": 4234,
 				"line_ending": "Unix"
 			}
 		},
@@ -539,7 +539,7 @@
 			"file": "js/map.js",
 			"settings":
 			{
-				"buffer_size": 2423,
+				"buffer_size": 2204,
 				"line_ending": "Unix"
 			}
 		},
@@ -547,7 +547,7 @@
 			"file": "js/panzoom.js",
 			"settings":
 			{
-				"buffer_size": 7408,
+				"buffer_size": 7458,
 				"line_ending": "Unix"
 			}
 		},
@@ -555,7 +555,7 @@
 			"file": "js/timer.js",
 			"settings":
 			{
-				"buffer_size": 4631,
+				"buffer_size": 4690,
 				"line_ending": "Unix"
 			}
 		},
@@ -563,7 +563,7 @@
 			"file": "js/bus.js",
 			"settings":
 			{
-				"buffer_size": 9114,
+				"buffer_size": 12250,
 				"line_ending": "Unix"
 			}
 		},
@@ -571,7 +571,7 @@
 			"file": "js/stops.js",
 			"settings":
 			{
-				"buffer_size": 3554,
+				"buffer_size": 6127,
 				"line_ending": "Unix"
 			}
 		},
@@ -579,7 +579,15 @@
 			"file": "js/misc.js",
 			"settings":
 			{
-				"buffer_size": 2244,
+				"buffer_size": 2184,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "js/shapes.js",
+			"settings":
+			{
+				"buffer_size": 2345,
 				"line_ending": "Unix"
 			}
 		}
@@ -794,6 +802,53 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"soon",
+			"green",
+			"$blue",
+			"#2b3d80",
+			"blue",
+			"black",
+			"slice",
+			"viewing-b",
+			"viewin",
+			"click",
+			"d3",
+			"busd3",
+			"bus",
+			"clear",
+			"console",
+			".panning",
+			"nearest_bus_line",
+			"refresh_stop",
+			"nearest_bus_line",
+			"nearest_bus_line ",
+			"nearest_bus_line",
+			"document.t",
+			"document-t",
+			"viewc",
+			"view",
+			"viewcon",
+			"width",
+			"nearest",
+			"x1",
+			"click",
+			"this_bus",
+			"x1",
+			".line",
+			"line",
+			"trip",
+			"$",
+			"tripCon",
+			"timer",
+			"stopco",
+			"shapec",
+			"tripco",
+			"paused",
+			"play",
+			"30",
+			"$",
+			"zoom",
+			"currz",
 			"timer",
 			"stopCon",
 			"stopC",
@@ -874,54 +929,7 @@
 			"basis",
 			"path",
 			"2",
-			"somehow",
-			"wno",
-			"addlineerror",
-			"\"===",
-			"===",
-			"\n  ",
-			"random",
-			"\"id\"",
-			"id",
-			"}",
-			"{",
-			";",
-			"chip",
-			"style",
-			"-ope",
-			"1500",
-			"stack",
-			"append",
-			"reverse",
-			"stack",
-			"text",
-			"max",
-			"stack",
-			"console.log",
-			"chicka",
-			"blue ja",
-			"red-tail",
-			"red tail",
-			"sharp",
-			"header",
-			"footer",
-			"scroller",
-			"h3",
-			"article-",
-			"proj-tit",
-			"header",
-			"scroller",
-			"scroll",
-			"overflow",
-			"hidden",
-			"overflow: hidden",
-			"header",
-			"footer",
-			"1.5",
-			"fixe",
-			"fixed",
-			"red",
-			"header"
+			"somehow"
 		],
 		"highlight": false,
 		"in_selection": false,
@@ -929,6 +937,9 @@
 		"regex": false,
 		"replace_history":
 		[
+			"$bus-blue",
+			"$blue",
+			"busCon",
 			"3",
 			"",
 			"1500",
@@ -1053,10 +1064,7 @@
 			"screen",
 			"1",
 			"2",
-			"<input class=\"price\" type=\"tel\" placeholder=\"Price\" value=\"$5\" />",
-			"<input class=\"price\" type=\"number\" placeholder=\"Price\" value=\"$5\" />",
-			"toolbar",
-			" "
+			"<input class=\"price\" type=\"tel\" placeholder=\"Price\" value=\"$5\" />"
 		],
 		"reverse": false,
 		"show_context": true,
@@ -1067,7 +1075,7 @@
 	"groups":
 	[
 		{
-			"selected": 7,
+			"selected": 0,
 			"sheets":
 			[
 				{
@@ -1075,15 +1083,15 @@
 					"file": "style.sass",
 					"settings":
 					{
-						"buffer_size": 6043,
+						"buffer_size": 6921,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								5557,
-								5557
+								5771,
+								5873
 							]
 						],
 						"settings":
@@ -1092,7 +1100,7 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 5610.0,
+						"translation.y": 6301.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -1102,15 +1110,15 @@
 					"file": "index.html",
 					"settings":
 					{
-						"buffer_size": 4218,
+						"buffer_size": 4234,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								3203,
-								3203
+								3768,
+								3768
 							]
 						],
 						"settings":
@@ -1120,7 +1128,7 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 2077.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -1130,15 +1138,15 @@
 					"file": "js/map.js",
 					"settings":
 					{
-						"buffer_size": 2423,
+						"buffer_size": 2204,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								783,
-								783
+								720,
+								720
 							]
 						],
 						"settings":
@@ -1158,91 +1166,7 @@
 					"file": "js/panzoom.js",
 					"settings":
 					{
-						"buffer_size": 7408,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								4977,
-								4977
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 4,
-					"file": "js/timer.js",
-					"settings":
-					{
-						"buffer_size": 4631,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								758,
-								763
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 7.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 5,
-					"file": "js/bus.js",
-					"settings":
-					{
-						"buffer_size": 9114,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								7986,
-								7986
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 4464.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 6,
-					"file": "js/stops.js",
-					"settings":
-					{
-						"buffer_size": 3554,
+						"buffer_size": 7458,
 						"regions":
 						{
 						},
@@ -1266,19 +1190,19 @@
 					"type": "text"
 				},
 				{
-					"buffer": 7,
-					"file": "js/misc.js",
+					"buffer": 4,
+					"file": "js/timer.js",
 					"settings":
 					{
-						"buffer_size": 2244,
+						"buffer_size": 4690,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1568,
-								1568
+								67,
+								67
 							]
 						],
 						"settings":
@@ -1289,6 +1213,119 @@
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "js/bus.js",
+					"settings":
+					{
+						"buffer_size": 12250,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								6056,
+								6056
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 3182.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "js/stops.js",
+					"settings":
+					{
+						"buffer_size": 6127,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								5241,
+								5241
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true,
+							"word_wrap": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 2396.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"file": "js/misc.js",
+					"settings":
+					{
+						"buffer_size": 2184,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1472,
+								1472
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 469.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 8,
+					"file": "js/shapes.js",
+					"settings":
+					{
+						"buffer_size": 2345,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2290,
+								2171
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 813.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"

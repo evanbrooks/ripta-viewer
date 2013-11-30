@@ -237,26 +237,26 @@ footer {
 .bus {
   cursor: pointer; }
   .bus > circle {
-    fill: blue;
+    fill: #004e84;
     -webkit-transition: all 0.3s; }
   .bus:hover > circle {
     fill: white;
-    stroke: blue;
+    stroke: #004e84;
     stroke-width: 1; }
   .bus > text {
     visibility: hidden;
     -webkit-transition: all 0.3s;
     text-anchor: middle;
     opacity: 0;
-    fill: blue;
+    fill: #004e84;
     font-weight: bold;
     font-size: 10px; }
     .panning .bus > text {
       opacity: 0; }
 
 .zoom .bus > circle {
-  fill: blue;
-  stroke: blue;
+  fill: #004e84;
+  stroke: #004e84;
   stroke-width: 1.5; }
 .zoom .bus > text {
   opacity: 1; }
@@ -264,13 +264,19 @@ footer {
 .zoom2 .bus > circle {
   fill: white;
   stroke: white;
-  stroke-width: 5;
+  stroke-width: 2;
   opacity: 1; }
 .zoom2 .bus > text {
   visibility: visible;
   opacity: 1; }
 .zoom2 .bus:hover > text {
   font-size: 24px; }
+
+.viewing-bus > circle, .zoom2 .viewing-bus > circle {
+  fill: #004e84;
+  stroke: #004e84; }
+.viewing-bus > text, .zoom2 .viewing-bus > text {
+  visibility: hidden; }
 
 .stop {
   fill: transparent;
@@ -281,13 +287,13 @@ footer {
   opacity: 1; }
   .stop:hover {
     opacity: 1;
-    stroke: black;
-    fill: black; }
+    stroke: #494948;
+    fill: #494948; }
 
 .viewingstop {
   opacity: 1;
   stroke-width: 2;
-  stroke: black; }
+  stroke: #494948; }
 
 .TEMPHIDE {
   display: none !important; }
@@ -344,16 +350,29 @@ footer {
     font-weight: bold;
     text-transform: uppercase;
     padding: 0.2em 0 0.5em 0; }
-
-#stoplabel {
-  -webkit-animation: bouncein 0.3s; }
-  #stoplabel .stopentry {
+  .label .stopentry {
     -webkit-transform-origin: top left;
     line-height: 1.3em;
-    height: 25px; }
-  #stoplabel .time {
+    height: 25px;
+    white-space: nowrap; }
+  .label .time {
     float: left;
     width: 80px; }
+
+#stoplabel {
+  color: #494948;
+  -webkit-animation: bouncein 0.3s; }
+
+#buslabel {
+  color: #004e84; }
+  #buslabel .stopentry {
+    opacity: 0.8; }
+    #buslabel .stopentry + .stopentry {
+      opacity: 0.6; }
+      #buslabel .stopentry + .stopentry + .stopentry {
+        opacity: 0.4; }
+        #buslabel .stopentry + .stopentry + .stopentry + .stopentry {
+          opacity: 0.2; }
 
 @-webkit-keyframes shrinkrow {
   0% {
@@ -371,4 +390,5 @@ footer {
   opacity: 0; }
 
 .bus-arrived {
-  color: green; }
+  color: #569533;
+  font-weight: bold; }
