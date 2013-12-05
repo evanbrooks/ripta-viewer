@@ -249,6 +249,9 @@ function ViewControl(el, mapControl, mapsvg) {
       vel = { x: curr.x - prev.x,
               y: curr.y - prev.y };
       prev = { x: curr.x, y: curr.y };
+
+      if (vel.x > 3) vel.x = 3;
+      if (vel.y > 3) vel.y = 3;
       return false; // continue timer
     }
     else return true;  // end timer

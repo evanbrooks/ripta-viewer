@@ -232,12 +232,12 @@ footer {
 
 .line {
   fill: none;
-  stroke-width: 2;
+  stroke-width: 1;
   -webkit-transition: all 1s;
-  stroke: #cbd8e0; }
+  stroke: white; }
 
 .viewing-stop-mode .line {
-  stroke: #c5d4dc; }
+  stroke: #d2dde4; }
 
 .zoom2 .line {
   stroke-dasharray: none;
@@ -270,8 +270,7 @@ footer {
       opacity: 0; }
 
 .zoom .bus > circle, .zoom2 .bus > circle {
-  fill: white;
-  stroke: white;
+  fill: #b2c5d1;
   stroke-width: 2;
   opacity: 1; }
 .zoom .bus > text, .zoom2 .bus > text {
@@ -282,7 +281,8 @@ footer {
 
 .viewing-bus > circle, .zoom .viewing-bus > circle, .zoom2 .viewing-bus > circle {
   fill: #00365b;
-  stroke: #00365b; }
+  stroke: #00365b;
+  stroke-width: 2; }
 .viewing-bus > text, .zoom .viewing-bus > text, .zoom2 .viewing-bus > text {
   visibility: hidden; }
 
@@ -292,8 +292,6 @@ footer {
   visibility: visible;
   stroke-width: 1;
   stroke: white;
-  fill: white;
-  opacity: 0.6;
   -webkit-transition: stroke-width 0.2s; }
   .stop:hover {
     opacity: 1;
@@ -301,8 +299,11 @@ footer {
     stroke-width: 10;
     fill: #494948; }
 
+.viewing-stop-mode .stop {
+  opacity: 0.4; }
+
 .viewingstop {
-  opacity: 1;
+  opacity: 1 !important;
   stroke-width: 8; }
 
 .TEMPHIDE {
@@ -378,14 +379,6 @@ footer {
 
 #buslabel {
   color: #00365b; }
-  #buslabel .stopentry {
-    opacity: 0.8; }
-    #buslabel .stopentry + .stopentry {
-      opacity: 0.6; }
-      #buslabel .stopentry + .stopentry + .stopentry {
-        opacity: 0.4; }
-        #buslabel .stopentry + .stopentry + .stopentry + .stopentry {
-          opacity: 0.2; }
 
 @-webkit-keyframes shrinkrow {
   0% {
@@ -401,7 +394,3 @@ footer {
   overflow: hidden;
   height: 0;
   opacity: 0; }
-
-.bus-arrived {
-  color: #3333ff;
-  text-shadow: none; }

@@ -275,17 +275,17 @@ footer
 
 .line
 	fill: none
-	stroke-width: 2
+	stroke-width: 1
 	//opacity: 0.6
 	-webkit-transition: all 1s
-	stroke: lighten($back, 8)
+	stroke: white
 	//stroke-dasharray: 1,2
 	&.selected
 		//stroke-width: 0.15
 
 .viewing-stop-mode
 	.line
-		stroke: lighten($back, 6)
+		stroke: lighten($back, 10)
 
 
 .zoom2 .line
@@ -334,8 +334,9 @@ footer
 
 .zoom .bus, .zoom2 .bus
 	&> circle
-		fill: white
-		stroke: white
+		//fill: white
+		//stroke: white
+		fill: $back
 		stroke-width: 2
 		opacity: 1
 	&> text
@@ -348,6 +349,7 @@ footer
 	&> circle
 		fill: $bus-blue
 		stroke: $bus-blue
+		stroke-width: 2
 	&> text
 		visibility: hidden
 
@@ -359,8 +361,8 @@ footer
 	visibility: visible
 	stroke-width: 1
 	stroke: white
-	fill: white
-	opacity: 0.6
+	//fill: white
+	//opacity: 0.6
 	-webkit-transition: stroke-width 0.2s
 	&:hover
 		opacity: 1
@@ -368,11 +370,14 @@ footer
 		stroke-width: 10
 		fill: $stop-green
 
+.viewing-stop-mode
+	.stop
+		opacity: 0.4
+
 .viewingstop
-	opacity: 1
+	opacity: 1 !important
 	stroke-width: 8
 	//stroke: $stop-green
-
 
 .TEMPHIDE
 	display: none!important
@@ -456,14 +461,14 @@ footer
 
 #buslabel
 	color: $bus-blue
-	.stopentry
-		opacity: 0.8
-		& + .stopentry
-			opacity: 0.6
-			& + .stopentry
-				opacity: 0.4
-				& + .stopentry
-					opacity: 0.2
+	// .stopentry
+	// 	opacity: 0.8
+	// 	& + .stopentry
+	// 		opacity: 0.6
+	// 		& + .stopentry
+	// 			opacity: 0.4
+	// 			& + .stopentry
+	// 				opacity: 0.2
 
 @-webkit-keyframes shrinkrow
 	0%
@@ -480,6 +485,6 @@ footer
 	opacity: 0
 
 .bus-arrived
-	color: $soon
+	// color: $soon
 	// font-weight: bold
-	text-shadow: none
+	// text-shadow: none
