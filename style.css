@@ -12,8 +12,8 @@ body, html {
 
 body {
   -webkit-transition: all 0.5s;
-  background: #ddeaf1;
-  font-family: "Karla";
+  background: #b2c5d1;
+  font-family: "Karla", sans-serif;
   font-size: 14px; }
 
 .paused {
@@ -24,6 +24,11 @@ body {
 
 .panning * {
   cursor: all-scroll; }
+
+h1 {
+  font-size: 22px;
+  color: #00365b;
+  font-weight: bold; }
 
 nav, footer {
   position: fixed;
@@ -101,43 +106,44 @@ footer {
 
 #timestamp {
   position: absolute;
-  bottom: 10px;
+  bottom: 17px;
   z-index: 999;
   width: 100px;
+  padding: 3px 0;
   margin-left: -50px;
   left: 50%;
-  background: white;
+  background: #bbcdd6;
   -webkit-transition: all 0.3s;
   text-align: center;
-  color: black;
+  color: #00365b;
   font-size: 1em;
   margin-bottom: 0px; }
 
 .loading .timeline {
-  -webkit-transform: translate3d(0, 30px, 0); }
+  -webkit-transform: translate3d(0, 60px, 0); }
 
 .timeline {
   width: 100%;
   -webkit-transition: all 0.3s;
-  padding: 10px 0;
+  padding: 20px 0;
   color: black;
   cursor: col-resize;
-  color: black;
+  color: white;
   position: relative;
-  background: white;
+  background: #bbcdd6;
   box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.1); }
   .timeline:active {
     cursor: col-resize; }
   .timeline::after {
     content: "";
-    height: 30px;
+    height: 57px;
     width: 0px;
-    border-right: 1px solid red;
+    border-right: 1px dotted #00365b;
     bottom: 0px;
     left: 50%;
     margin-left: -5px;
     position: absolute;
-    z-index: 999; }
+    z-index: 5; }
   .timeline .times {
     white-space: nowrap;
     display: inline-block; }
@@ -148,6 +154,12 @@ footer {
       position: relative;
       -webkit-text-rendering: optimizeLegibility;
       text-align: center; }
+      .timeline .times > li::after {
+        content: "30";
+        position: absolute;
+        right: 0;
+        top: 5px;
+        font-size: 8px; }
 
 .controls {
   position: fixed;
@@ -220,9 +232,12 @@ footer {
 
 .line {
   fill: none;
-  stroke-width: 1;
+  stroke-width: 2;
   -webkit-transition: all 1s;
-  stroke: white; }
+  stroke: #cbd8e0; }
+
+.viewing-stop-mode .line {
+  stroke: #c5d4dc; }
 
 .zoom2 .line {
   stroke-dasharray: none;
@@ -237,45 +252,38 @@ footer {
 .bus {
   cursor: pointer; }
   .bus > circle {
-    fill: #004e84;
+    fill: #00365b;
     -webkit-transition: all 0.3s; }
   .bus:hover > circle {
     fill: white;
-    stroke: #004e84;
+    stroke: #00365b;
     stroke-width: 1; }
   .bus > text {
     visibility: hidden;
     -webkit-transition: all 0.3s;
     text-anchor: middle;
     opacity: 0;
-    fill: #004e84;
+    fill: #00365b;
     font-weight: bold;
     font-size: 10px; }
     .panning .bus > text {
       opacity: 0; }
 
-.zoom .bus > circle {
-  fill: #004e84;
-  stroke: #004e84;
-  stroke-width: 1.5; }
-.zoom .bus > text {
-  opacity: 1; }
-
-.zoom2 .bus > circle {
+.zoom .bus > circle, .zoom2 .bus > circle {
   fill: white;
   stroke: white;
   stroke-width: 2;
   opacity: 1; }
-.zoom2 .bus > text {
+.zoom .bus > text, .zoom2 .bus > text {
   visibility: visible;
   opacity: 1; }
-.zoom2 .bus:hover > text {
+.zoom .bus:hover > text, .zoom2 .bus:hover > text {
   font-size: 24px; }
 
-.viewing-bus > circle, .zoom2 .viewing-bus > circle {
-  fill: #004e84;
-  stroke: #004e84; }
-.viewing-bus > text, .zoom2 .viewing-bus > text {
+.viewing-bus > circle, .zoom .viewing-bus > circle, .zoom2 .viewing-bus > circle {
+  fill: #00365b;
+  stroke: #00365b; }
+.viewing-bus > text, .zoom .viewing-bus > text, .zoom2 .viewing-bus > text {
   visibility: hidden; }
 
 .stop {
@@ -284,16 +292,18 @@ footer {
   visibility: visible;
   stroke-width: 1;
   stroke: white;
-  opacity: 1; }
+  fill: white;
+  opacity: 0.6;
+  -webkit-transition: stroke-width 0.2s; }
   .stop:hover {
     opacity: 1;
     stroke: #494948;
+    stroke-width: 10;
     fill: #494948; }
 
 .viewingstop {
   opacity: 1;
-  stroke-width: 2;
-  stroke: #494948; }
+  stroke-width: 8; }
 
 .TEMPHIDE {
   display: none !important; }
@@ -306,8 +316,7 @@ footer {
   font-size: 2em; }
 
 #imagelayer {
-  display: none;
-  opacity: 0.5;
+  opacity: 0.03;
   position: absolute;
   top: 0;
   bottom: 0;
@@ -340,8 +349,8 @@ footer {
   pointer-events: none;
   -webkit-transform-origin: top left;
   -webkit-transform: translate3d(-200px, -200px, 0);
-  font-size: 18px;
-  min-width: 300px; }
+  font-size: 22px;
+  min-width: 600px; }
   .label h2 {
     font-weight: bold; }
   .label h3 {
@@ -352,19 +361,23 @@ footer {
     padding: 0.2em 0 0.5em 0; }
   .label .stopentry {
     -webkit-transform-origin: top left;
-    line-height: 1.3em;
-    height: 25px;
+    line-height: 1.5em;
+    height: 30px;
     white-space: nowrap; }
+  .label .time, .label .sign {
+    display: inline-block; }
   .label .time {
-    float: left;
-    width: 80px; }
+    width: 80px;
+    margin-right: 1em; }
 
 #stoplabel {
-  color: #494948;
+  color: white;
+  text-rendering: optimizeLegibility;
+  text-shadow: 0 1px #82a2b4, 0 -1px #82a2b4, 1px 0 #82a2b4, -1px 0 #82a2b4;
   -webkit-animation: bouncein 0.3s; }
 
 #buslabel {
-  color: #004e84; }
+  color: #00365b; }
   #buslabel .stopentry {
     opacity: 0.8; }
     #buslabel .stopentry + .stopentry {
@@ -390,5 +403,5 @@ footer {
   opacity: 0; }
 
 .bus-arrived {
-  color: #569533;
-  font-weight: bold; }
+  color: #3333ff;
+  text-shadow: none; }

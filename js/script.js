@@ -28,13 +28,17 @@ function setup() {
     .container(document.getElementById("imagelayer").appendChild(po.svg("svg")))
     //.zoomRange([0, 9])
     .zoom(11)
-    .add(po.image().url(po.url("http://{S}tile.cloudmade.com"
-    + "/4c5183a444874520adcf9176f6f55a0f" // http://cloudmade.com/register
-    + "/20760/256/{Z}/{X}/{Y}.png")
-    .hosts(["a.", "b.", "c.", ""])))
+    // .add(po.image().url(po.url("http://{S}tile.cloudmade.com"
+    // + "/4c5183a444874520adcf9176f6f55a0f" // http://cloudmade.com/register
+    // + "/20760/256/{Z}/{X}/{Y}.png")
+    // .hosts(["a.", "b.", "c.", ""])))
     //.add(po.interact())
+    //.add(po.image().url("http://s3.amazonaws.com/com.modestmaps.bluemarble/{Z}-r{Y}-c{X}.jpg"))
     .add(po.compass().pan("none"));
 
+    tilemap.add(po.image()
+      .url(po.url("http://{S}tile.stamen.com/toner-background/{Z}/{X}/{Y}.jpg")
+      .hosts(["", "a.", "b.", "c.", "d."])));
 }
 
 

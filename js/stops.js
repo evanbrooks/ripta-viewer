@@ -19,6 +19,7 @@ function StopControl(map, view, stopLayer) {
     stopLayer.selectAll(".viewingstop")
       .attr("class", "stop")
       .attr("r", 4);
+    $("body").removeClass("viewing-stop-mode");
     d3.select("#stoplabel").attr("data-stop", "").attr("style",
       "-webkit-transform: translate3d(" + 0 + "px, " + 0 + "px, 0px)");
     stopLayer.selectAll(".nearest-bus-line").remove();
@@ -48,7 +49,7 @@ function StopControl(map, view, stopLayer) {
     self.stopdata.enter()
       .append("circle")
       .attr("id", function(d) { return "stop" + parseInt(d.id, 10) })
-      .attr("r", 4)
+      .attr("r", 3)
       .attr("class", "stop")
       .on("click", function(d, i){
         d3.event.stopPropagation();
@@ -58,7 +59,7 @@ function StopControl(map, view, stopLayer) {
 
         d3.select(this)
           .attr("class", "stop viewingstop")
-          .attr("r", 4);
+          .attr("r", 3);
         show_stop_label(d, i);
 
       });
@@ -76,7 +77,7 @@ function StopControl(map, view, stopLayer) {
       .transition()
       .duration(500)
       .attr("r", function(d, i){
-        if (zoom > 25) return 6;
+        if (zoom > 25) return 3;
         else return 3;
       })
 
@@ -205,6 +206,9 @@ function StopControl(map, view, stopLayer) {
 
 
   function show_stop_label(d, i) {
+
+    $("body").addClass("viewing-stop-mode");
+
     is_viewing_detail = true;
     map.busControl.clear_bus();
 

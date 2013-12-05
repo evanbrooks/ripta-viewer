@@ -32,9 +32,11 @@ $dark: rgb(79, 85, 102)
 $light: #f4f4f4 //rgb(206, 223, 228)
 $sun: rgb(230, 144, 122)
 
-$bus-blue: #004e84
+// $bus-blue: darken(blue, 20) // #004e84
+$bus-blue: darken(#004e84, 8)
 $stop-green: #494948
-$soon: #569533
+$soon: lighten(blue, 10) // #569533
+$back: lighten(#A5BCC9, 4) // #CBD7DD // #DDEAF1
 
 
 // Body
@@ -46,11 +48,13 @@ body, html
 
 body
 	-webkit-transition: all 0.5s
-	background: #DDEAF1
+	background: $back
 	font:
-		family: "Karla"
+		family: "Karla", sans-serif
 		size: 14px
 
+.viewing-stop-mode
+	// background: darken($back, 8)
 
 .paused
 	background: #E0E9EE
@@ -65,7 +69,10 @@ body
 	cursor: all-scroll
 
 
-
+h1
+	font-size: 22px
+	color: $bus-blue
+	font-weight: bold
 
 
 // Nav
@@ -142,44 +149,45 @@ footer
 
 #timestamp
 	position: absolute
-	bottom: 10px
+	bottom: 17px
 	z-index: 999
 	width: 100px
+	padding: 3px 0
 	margin-left: -50px
 	left: 50%
-	background: white
+	background: lighten($back, 3)
 	-webkit-transition: all 0.3s
 	text-align: center
-	color: black
+	color: $bus-blue
 	font-size: 1em
 	margin-bottom: 0px
 
 .loading .timeline
-	-webkit-transform: translate3d(0,30px,0)
+	-webkit-transform: translate3d(0,60px,0)
 
 .timeline
 	width: 100%
 	-webkit-transition: all 0.3s
-	padding: 10px 0
+	padding: 20px 0
 	color: black
 	cursor: col-resize
-	color: black
+	color: white
 	position: relative
-	background: white
+	background: lighten($back, 3)
 	box-shadow: inset 0 0 2px rgba(0,0,0,0.1)
 	&:active
 		cursor: col-resize
 	&::after
 		content: ""
-		height: 30px
+		height: 57px
 		width: 0px
 		//background: red
-		border-right: 1px solid red
+		border-right: 1px dotted $bus-blue
 		bottom: 0px
 		left: 50%
 		margin-left: -5px
 		position: absolute
-		z-index: 999
+		z-index: 5
 	.times
 		white-space: nowrap
 		display: inline-block
@@ -190,11 +198,12 @@ footer
 			position: relative
 			-webkit-text-rendering: optimizeLegibility
 			text-align: center
-			// &::after
-			// 	content: "30"
-			// 	position: absolute
-			// 	right: 0
-			// 	font-size: 8px
+			&::after
+				content: "30"
+				position: absolute
+				right: 0
+				top: 5px
+				font-size: 8px
 
 .controls
 	position: fixed
@@ -266,13 +275,18 @@ footer
 
 .line
 	fill: none
-	stroke-width: 1
-	//opacity: 0.2
+	stroke-width: 2
+	//opacity: 0.6
 	-webkit-transition: all 1s
-	stroke: white
+	stroke: lighten($back, 8)
 	//stroke-dasharray: 1,2
 	&.selected
 		//stroke-width: 0.15
+
+.viewing-stop-mode
+	.line
+		stroke: lighten($back, 6)
+
 
 .zoom2 .line
 	stroke-dasharray: none
@@ -310,15 +324,15 @@ footer
 			weight: bold
 			size: 10px
 
-.zoom .bus
-	&> circle
-		fill: $bus-blue
-		stroke: $bus-blue
-		stroke-width: 1.5
-	&> text
-		opacity: 1
+// .zoom .bus
+// 	&> circle
+// 		fill: $bus-blue
+// 		stroke: $bus-blue
+// 		stroke-width: 1.5
+// 	&> text
+// 		opacity: 1
 
-.zoom2 .bus
+.zoom .bus, .zoom2 .bus
 	&> circle
 		fill: white
 		stroke: white
@@ -330,7 +344,7 @@ footer
 	&:hover > text
 		font-size: 24px
 
-.viewing-bus, .zoom2 .viewing-bus 
+.viewing-bus, .zoom .viewing-bus, .zoom2 .viewing-bus 
 	&> circle
 		fill: $bus-blue
 		stroke: $bus-blue
@@ -345,16 +359,19 @@ footer
 	visibility: visible
 	stroke-width: 1
 	stroke: white
-	opacity: 1
+	fill: white
+	opacity: 0.6
+	-webkit-transition: stroke-width 0.2s
 	&:hover
 		opacity: 1
 		stroke: $stop-green
+		stroke-width: 10
 		fill: $stop-green
 
 .viewingstop
 	opacity: 1
-	stroke-width: 2
-	stroke: $stop-green
+	stroke-width: 8
+	//stroke: $stop-green
 
 
 .TEMPHIDE
@@ -369,8 +386,8 @@ footer
 
 
 #imagelayer
-	display: none
-	opacity: 0.5
+	//display: none
+	opacity: 0.03
 	position: absolute
 	top: 0
 	bottom: 0
@@ -405,8 +422,8 @@ footer
 	// -webkit-transition: all 0.3s
 	-webkit-transform-origin: top left
 	-webkit-transform: translate3d(-200px, -200px, 0)
-	font-size: 18px
-	min-width: 300px
+	font-size: 22px
+	min-width: 600px
 	h2
 		font-weight: bold
 		// text-transform: uppercase
@@ -419,17 +436,22 @@ footer
 	.stopentry
 		-webkit-transform-origin: top left
 		//-webkit-animation: bouncein 0.4s 
-		line-height: 1.3em
-		height: 25px
+		line-height: 1.5em
+		height: 30px
 		white-space: nowrap
+	.time, .sign
+		display: inline-block
 	.time
-		float: left
 		width: 80px
+		margin-right: 1em
 	.sign
 		// font-weight: bold
 
 #stoplabel
-	color: $stop-green
+	color: white
+	// -webkit-font-smoothing: antialiased
+	text-rendering: optimizeLegibility
+	text-shadow: 0 1px darken($back, 15), 0 -1px darken($back, 15), 1px 0 darken($back, 15), -1px 0 darken($back, 15)
 	-webkit-animation: bouncein 0.3s 
 
 #buslabel
@@ -459,4 +481,5 @@ footer
 
 .bus-arrived
 	color: $soon
-	font-weight: bold
+	// font-weight: bold
+	text-shadow: none

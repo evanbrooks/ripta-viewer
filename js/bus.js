@@ -46,6 +46,7 @@ function BusControl(map, view, busLayer) {
 
   self.clear_bus = function() {
     is_viewing_detail = false;
+    $("body").removeClass("viewing-bus-mode");
     busLayer.selectAll(".viewing-bus")
       .attr("class", "bus")
       .attr("r", 4);
@@ -198,6 +199,7 @@ function BusControl(map, view, busLayer) {
 
   function show_bus_label(d, i) {
     map.stopControl.clear_stop();
+    $("body").addClass("viewing-bus-mode");
     var this_bus = self.get_bus_from_id(d.id);
     var to = {x: - xScale(this_bus.x) + view.w / 2 - 150, y: - yScale(this_bus.y) + view.h / 2 - 100};
     view.move_to(to);

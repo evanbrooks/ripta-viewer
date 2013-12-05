@@ -117,7 +117,11 @@ function ViewControl(el, mapControl, mapsvg) {
 
     $container.tform(curr.x, curr.y);
 
-    //tilemap.center({lon: xScale.invert(w/2 - curr.x), lat: yScale.invert(h/2 - curr.y)}).zoom((currZoom + 40) / 4);
+    // tilemap.center({lon: xScale.invert(w/2 - curr.x), lat: yScale.invert(h/2 - curr.y)}).zoom((currZoom + 40) / 4);
+    tilemap.extent([
+      {lon: xScale.invert(- curr.x),    lat: yScale.invert(h - curr.y)   }, // sw
+      {lon: xScale.invert(w - curr.x),  lat: yScale.invert(- curr.y)     } // ne
+    ]);
 
 
     delta = { x: lastRedraw.x - curr.x,
@@ -135,24 +139,24 @@ function ViewControl(el, mapControl, mapsvg) {
   }
 
   this.move_to = function(center) {
-    var target = center;
-    var dx = curr.x - center.x;
-    var dy = curr.y - center.y;
+    // var target = center;
+    // var dx = curr.x - center.x;
+    // var dy = curr.y - center.y;
 
-    var counter = 5;
+    // var counter = 5;
 
-    d3.timer(function(){
-      if (counter > 0) {
-        curr.x -= dx/5;
-        curr.y -= dy/5;
-        counter --;
-        $container.tform(curr.x, curr.y);
-        return false;
-      }
-      else {
-        drawMap();
-      }
-    });
+    // d3.timer(function(){
+    //   if (counter > 0) {
+    //     curr.x -= dx/5;
+    //     curr.y -= dy/5;
+    //     counter --;
+    //     $container.tform(curr.x, curr.y);
+    //     return false;
+    //   }
+    //   else {
+    //     drawMap();
+    //   }
+    // });
   };
 
   function zoomTo(zoom, center){
@@ -162,7 +166,7 @@ function ViewControl(el, mapControl, mapsvg) {
     var zoomCenter = center || { x: w/2, y: h/2};
     currZoom = parseFloat(zoom);
     prevCenter = getCenter(center);
-    xlimit = 1400 * (agency.lon.max - agency.lon.min) * zoom;
+    xlimit = 1050 * (agency.lon.max - agency.lon.min) * zoom;
     ylimit = 1400 * (agency.lat.max - agency.lat.min) * zoom;
 
     mapControl.yScale.range( [ ylimit, 0    ] );
@@ -172,7 +176,12 @@ function ViewControl(el, mapControl, mapsvg) {
     curr.y = zoomCenter.y - prevCenter.y * ylimit;
 
     $container.tform(curr.x, curr.y);
+
     //tilemap.center({lon: xScale.invert(w/2 - curr.x), lat: yScale.invert(h/2 - curr.y)}).zoom((currZoom + 40) / 4);
+    tilemap.extent([
+      {lon: xScale.invert(- curr.x),      lat: yScale.invert(h - curr.y) }, // sw
+      {lon: xScale.invert(w - curr.x),  lat: yScale.invert(- curr.y)     } // ne
+    ]);
 
     $el.css({"width": xlimit, "height": ylimit});
 
@@ -207,11 +216,15 @@ function ViewControl(el, mapControl, mapsvg) {
   }
 
   function scrollZoom(scroll) {
-    currZoom += parseFloat(0.005 * scroll);
+    // console.log(scroll)
+    //currZoom *= parseFloat(1.0005 * scroll);
+    if (scroll > 0) currZoom *= 1.05;
+    else            currZoom *= 0.95;
+
     if (currZoom < 0.5) {
       currZoom = 0.51;
     }
-    $("#zoom-slide").val(currZoom);
+
     zoomTo(currZoom, { x: mouse.x, y: mouse.y});
   }
 
