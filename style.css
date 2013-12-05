@@ -372,9 +372,7 @@ footer {
     margin-right: 1em; }
 
 #stoplabel {
-  color: white;
-  text-rendering: optimizeLegibility;
-  text-shadow: 0 1px #82a2b4, 0 -1px #82a2b4, 1px 0 #82a2b4, -1px 0 #82a2b4;
+  color: #00365b;
   -webkit-animation: bouncein 0.3s; }
 
 #buslabel {
