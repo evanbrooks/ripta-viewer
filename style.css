@@ -286,7 +286,7 @@ footer {
   visibility: hidden; }
 
 .stop {
-  fill: transparent;
+  fill: white;
   cursor: pointer;
   visibility: visible;
   stroke-width: 1;
