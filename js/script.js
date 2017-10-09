@@ -37,7 +37,7 @@ function setup() {
     .add(po.compass().pan("none"));
 
     tilemap.add(po.image()
-      .url(po.url("http://{S}tile.stamen.com/toner-background/{Z}/{X}/{Y}.png")
+      .url(po.url("http://{S}tile.stamen.com/toner-background/{Z}/{X}/{Y}@2x.png")
       .hosts(["", "a.", "b.", "c.", "d."])));
 }
 
