@@ -112,7 +112,7 @@ footer {
   padding: 3px 0;
   margin-left: -50px;
   left: 50%;
-  background: #bbcdd6;
+  background: #b4c6d2;
   -webkit-transition: all 0.3s;
   text-align: center;
   color: #00365b;
@@ -126,11 +126,10 @@ footer {
   width: 100%;
   -webkit-transition: all 0.3s;
   padding: 20px 0;
-  color: black;
   cursor: col-resize;
-  color: white;
+  color: #00365b;
   position: relative;
-  background: #bbcdd6;
+  background: rgba(181, 200, 212, 0.86);
   box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.1); }
   .timeline:active {
     cursor: col-resize; }
