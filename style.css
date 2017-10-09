@@ -253,14 +253,14 @@ footer {
   cursor: pointer; }
   .bus > circle {
     fill: #00365b;
-    -webkit-transition: all 0.3s; }
+    -webkit-transition: stroke 0.3s; }
   .bus:hover > circle {
     fill: white;
     stroke: #00365b;
     stroke-width: 1; }
   .bus > text {
     visibility: hidden;
-    -webkit-transition: all 0.3s;
+    -webkit-transition: opacity 0.3s;
     text-anchor: middle;
     opacity: 0;
     fill: #00365b;
