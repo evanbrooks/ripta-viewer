@@ -233,7 +233,7 @@ footer {
 .line {
   fill: none;
   stroke-width: 1;
-  -webkit-transition: all 1s;
+  -webkit-transition: stroke 1s;
   stroke: white; }
 
 .viewing-stop-mode .line {
