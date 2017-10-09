@@ -193,7 +193,7 @@ footer {
   fill: none;
   stroke-width: 0;
   opacity: 1;
-  -webkit-transition: all 1s;
+  -webkit-transition: stroke 1s;
   stroke: #4f5566; }
   .shapes > .line.selected {
     stroke-width: 0.15; }
@@ -203,7 +203,7 @@ footer {
 
 .bus > circle {
   fill: #4f5566;
-  -webkit-transition: all 0.3s; }
+  -webkit-transition: stroke 0.3s; }
 .bus > text {
   -webkit-transition: all 0.5s;
   opacity: 0;
